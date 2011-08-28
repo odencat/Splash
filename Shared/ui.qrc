@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/" >
+        <file>resource/target.png</file>
+        <file>resource/center_point.png</file>
+        <file>resource/remove.png</file>
+        <file>resource/add.png</file>
+        <file>resource/play_down.png</file>
+        <file>resource/disk.png</file>
+        <file>resource/palette.png</file>
+        <file>resource/play.png</file>
+        <file>resource/splash.ico</file>
+        <file>resource/refresh.png</file>
+    </qresource>
+</RCC>

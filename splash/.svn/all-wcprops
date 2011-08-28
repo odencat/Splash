@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/334/trunk/tools/splash
+END
+GLSprite.h
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/333/trunk/tools/splash/GLSprite.h
+END
+EmittedAnimation.h
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/300/trunk/tools/splash/EmittedAnimation.h
+END
+irrKlang.dll
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/287/trunk/tools/splash/irrKlang.dll
+END
+mainwindow.ui
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/323/trunk/tools/splash/mainwindow.ui
+END
+Splash.pro
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/287/trunk/tools/splash/Splash.pro
+END
+Splash.rc
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/254/trunk/tools/splash/Splash.rc
+END
+mainwindow.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/319/trunk/tools/splash/mainwindow.cpp
+END
+ui.qrc
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/254/trunk/tools/splash/ui.qrc
+END
+libvorbis-0.dll
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/287/trunk/tools/splash/libvorbis-0.dll
+END
+mainwindow.h
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/319/trunk/tools/splash/mainwindow.h
+END
+splash.ico
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/254/trunk/tools/splash/splash.ico
+END
+ResourceManager.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/307/trunk/tools/splash/ResourceManager.cpp
+END
+libvorbisfile-3.dll
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/287/trunk/tools/splash/libvorbisfile-3.dll
+END
+main.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/254/trunk/tools/splash/main.cpp
+END
+ResourceManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/299/trunk/tools/splash/ResourceManager.h
+END
+GLSprite.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/333/trunk/tools/splash/GLSprite.cpp
+END
+libogg-0.dll
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/287/trunk/tools/splash/libogg-0.dll
+END
+Macros.h
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/300/trunk/tools/splash/Macros.h
+END
+init.json
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/307/trunk/tools/splash/init.json
+END
+EmittedAnimation.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/318/trunk/tools/splash/EmittedAnimation.cpp
+END

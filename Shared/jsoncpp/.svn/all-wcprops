@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/264/trunk/tools/Shared/jsoncpp
+END
+AUTHORS
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/262/trunk/tools/Shared/jsoncpp/AUTHORS
+END
+jsoncpp.pri
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/264/trunk/tools/Shared/jsoncpp/jsoncpp.pri
+END
+SConstruct
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/262/trunk/tools/Shared/jsoncpp/SConstruct
+END
+README.txt
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/262/trunk/tools/Shared/jsoncpp/README.txt
+END

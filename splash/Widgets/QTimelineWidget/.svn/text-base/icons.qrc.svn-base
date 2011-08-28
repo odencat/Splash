@@ -1,0 +1,22 @@
+<RCC>
+    <qresource prefix="/" >
+        <file>icons/arrow.png</file>
+        <file>icons/arrow_selected.png</file>
+        <file>icons/blank.png</file>
+        <file>icons/blank_selected.png</file>
+        <file>icons/connect_key.png</file>
+        <file>icons/connect_key_selected.png</file>
+        <file>icons/empty_frame.png</file>
+        <file>icons/empty_frame_end.png</file>
+        <file>icons/empty_frame_end_selected.png</file>
+        <file>icons/empty_frame_selected.png</file>
+        <file>icons/empty_key.png</file>
+        <file>icons/empty_key_selected.png</file>
+        <file>icons/fix_frame.png</file>
+        <file>icons/fix_frame_end.png</file>
+        <file>icons/fix_frame_end_selected.png</file>
+        <file>icons/fix_frame_selected.png</file>
+        <file>icons/line.png</file>
+        <file>icons/line_selected.png</file>
+    </qresource>
+</RCC>
