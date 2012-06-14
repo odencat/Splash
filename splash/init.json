@@ -1,4 +1,4 @@
 {
-   "initFilePath" : "/Users/dsato/Development/git/TinyQuest/TinyQuest/buildprocess/rawassets",
-   "option" : null
+   "animationPath" : "/Users/dsato/Development/git/TinyQuest/PreBuild/RawAssets/Animations",
+   "imagePath" : "/Users/dsato/Development/git/TinyQuest/Unity/Assets/Resources/Images"
 }

@@ -20,7 +20,7 @@ public:
 
     enum
     {
-        TARGET_originX = -150,
+        TARGET_originX = -50,
         TARGET_originY = 0
     };
 

@@ -18,7 +18,7 @@ bool GLSprite::priorityLessThan(const GLSprite* pItem1, const GLSprite* pItem2)
     return pItem1->mSpriteDescriptor.mPriority < pItem2->mSpriteDescriptor.mPriority;
 }
 
-QPoint GLSprite::getPositionWithPositionType(QPointF basePosition, GLSprite::PositionTypeOption positionTypeOption, int width, int height)
+QPoint GLSprite::getPositionWithPositionType(QPointF basePosition, GLSprite::PositionTypeOption positionTypeOption, int width, int height, int selfWidth, int selfHeight)
 {
     int dx = 0;
     int dy = 0;
@@ -64,7 +64,12 @@ QPoint GLSprite::getPositionWithPositionType(QPointF basePosition, GLSprite::Pos
         default:
         break;
     }
-    return QPointF(basePosition.x() + dx * width, basePosition.y() + dy * height).toPoint();
+
+    int deltaY = 0;
+    if (dy == 1) {
+        deltaY = -selfHeight;
+    }
+    return QPointF(basePosition.x() + dx * width, basePosition.y() + dy * height + deltaY).toPoint();
 }
 
 QString GLSprite::blendTypeSting[GLSprite::eBT_COUNT] =

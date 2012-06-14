@@ -84,7 +84,7 @@ void AnimationModel::setup()
         spriteDescriptor.mTextureSrcRect = DEFAULT_SELECTION_RECT;
         spriteDescriptor.mCenter.mX = 0;
         spriteDescriptor.mCenter.mY = 0;
-        spriteDescriptor.mPosition.mX = -100;
+        spriteDescriptor.mPosition.mX = -75;
 
         spTargetSprite = new GLSprite(NULL, NULL, -1, spriteDescriptor, false, spTargetPixmap);
     }
@@ -637,7 +637,7 @@ void AnimationModel::setFinalPosition(const GLSprite* parentGLSprite, GLSprite::
         }
         else if(spriteDescriptor.mPositionType == GLSprite::PositionType_RelativeToTargetOrigin)
         {
-            QPoint targetPoint = GLSprite::getPositionWithPositionType(QPoint(TARGET_originX, TARGET_originY), spriteDescriptor.mPositionTypeOption, spTargetSprite->mSpriteDescriptor.mTextureSrcRect.width(), spTargetSprite->mSpriteDescriptor.mTextureSrcRect.height());
+            QPoint targetPoint = GLSprite::getPositionWithPositionType(QPoint(TARGET_originX, TARGET_originY), spriteDescriptor.mPositionTypeOption, spTargetSprite->mSpriteDescriptor.mTextureSrcRect.width(), spTargetSprite->mSpriteDescriptor.mTextureSrcRect.height(), spriteDescriptor.mTextureSrcRect.width(), spriteDescriptor.mTextureSrcRect.height());
             QTransform transform;
             transform.translate(targetPoint.x(), targetPoint.y());
             transform.rotate(0);

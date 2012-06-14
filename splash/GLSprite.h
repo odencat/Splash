@@ -209,13 +209,16 @@ public:
         {
             if (mPositionType != PositionType_None)
             {
-                return getPositionWithPositionType(QPointF(mPosition.mX, mPosition.mY), mPositionTypeOption, pTargetSprite->mSpriteDescriptor.mTextureSrcRect.width(), pTargetSprite->mSpriteDescriptor.mTextureSrcRect.height());
+                int selfWidth = this->mTextureSrcRect.width();
+                int selfHeight = this->mTextureSrcRect.height();
+
+                return getPositionWithPositionType(QPointF(mPosition.mX, mPosition.mY), mPositionTypeOption, pTargetSprite->mSpriteDescriptor.mTextureSrcRect.width(), pTargetSprite->mSpriteDescriptor.mTextureSrcRect.height(), selfWidth, selfHeight);
             }
             return QPointF(mPosition.mX, mPosition.mY).toPoint();
         }
     };
 
-    static QPoint getPositionWithPositionType(QPointF basePosition, PositionTypeOption positionTypeOption, int width, int height);
+    static QPoint getPositionWithPositionType(QPointF basePosition, PositionTypeOption positionTypeOption, int width, int height, int selfWidth, int selfHeight);
     static QString blendTypeSting[eBT_COUNT];
     static BlendType getBlendTypeByString(QString typeString) ;
     static QString facingOptionTypeSting[eBT_COUNT];
