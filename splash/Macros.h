@@ -4,6 +4,10 @@
 #define PI 3.14159265358979323846
 #define LERP(startValue, endValue, frameNo, startFrameNo, endFrameNo)\
 startValue + ((endValue - startValue) * (frameNo - startFrameNo)) / (endFrameNo - startFrameNo)
+#define EASE_IN(startValue, endValue, frameNo, startFrameNo, endFrameNo)\
+startValue + ((endValue - startValue) * (frameNo - startFrameNo)) / (endFrameNo - startFrameNo)
+#define EASE_OUT(startValue, endValue, frameNo, startFrameNo, endFrameNo)\
+startValue + ((endValue - startValue) * (frameNo - startFrameNo)) / (endFrameNo - startFrameNo)
 //#define LERP(l, h, a)  l + (h - l) * a
 
 #define CLIP(x, a, b) x > b ? b : (x < a ? a : x)

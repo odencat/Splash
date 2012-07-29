@@ -20,9 +20,9 @@ AnimationViewer::AnimationViewer(QWidget* parent, AnimationModel* animationModel
 
     mpTweenModel = new QStandardItemModel();
     // Set Tween types
-    mpTweenModel->appendRow(new QStandardItem(QString("None")));
-    mpTweenModel->appendRow(new QStandardItem(QString("Fix")));
-    mpTweenModel->appendRow(new QStandardItem(QString("Tween")));
+    for (int i = 0; i < KeyFrameData::eTT_COUNT; i++) {
+      mpTweenModel->appendRow(new QStandardItem(KeyFrameData::tweenTypeSting[i]));
+    }
 
     m_ui->alphaTweenTypeComboBox->setModel(mpTweenModel);
     m_ui->positionTweenTypeComboBox->setModel(mpTweenModel);

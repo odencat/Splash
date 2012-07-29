@@ -16,20 +16,44 @@ static bool sIsNesting = false;
 
 // Macros
 #define TweenValue(field, startValue, endValue, frameNo, startFrameNo, endFrameNo)\
-field = LERP(startValue, endValue, frameNo, startFrameNo, endFrameNo)
+{\
+   switch (tweenType){\
+   case KeyFrameData::eTT_EaseIn:\
+       field = LERP(startValue, endValue, frameNo, startFrameNo, endFrameNo);\
+   break;\
+   case KeyFrameData::eTT_EaseOut:\
+       field = LERP(startValue, endValue, frameNo, startFrameNo, endFrameNo);\
+   break;\
+   case KeyFrameData::eTT_Linear:\
+       field = LERP(startValue, endValue, frameNo, startFrameNo, endFrameNo);\
+   break;\
+   case KeyFrameData::eTT_Fix:\
+       field = LERP(startValue, startValue, frameNo, startFrameNo, endFrameNo);\
+   break;\
+   default:\
+   break;\
+   }\
+}
+
 
 #define Tween(tweenType, startValue, endValue, field, frameNo, startFrameNo, endFrameNo)\
 {\
- switch (tweenType){\
-    case KeyFrameData::eTT_Linear:\
-        TweenValue(field, startValue, endValue, frameNo, startFrameNo, endFrameNo);\
-    break;\
-    case KeyFrameData::eTT_Fix:\
-        TweenValue(field, startValue, startValue, frameNo, startFrameNo, endFrameNo);\
-    break;\
-    default:\
-    break;\
-    }\
+   switch (tweenType){\
+   case KeyFrameData::eTT_EaseIn:\
+       field = EASE_IN(startValue, endValue, frameNo, startFrameNo, endFrameNo);\
+   break;\
+   case KeyFrameData::eTT_EaseOut:\
+       field = EASE_OUT(startValue, endValue, frameNo, startFrameNo, endFrameNo);\
+   break;\
+   case KeyFrameData::eTT_Linear:\
+       field = LERP(startValue, endValue, frameNo, startFrameNo, endFrameNo);\
+   break;\
+   case KeyFrameData::eTT_Fix:\
+       field = LERP(startValue, startValue, frameNo, startFrameNo, endFrameNo);\
+   break;\
+   default:\
+   break;\
+   }\
 }
 ////
 
