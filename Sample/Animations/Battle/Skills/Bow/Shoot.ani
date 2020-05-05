@@ -1,0 +1,136 @@
+{
+   "events" : {
+      "11" : [ "damage:0" ]
+   },
+   "keyframes" : {
+      "0" : [
+         {
+            "frameNo" : 0,
+            "positionTween" : "fix",
+            "sourcePath" : "Battle/Skills/Battler_Base.png",
+            "textureRect" : [ 288, 0, 32, 32 ]
+         },
+         {
+            "frameNo" : 13,
+            "positionTween" : "fix",
+            "sourcePath" : "Battle/Skills/Battler_Base.png",
+            "textureRect" : [ 288, 0, 32, 32 ]
+         }
+      ],
+      "1" : [
+         {
+            "frameNo" : 0,
+            "position" : [ -9, 4 ],
+            "positionTween" : "fix",
+            "rotationTween" : "fix",
+            "sourcePath" : "Battle/Skills/Weapon_BowBase.png",
+            "swapTargetType" : "weapon",
+            "textureRect" : [ 0, 0, 32, 32 ]
+         },
+         {
+            "frameNo" : 1,
+            "position" : [ -9, 4 ],
+            "rotation" : 10,
+            "sourcePath" : "Battle/Skills/Weapon_BowBase.png",
+            "swapTargetType" : "weapon",
+            "textureRect" : [ 32, 0, 32, 32 ]
+         },
+         {
+            "frameNo" : 2,
+            "position" : [ -49, -104 ],
+            "sourcePath" : "Battle/Skills/Weapon_BowBase.png",
+            "swapTargetType" : "weapon",
+            "textureRect" : [ 64, 0, 32, 32 ]
+         },
+         {
+            "frameNo" : 3,
+            "position" : [ -9, 4 ],
+            "positionTween" : "fix",
+            "sourcePath" : "Battle/Skills/Weapon_BowBase.png",
+            "swapTargetType" : "weapon",
+            "textureRect" : [ 128, 0, 32, 32 ]
+         },
+         {
+            "frameNo" : 5,
+            "position" : [ -9, 4 ],
+            "positionTween" : "fix",
+            "sourcePath" : "Battle/Skills/Weapon_BowBase.png",
+            "swapTargetType" : "weapon",
+            "textureRect" : [ 128, 0, 32, 32 ]
+         },
+         {
+            "frameNo" : 6,
+            "position" : [ -9, 4 ],
+            "positionTween" : "fix",
+            "sourcePath" : "Battle/Skills/Weapon_BowBase.png",
+            "swapTargetType" : "weapon",
+            "textureRect" : [ 0, 0, 32, 32 ]
+         },
+         {
+            "center" : [ 2.0, 0.0 ],
+            "frameNo" : 10,
+            "position" : [ -7, 4 ],
+            "positionTween" : "fix",
+            "sourcePath" : "Battle/Skills/Weapon_BowBase.png",
+            "swapTargetType" : "weapon",
+            "textureRect" : [ 0, 0, 32, 32 ]
+         }
+      ],
+      "2" : [
+         {
+            "frameNo" : 0,
+            "position" : [ -16, 3 ],
+            "positionTween" : "linear",
+            "rotation" : 90,
+            "rotationTween" : "linear",
+            "sourcePath" : "Battle/Skills/Weapon_BowBase.png",
+            "textureRect" : [ 160, 0, 32, 32 ]
+         },
+         {
+            "frameNo" : 2,
+            "position" : [ -11, 3 ],
+            "positionTween" : "fix",
+            "rotation" : 90,
+            "sourcePath" : "Battle/Skills/Weapon_BowBase.png",
+            "textureRect" : [ 160, 0, 32, 32 ]
+         },
+         {
+            "frameNo" : 4,
+            "position" : [ -11, 3 ],
+            "positionTween" : "fix",
+            "rotation" : 90,
+            "rotationTween" : "fix",
+            "sourcePath" : "Battle/Skills/Weapon_BowBase.png",
+            "textureRect" : [ 160, 0, 32, 32 ]
+         },
+         {
+            "alphaTween" : "fix",
+            "colorTween" : "linear",
+            "emitter" : true,
+            "facingOption" : "faceToMov",
+            "frameNo" : 6,
+            "maxEmitAngle" : 270,
+            "maxEmitSpeed" : 5.0,
+            "minEmitAngle" : 270,
+            "minEmitSpeed" : 5.0,
+            "position" : [ -11, 3 ],
+            "positionTween" : "fix",
+            "rotationTween" : "fix",
+            "sourcePath" : "Battle/Skills/Bow/ArrowShoot.ani"
+         }
+      ],
+      "3" : [
+         {
+            "emitter" : true,
+            "frameNo" : 11,
+            "maxEmitAngle" : 0,
+            "maxEmitSpeed" : 0.0,
+            "minEmitAngle" : 0,
+            "minEmitSpeed" : 0.0,
+            "positionTween" : "fix",
+            "positionType" : "relativeToTarget",
+            "sourcePath" : "Battle/Skills/Effect/Stab01.ani"
+         }
+      ]
+   }
+}

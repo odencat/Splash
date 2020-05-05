@@ -1,7 +1,7 @@
 #ifndef ANIMATIONVIEWER_H
 #define ANIMATIONVIEWER_H
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 #include "DataModels/KeyFrameData.h"
 #include "DataModels/KeyFrame.h"
 namespace Ui

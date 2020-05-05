@@ -83,13 +83,13 @@ QTimelineWidget::QTimelineWidget(AnimationModel* pAnimationModel, QWidget *paren
     this->horizontalHeader()->setStretchLastSection(false);
     this->horizontalHeader()->setDefaultSectionSize(10);
 
-    this->horizontalHeader()->setResizeMode(QHeaderView::Fixed);
+    this->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     this->horizontalHeader()->setVisible(false);
 
     this->verticalHeader()->setStretchLastSection(false);
     this->verticalHeader()->setDefaultSectionSize(20);
 
-    this->verticalHeader()->setResizeMode(QHeaderView::Fixed);
+    this->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
 
     this->setAlternatingRowColors(true);
     this->setColumnCount(100);

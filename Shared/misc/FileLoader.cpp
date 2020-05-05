@@ -7,7 +7,8 @@
 // public
 Json::Value FileLoader::loadInitData()
 {
-    QFileInfo initFileInfo = QFileInfo(QDir::currentPath(), QString("init.json"));
+//    QFileInfo initFileInfo = QFileInfo(QDir::currentPath(), QString("init.json"));
+    QFileInfo initFileInfo = QFileInfo(QString("/Users/daigosato/Development/Daigo/Splash/splash"), QString("init.json"));
     QString filePath = initFileInfo.absoluteFilePath();
 
     return loadJsonFile(filePath);
@@ -34,6 +35,8 @@ std::string FileLoader::getFileData(QString path)
 {
     // Get json file data
     QFile file(path);
+   printf("PATH = %s\n", path.toStdString().c_str());
+
     QString fileData;
     if (file.open( QIODevice::ReadOnly))
     {

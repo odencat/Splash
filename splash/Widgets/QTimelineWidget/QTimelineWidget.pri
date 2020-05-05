@@ -1,9 +1,9 @@
 DEPENDPATH += . \
     Widgets/QTimelineWidget
 TEMPLATE = app
-SOURCES += QTimelineWidget.cpp \
-    QTimelinePanel.cpp
-HEADERS += QTimelineWidget.h \
-    QTimelinePanel.h
-RESOURCES += icons.qrc
-FORMS += QTimelinePanel.ui
+SOURCES += $$PWD/QTimelineWidget.cpp \
+    $$PWD/QTimelinePanel.cpp
+HEADERS += $$PWD/QTimelineWidget.h \
+    $$PWD/QTimelinePanel.h
+RESOURCES += $$PWD/icons.qrc
+FORMS += $$PWD/QTimelinePanel.ui

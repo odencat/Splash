@@ -1,7 +1,7 @@
 #ifndef IMAGEPALETDIALOG_H
 #define IMAGEPALETDIALOG_H
 
-#include <QtGui/QDialog>
+#include <QtWidgets/QDialog>
 
 #include "SourceFileDirModel.h"
 #include "ResourceManager.h"

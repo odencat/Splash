@@ -1,0 +1,78 @@
+{
+   "events" : {
+      "2" : [ "" ]
+   },
+   "keyframes" : {
+      "0" : [
+         {
+            "frameNo" : 0,
+            "positionTween" : "fix",
+            "sourcePath" : "Battle/Skills/Battler_Base.png",
+            "textureRect" : [ 160, 0, 32, 32 ]
+         },
+         {
+            "frameNo" : 1,
+            "sourcePath" : "Battle/Skills/Battler_Base.png",
+            "swapTargetType" : "character",
+            "textureRect" : [ 288, 0, 32, 32 ]
+         },
+         {
+            "frameNo" : 5,
+            "sourcePath" : "Battle/Skills/Battler_Base.png",
+            "swapTargetType" : "character",
+            "textureRect" : [ 288, 0, 32, 32 ]
+         },
+         {
+            "frameNo" : 7,
+            "sourcePath" : "Battle/Skills/Battler_Base.png",
+            "swapTargetType" : "character",
+            "textureRect" : [ 288, 0, 32, 32 ]
+         }
+      ],
+      "1" : [
+         {
+            "center" : [ -2.0, 13.0 ],
+            "frameNo" : 0,
+            "position" : [ -7, 6 ],
+            "positionTween" : "linear",
+            "priority" : 0.4000000059604645,
+            "rotation" : 30,
+            "rotationTween" : "linear",
+            "sourcePath" : "Battle/Skills/Weapon_AxeBase.png",
+            "textureRect" : [ 0, 0, 32, 32 ]
+         },
+         {
+            "center" : [ -1.0, 13.0 ],
+            "frameNo" : 3,
+            "position" : [ -6, 6 ],
+            "positionTween" : "fix",
+            "rotation" : -160,
+            "rotationTween" : "fix",
+            "sourcePath" : "Battle/Skills/Weapon_AxeBase.png",
+            "textureRect" : [ 0, 0, 32, 32 ]
+         },
+         {
+            "center" : [ -1.0, 13.0 ],
+            "frameNo" : 5,
+            "position" : [ -6, 6 ],
+            "positionTween" : "fix",
+            "rotation" : -160,
+            "rotationTween" : "fix",
+            "sourcePath" : "Battle/Skills/Weapon_AxeBase.png",
+            "textureRect" : [ 0, 0, 32, 32 ]
+         }
+      ],
+      "2" : [
+         {
+            "frameNo" : 3,
+            "positionTween" : "fix",
+            "positionType" : "relativeToTarget",
+            "sourcePath" : "Battle/Skills/Effect/Stab01.ani"
+         },
+         {
+            "frameNo" : 6,
+            "isEmpty" : true
+         }
+      ]
+   }
+}

@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "ResourceTree/ResourceTree.h"
 #include <fstream>
@@ -51,7 +51,7 @@ ResourceTree::ResourceTree(QWidget *parent)
     QStringList labels;
     labels << tr("Animation Files");
 
-    header()->setResizeMode(QHeaderView::Stretch);
+    header()->setSectionResizeMode(QHeaderView::Stretch);
     setHeaderLabels(labels);
 
     folderIcon.addPixmap(style()->standardPixmap(QStyle::SP_DirClosedIcon), QIcon::Normal, QIcon::Off);

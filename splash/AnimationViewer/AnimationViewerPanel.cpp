@@ -13,7 +13,7 @@
 
 #define TARGET_SCREEN_WIDTH 320
 #define TARGET_SCREEN_HEIGHT 240
-#define ZOOM 2.0f
+#define ZOOM 1.0f
 
 AnimationViewerPanel::AnimationViewerPanel(QWidget* parent, AnimationModel* pAnimationModel, CelModel* const pSelectedCelModel)
         : QGLWidget(parent),
@@ -216,7 +216,7 @@ void AnimationViewerPanel::paintEvent(QPaintEvent *event)
     // clear screen
     painter.setPen(Qt::black);
     painter.setBrush(Qt::NoBrush);
-    painter.fillRect(QRect(0, 0, width() - 1, height() - 1), Qt::SolidPattern);
+    painter.fillRect(QRect(0, 0, width() , height() ), Qt::SolidPattern);
 
     painter.translate(width() / 2, height() / 2);
     painter.scale(ZOOM, ZOOM);
@@ -275,11 +275,11 @@ void AnimationViewerPanel::renderCelSprites(const QPoint& centerPoint, QPainter&
         // Move rendering position depends on targeting position option
         int dx = 0;
         int dy = 0;
-//        if (glSprite->mLineNo == AnimationModel::LINE_target)
+//        i/*f (glSprite->mLineNo == AnimationModel::LINE_target)
 //        {
 //            dx = glSprite->mSpriteDescriptor.mTextureSrcRect.width() / 2;
 //            dy = glSprite->mSpriteDescriptor.mTextureSrcRect.height() / 2;
-//        }
+//        }*/
 
         painter.translate(centerPoint.x() + dx, centerPoint.y() + dy);
         if (glSprite)

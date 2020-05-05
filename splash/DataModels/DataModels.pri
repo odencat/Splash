@@ -1,11 +1,11 @@
 DEPENDPATH += . \
     DataModels
-HEADERS += CelModel.h \
-    AnimationModel.h \
-    KeyFrameData.h \
-    KeyFrame.h
+HEADERS += $$PWD/CelModel.h \
+    $$PWD/AnimationModel.h \
+    $$PWD/KeyFrameData.h \
+    $$PWD/KeyFrame.h
 
-SOURCES += CelModel.cpp \
-    AnimationModel.cpp \
-    KeyFrameData.cpp \
-    KeyFrame.cpp
+SOURCES += $$PWD/CelModel.cpp \
+    $$PWD/AnimationModel.cpp \
+    $$PWD/KeyFrameData.cpp \
+    $$PWD/KeyFrame.cpp

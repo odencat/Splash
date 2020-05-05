@@ -1,7 +1,7 @@
 #ifndef QTIMELINEPANEL_H
 #define QTIMELINEPANEL_H
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 
 namespace Ui {
     class QTimelinePanel;

@@ -1,0 +1,32 @@
+{
+   "events" : {
+      "0" : [ "snd:MMS/hit74_c" ]
+   },
+   "keyframes" : {
+      "0" : [
+         {
+            "facingOption" : "faceToMov",
+            "frameNo" : 0,
+            "positionTween" : "fix",
+            "sourcePath" : "Battle/Skills/Effect_Weapon03.png",
+            "textureRect" : [ 0, 288, 96, 96 ]
+         },
+         {
+            "frameNo" : 1,
+            "position" : [ -138, -89 ],
+            "sourcePath" : "Battle/Skills/Effect_Weapon03.png",
+            "textureRect" : [ 192, 288, 96, 96 ]
+         },
+         {
+            "frameNo" : 2,
+            "sourcePath" : "Battle/Skills/Effect_Weapon03.png",
+            "textureRect" : [ 384, 288, 96, 96 ]
+         },
+         {
+            "frameNo" : 3,
+            "isEmpty" : true
+         }
+      ]
+   },
+   "name" : "Stab!"
+}

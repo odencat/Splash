@@ -1,5 +1,5 @@
-#include "imagepaletdialog.h"
-#include "ui_imagepaletdialog.h"
+#include "ImagePaletDialog.h"
+#include "ui_ImagePaletDialog.h"
 #include "DataModels/AnimationModel.h"
 #include "ImagePaletDialog/AnimationImagePaletPanel.h"
 #include "ResourceManager.h"
@@ -45,7 +45,7 @@ void ImagePaletDialog::refreshTreeView(ResourceManager::FileType fileType)
     m_ui->fileSelectionTreeView->setModel(&mSourceFileTreeViewModel);
     m_ui->fileSelectionTreeView->setRootIndex(mSourceFileTreeViewModel.index(rootPath) );
     m_ui->fileSelectionTreeView->setAutoScroll(true);
-    m_ui->fileSelectionTreeView->header()->setResizeMode(0, QHeaderView::ResizeToContents);
+    m_ui->fileSelectionTreeView->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
 }
 
 void ImagePaletDialog::showEvent(QShowEvent *event)

@@ -64,13 +64,11 @@ void MainWindow::setupUIModels()
 
     ui->animationTreeView->setModel(&mAnimationTreeViewModel);
     ui->animationTreeView->setRootIndex(mAnimationTreeViewModel.index(rootPath) );
-    ui->animationTreeView->header()->setResizeMode(0, QHeaderView::ResizeToContents);
+    ui->animationTreeView->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
 }
 void MainWindow::setupUI()
 {
     ui->setupUi(this);
-
-    mpDialog = new ImagePaletDialog(this, mpAnimationModel);
 
     mpAnimationViewer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     ui->animationViewer->addWidget(mpAnimationViewer);
@@ -251,11 +249,12 @@ void MainWindow::onRemoveAnimationButtonClicked()
 
 void MainWindow::onPaletButtonClicked()
 {
-   if (mpDialog->isHidden())
-   {
-       mpDialog->move(this->x(), this->y());
-       mpDialog->show();
+    if (mpDialog != NULL) {
+        delete mpDialog;
     }
+    mpDialog = new ImagePaletDialog(this, mpAnimationModel);
+    mpDialog->move(this->x(), this->y());
+    mpDialog->show();
 }
 
 void MainWindow::refreshTree()

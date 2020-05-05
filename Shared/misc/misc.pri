@@ -1,7 +1,7 @@
 DEPENDPATH += . \
     ../Shared/misc
 INCLUDEPATH += ../Shared/misc
-HEADERS += FileLoader.h \
-    SourceFileDirModel.h
-SOURCES += FileLoader.cpp \
-    SourceFileDirModel.cpp
+HEADERS += $$PWD/FileLoader.h \
+    $$PWD/SourceFileDirModel.h
+SOURCES += $$PWD/FileLoader.cpp \
+    $$PWD/SourceFileDirModel.cpp

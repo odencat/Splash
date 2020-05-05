@@ -13,6 +13,7 @@ include(Widgets/ResourceTree/ResourceTree.pri)
 INCLUDEPATH += Widgets ../Shared
 QT += opengl
 QT += xml
+QT += multimedia
 TARGET = Splash
 TEMPLATE = app
 SOURCES += main.cpp \

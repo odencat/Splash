@@ -220,7 +220,7 @@ void GLSprite::renderColored8(QPainter& painter, QImage* pImage, const QPointF& 
     int dB = (int)(255 * color.mB);
 
     QVector<QRgb> colors = pImage->colorTable();
-    for (int i = 1; i < pImage->numColors() ; i++)
+    for (int i = 1; i < pImage->colorCount() ; i++)
     {
         tempColorTable[i] = colors[i];
         QRgb rgb = colors[i];
@@ -233,7 +233,7 @@ void GLSprite::renderColored8(QPainter& painter, QImage* pImage, const QPointF& 
     pImage->setColorTable(colors);
 
     painter.drawImage(dstPoint, *pImage, srcRect);
-    for (int i = 1; i < pImage->numColors() ; i++)
+    for (int i = 1; i < pImage->colorCount() ; i++)
     {
         colors[i] = tempColorTable[i];
     }
@@ -312,7 +312,7 @@ void GLSprite::render(QPoint offset, QPainter& painter, const GLSprite* pTargetS
     painter.setOpacity(getAbsoluteAlpha());
 
    // Rotation & Scale & translate
-    QTransform saveTransform = painter.combinedTransform();
+    QTransform saveTransform = painter.transform();
     painter.setTransform(getTransform(), true);
 
     // Get source texture rectangle (Not used for sub animation)
