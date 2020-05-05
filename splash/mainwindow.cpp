@@ -76,6 +76,8 @@ void MainWindow::setupUI()
     mpQTimelinePanel = new QTimelinePanel(mpAnimationModel, this);
     mpQTimelinePanel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     ui->timelineContainer->addWidget(mpQTimelinePanel);
+
+    this->setFixedSize(1200, 800);
 }
 
 MainWindow::MainWindow(QWidget *parent)

@@ -19,4 +19,4 @@ assets/images/pictures/sharephoto04.gal
 assets/images/pictures/sharephoto05.gal
 assets/images/pictures/sharephoto06.gal
 build-Splash-Desktop_x86_darwin_generic_mach_o_64bit-Debug
-*.pro.user.*
+*.pro.user*
