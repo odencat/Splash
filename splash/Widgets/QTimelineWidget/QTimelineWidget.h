@@ -2,6 +2,7 @@
 #define QTIMELINEWIDGET_H
 
 #include <QTableWidget>
+#include <QStyledItemDelegate>
 #include <QPoint>
 #include "DataModels/KeyFrame.h"
 #include "DataModels/AnimationModel.h"

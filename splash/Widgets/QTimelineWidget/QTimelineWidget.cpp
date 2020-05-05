@@ -77,17 +77,17 @@ QTimelineWidget::QTimelineWidget(AnimationModel* pAnimationModel, QWidget *paren
         sBrushes[i][j] = QBrush(QPixmap(sBrushesFileNames[i][j]));
      }
     }
-
+    this->setFont(QFont("Arial", 6));
     this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     this->setMinimumHeight(200);
     this->horizontalHeader()->setStretchLastSection(false);
-    this->horizontalHeader()->setDefaultSectionSize(10);
+    this->horizontalHeader()->setDefaultSectionSize(6);
 
     this->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     this->horizontalHeader()->setVisible(false);
 
     this->verticalHeader()->setStretchLastSection(false);
-    this->verticalHeader()->setDefaultSectionSize(20);
+    this->verticalHeader()->setDefaultSectionSize(24);
 
     this->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
 
