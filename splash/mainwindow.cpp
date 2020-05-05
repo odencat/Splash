@@ -256,6 +256,7 @@ void MainWindow::onPaletButtonClicked()
     }
     mpDialog = new ImagePaletDialog(this, mpAnimationModel);
     mpDialog->move(this->x(), this->y());
+    mpDialog->setWindowFlag(Qt::WindowStaysOnTopHint);
     mpDialog->show();
 }
 
