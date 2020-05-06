@@ -38,7 +38,7 @@ AnimationViewer::AnimationViewer(QWidget* parent, AnimationModel* animationModel
     m_ui->positionTypeComboBox->setModel(mpPositionTypeModel);
 
     mpAnimationPlayTimer = new QTimer(this);
-    mpAnimationPlayTimer->setInterval(16);
+    mpAnimationPlayTimer->setInterval(33);
 
     m_ui->gridCelDataBox->setEnabled(false);
 
