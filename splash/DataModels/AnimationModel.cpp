@@ -1492,7 +1492,15 @@ void AnimationModel::tellTimeLineToRefresh()
 
 void AnimationModel::moveTimeLine(int oldIndex, int newIndex)
 {
-//    mKeyFramesList[newIndex] = mKeyFramesList[oldIndex];
-//    mKeyFramesList[oldIndex].clear();
-//    emit refreshTimeLine();
+    if (oldIndex >= mTimeline.count() || newIndex >= mTimeline.count()) {
+        return;
+    }
+    if (newIndex > oldIndex) {
+        mTimeline.insert(newIndex+1, mTimeline[oldIndex]);
+        mTimeline.removeAt(oldIndex);
+    } else {
+        mTimeline.insert(newIndex, mTimeline[oldIndex]);
+        mTimeline.removeAt(oldIndex+1);
+    }
+    emit refreshTimeLine();
 }
