@@ -92,7 +92,7 @@ AnimationViewer::AnimationViewer(QWidget* parent, AnimationModel* animationModel
     connect(m_ui->centerYSpinBox, SIGNAL(valueChanged(int)), mpSelectedCelModel, SLOT(setCenterY(int)));
 
     // Special
-    connect(m_ui->swapTargetComboBox, SIGNAL(currentIndexChanged(int)), mpSelectedCelModel, SLOT(setSwapTargetType(int)));
+//    connect(m_ui->swapTargetComboBox, SIGNAL(currentIndexChanged(int)), mpSelectedCelModel, SLOT(setSwapTargetType(int)));
     connect(m_ui->hideActorCheckbox, SIGNAL(toggled(bool)), mpSelectedCelModel, SLOT(setHideActor(bool)));
 
     // Selected Model changed
@@ -112,7 +112,8 @@ AnimationViewer::AnimationViewer(QWidget* parent, AnimationModel* animationModel
     connect(mpSelectedCelModel, SIGNAL(centerXChanged(int)), m_ui->centerXSpinBox, SLOT(setValue(int)));
     connect(mpSelectedCelModel, SIGNAL(centerYChanged(int)), m_ui->centerYSpinBox, SLOT(setValue(int)));
 
-    connect(mpSelectedCelModel, SIGNAL(swapTargetTypeChanged(int)), m_ui->swapTargetComboBox, SLOT(setCurrentIndex(int)));
+// TODO add back if necessary
+//    connect(mpSelectedCelModel, SIGNAL(swapTargetTypeChanged(int)), m_ui->swapTargetComboBox, SLOT(setCurrentIndex(int)));
 
     // Refresh the screen if KeyFrameData changed
     connect(m_ui->prioritySpinBox, SIGNAL(valueChanged(double)), mpAnimationViewerPanel, SLOT(refresh()));
@@ -204,7 +205,7 @@ void AnimationViewer::blockSignals(bool block)
     m_ui->colorSpinBoxR->blockSignals(block);
     m_ui->colorSpinBoxG->blockSignals(block);
     m_ui->colorSpinBoxB->blockSignals(block);
-    m_ui->swapTargetComboBox->blockSignals(block);
+//    m_ui->swapTargetComboBox->blockSignals(block);
 
     m_ui->minEmitSpeedSpinBox->blockSignals(block);
     m_ui->maxEmitSpeedSpinBox->blockSignals(block);
@@ -271,8 +272,8 @@ void AnimationViewer::onCelSelected(KeyFrameData* pKeyFrameData)
             m_ui->centerYSpinBox->setValue((int)pKeyFrameData->mSpriteDescriptor.mCenter.mY);
 
             // special
-            m_ui->swapTargetComboBox->setEnabled(true);
-            m_ui->swapTargetComboBox->setCurrentIndex((int)pKeyFrameData->mSwapTargetType);
+//            m_ui->swapTargetComboBox->setEnabled(true);
+//            m_ui->swapTargetComboBox->setCurrentIndex((int)pKeyFrameData->mSwapTargetType);
 
             // Emitter
             m_ui->emitterCheckBox->setEnabled(false);
@@ -288,8 +289,8 @@ void AnimationViewer::onCelSelected(KeyFrameData* pKeyFrameData)
             m_ui->centerYSpinBox->setValue(0);
 
             // Special
-            m_ui->swapTargetComboBox->setEnabled(false);
-            m_ui->swapTargetComboBox->setCurrentIndex(0);
+//            m_ui->swapTargetComboBox->setEnabled(false);
+//            m_ui->swapTargetComboBox->setCurrentIndex(0);
 
             // Emitter
             m_ui->emitterCheckBox->setEnabled(true);
