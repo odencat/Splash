@@ -449,8 +449,10 @@ void AnimationViewerPanel::mousePressEvent(QMouseEvent *event)
     mTargetGrabbed  = false;
     mCelGrabbed = false;
 
+    grabTarget(relativePressedPosition);
+
     // only for edit mode
-    if (!mIsAnimationPlaying)
+    if (!mIsAnimationPlaying && !mTargetGrabbed)
     {
         // center point mode
         if (event->modifiers() & Qt::ControlModifier)
@@ -497,11 +499,6 @@ void AnimationViewerPanel::mousePressEvent(QMouseEvent *event)
             }
           }
         }
-    }
-
-    if (!mCelGrabbed)
-    {
-        grabTarget(relativePressedPosition);
     }
 }
 
