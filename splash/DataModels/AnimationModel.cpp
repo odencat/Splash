@@ -1478,7 +1478,7 @@ void AnimationModel::tellTimeLineToRefresh()
 
 void AnimationModel::moveTimeLine(int oldIndex, int newIndex)
 {
-    mKeyFramesList[newIndex] = mKeyFramesList[oldIndex];
-    mKeyFramesList[oldIndex].clear();
-    emit refreshTimeLine();
+//    mKeyFramesList[newIndex] = mKeyFramesList[oldIndex];
+//    mKeyFramesList[oldIndex].clear();
+//    emit refreshTimeLine();
 }

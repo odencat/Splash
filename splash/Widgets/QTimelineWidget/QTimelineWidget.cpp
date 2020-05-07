@@ -415,7 +415,7 @@ void QTimelineWidget::refreshTimeLine()
  static bool sectionMoved = false;
  void QTimelineWidget::onSectionMoved(int logicalIndex, int oldVisualIndex, int newVisualIndex)
  {
-    if (!changed) {
+    if (!sectionMoved) {
         sectionMoved = true;
         mpAnimationModel->moveTimeLine(oldVisualIndex, newVisualIndex);
         // revert the operation
