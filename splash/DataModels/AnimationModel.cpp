@@ -174,6 +174,10 @@ int AnimationModel::getLastEventFrameNo()
     return lastFrameNo;
 }
 
+int AnimationModel::getLineCount() const {
+    return LINE_COUNT;
+}
+
 int AnimationModel::getMaxFrameCount(int lineNo) const
 {
     int max = 0;

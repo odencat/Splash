@@ -27,9 +27,7 @@ public:
     enum
     {
         LINE_target = 8,
-        LINE_camera = 9,
-
-        LINE_COUNT = 10
+        LINE_camera = 9
     };
 
     struct EventList
@@ -52,6 +50,8 @@ public:
     void clearPixmapHash();
 
     int getLastEventFrameNo();
+
+    int getLineCount() const;
     int getMaxFrameCount(int lineNo) const;
     int getMaxFrameCount() const;
 
@@ -116,6 +116,11 @@ public:
     const QWidget* mpParent;
 
 private:
+    enum
+    {
+        LINE_COUNT = 10
+    };
+
     void readCommand(QString command);
     QString mAnimationName;
     QString mAnimationDirectory;
