@@ -88,6 +88,9 @@ QTimelineWidget::QTimelineWidget(AnimationModel* pAnimationModel, QWidget *paren
 
     this->verticalHeader()->setStretchLastSection(false);
     this->verticalHeader()->setDefaultSectionSize(24);
+    this->verticalHeader()->setSectionsMovable(true);
+
+    connect(this->verticalHeader(), SIGNAL(sectionMoved(int, int, int)), this, SLOT(onSectionMoved(int, int, int)));
 
     this->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
 
@@ -407,6 +410,19 @@ void QTimelineWidget::refreshTimeLine()
  void QTimelineWidget::onCellDoubleClicked(int row, int column)
  {
 
+ }
+
+ static bool sectionMoved = false;
+ void QTimelineWidget::onSectionMoved(int logicalIndex, int oldVisualIndex, int newVisualIndex)
+ {
+    if (!changed) {
+        sectionMoved = true;
+        mpAnimationModel->moveTimeLine(oldVisualIndex, newVisualIndex);
+        // revert the operation
+        this->verticalHeader()->moveSection(newVisualIndex, oldVisualIndex);
+    } else {
+        sectionMoved = false;
+    }
  }
 
  void QTimelineWidget::onCellPressed(int row, int column)

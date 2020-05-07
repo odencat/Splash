@@ -91,6 +91,7 @@ public:
     void selectCurrentKeyFramePosition(int lineNo, int frameNo);
 
     void tellTimeLineToRefresh();
+    void moveTimeLine(int oldIndex, int newIndex);
 
     // GLSprite related functions
     GLSprite* createGLSpriteAt(const GLSprite* parentGLSprite, int frameNo, int lineNo) const;

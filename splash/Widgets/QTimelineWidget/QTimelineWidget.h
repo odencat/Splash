@@ -56,6 +56,7 @@ private slots:
  void onCellDoubleClicked(int row, int column);
  void onCellPressed(int row, int column);
  void onCellEntered(int row, int column);
+ void onSectionMoved(int logicalIndex, int oldLogicalIndex, int newLogicalIndex);
  void contextMenu(const QPoint &pos);
  void copyFrame();
  void deleteFrame();

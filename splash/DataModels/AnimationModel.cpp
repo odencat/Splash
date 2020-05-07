@@ -945,12 +945,6 @@ void AnimationModel::selectCurrentKeyFramePosition(int lineNo, int frameNo)
     }
 }
 
-// HACK: using animation model as an agent..
-void AnimationModel::tellTimeLineToRefresh()
-{
-    emit refreshTimeLine();
-}
-
 bool AnimationModel::saveData()
 {
     // Get path with directory info
@@ -1472,4 +1466,19 @@ void AnimationModel::createEmptyAnimation(QString path)
 
         emit fileChanged();
     }
+}
+
+// --------- Timelines
+
+// HACK: using animation model as an agent..
+void AnimationModel::tellTimeLineToRefresh()
+{
+    emit refreshTimeLine();
+}
+
+void AnimationModel::moveTimeLine(int oldIndex, int newIndex)
+{
+    mKeyFramesList[newIndex] = mKeyFramesList[oldIndex];
+    mKeyFramesList[oldIndex].clear();
+    emit refreshTimeLine();
 }
