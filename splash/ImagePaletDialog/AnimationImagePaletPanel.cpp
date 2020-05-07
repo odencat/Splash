@@ -228,6 +228,13 @@ void AnimationImagePaletPanel::mouseMoveEvent(QMouseEvent *event)
                     pos.setY(pos.y() + (t >= 0 ? mSnapGridY : -mSnapGridY));
                 }
             }
+
+            if (pos.x() > this->width()) {
+                pos.setX(this->width());
+            }
+            if (pos.y() > this->height()) {
+                pos.setY(this->height());
+            }
             mSelectedRect.setBottomRight(pos - QPoint(1, 1));
             repaint();
         }
