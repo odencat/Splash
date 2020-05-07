@@ -129,7 +129,7 @@ private:
     GLSprite* tweenFrame(const GLSprite* parentGLSprite, int lineNo, int frameNo) const;
 
     // Key Frames
-    QList<KeyFrame*> mKeyFrames[LINE_COUNT];
+    QList<KeyFrame*> mTimeline[LINE_COUNT];
     QHash<int, EventList> mEvents;
 
     QString mSelectedSourcePath;

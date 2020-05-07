@@ -177,9 +177,9 @@ int AnimationModel::getLastEventFrameNo()
 int AnimationModel::getMaxFrameCount(int lineNo) const
 {
     int max = 0;
-    if (mKeyFrames[lineNo].count() > 0)
+    if (mTimeline[lineNo].count() > 0)
     {
-        max = mKeyFrames[lineNo].last()->mFrameNo + 1;
+        max = mTimeline[lineNo].last()->mFrameNo + 1;
     }
 
     return max;
@@ -230,11 +230,11 @@ void AnimationModel::setEventText(int frameNo, int index, QString text)
 KeyFrame* AnimationModel::getKeyFrame(int lineNo, int frameNo) const
 {
     if (lineNo >= LINE_COUNT || lineNo < 0 || frameNo < 0){return NULL;}
-    for (int i = 0; i < mKeyFrames[lineNo].count(); i++)
+    for (int i = 0; i < mTimeline[lineNo].count(); i++)
     {
-        if (mKeyFrames[lineNo][i]->mFrameNo == frameNo)
+        if (mTimeline[lineNo][i]->mFrameNo == frameNo)
         {
-            return mKeyFrames[lineNo][i];
+            return mTimeline[lineNo][i];
         }
     }
 
@@ -244,9 +244,9 @@ KeyFrame* AnimationModel::getKeyFrame(int lineNo, int frameNo) const
 int AnimationModel::getKeyFrameIndex(int lineNo, int frameNo) const
 {
     if (lineNo < 0 || frameNo < 0) {return -2;}
-    for (int i = 0; i < mKeyFrames[lineNo].count(); i++)
+    for (int i = 0; i < mTimeline[lineNo].count(); i++)
     {
-        if (mKeyFrames[lineNo][i]->mFrameNo == frameNo)
+        if (mTimeline[lineNo][i]->mFrameNo == frameNo)
         {
             return i;
         }
@@ -270,7 +270,7 @@ bool AnimationModel::isKeyData(KeyFrameData::TweenAttribute tweenAttribute, cons
 
 int AnimationModel::getPreviousKeyFrameIndex(int lineNo, int frameNo, KeyFrameData::TweenAttribute tweenAttribute) const
 {
-    const QList<KeyFrame*>& keyframeList = mKeyFrames[lineNo];
+    const QList<KeyFrame*>& keyframeList = mTimeline[lineNo];
     for (int i = keyframeList.count() - 1; i >= 0; i--)
     {
         const KeyFrame* pKeyframe = keyframeList[i];
@@ -288,7 +288,7 @@ int AnimationModel::getPreviousKeyFrameIndex(int lineNo, int frameNo, KeyFrameDa
 
 int AnimationModel::getNextKeyFrameIndex(int lineNo, int frameNo, KeyFrameData::TweenAttribute tweenAttribute) const
 {
-    const QList<KeyFrame*>& keyframeList = mKeyFrames[lineNo];
+    const QList<KeyFrame*>& keyframeList = mTimeline[lineNo];
     for (int i = 0; i < keyframeList.count(); i++)
     {
         const KeyFrame* pKeyframe = keyframeList[i];
@@ -309,12 +309,12 @@ int AnimationModel::getSubanimationStartKeyFrameIndex(int lineNo, int frameNo) c
 {
     int prevIndex = getPreviousKeyFrameIndex(lineNo, frameNo, KeyFrameData::TweenAttribute_any);
     if (prevIndex < 0){return -1;}
-    if (!mKeyFrames[lineNo][prevIndex]->mpKeyFrameData){return -1;}
-    QString sourthPath = mKeyFrames[lineNo][prevIndex]->mpKeyFrameData->mSpriteDescriptor.mSourcePath;
+    if (!mTimeline[lineNo][prevIndex]->mpKeyFrameData){return -1;}
+    QString sourthPath = mTimeline[lineNo][prevIndex]->mpKeyFrameData->mSpriteDescriptor.mSourcePath;
 
     for (int i = prevIndex - 1; i >= 0; i--)
     {
-        if(!mKeyFrames[lineNo][i]->mpKeyFrameData || sourthPath != mKeyFrames[lineNo][i]->mpKeyFrameData->mSpriteDescriptor.mSourcePath)
+        if(!mTimeline[lineNo][i]->mpKeyFrameData || sourthPath != mTimeline[lineNo][i]->mpKeyFrameData->mSpriteDescriptor.mSourcePath)
         {
             return i + 1;
         }
@@ -359,7 +359,7 @@ void AnimationModel::setKeyFrame(int lineNo, int frameNo, const GLSprite::Point2
         pKeyframeData->mSpriteDescriptor.mSourcePath = mSelectedSourcePath;
 
         KeyFrame* pKeyFrame = new KeyFrame(lineNo, frameNo, pKeyframeData);
-        mKeyFrames[lineNo].insert(index + 1, pKeyFrame);
+        mTimeline[lineNo].insert(index + 1, pKeyFrame);
 
         emit refreshTimeLine();
     }
@@ -373,7 +373,7 @@ void AnimationModel::setKeyFrame(int lineNo, int frameNo, KeyFrameData* pKeyfram
     {
         int index = getPreviousKeyFrameIndex(lineNo, frameNo, KeyFrameData::TweenAttribute_any);
         KeyFrame* pKeyFrame = new KeyFrame(lineNo, frameNo, pKeyframeData);
-        mKeyFrames[lineNo].insert(index + 1, pKeyFrame);
+        mTimeline[lineNo].insert(index + 1, pKeyFrame);
 
         emit refreshTimeLine();
     }
@@ -388,7 +388,7 @@ void AnimationModel::insertEmptyKeyFrame(int lineNo, int frameNo)
         int index = getPreviousKeyFrameIndex(lineNo, frameNo, KeyFrameData::TweenAttribute_any);
 
         KeyFrame* pKeyframe = new KeyFrame(lineNo, frameNo, NULL);
-        mKeyFrames[lineNo].insert(index + 1, pKeyframe);
+        mTimeline[lineNo].insert(index + 1, pKeyframe);
 
         emit refreshTimeLine();
     }
@@ -420,9 +420,9 @@ void AnimationModel::addFrameLength(int lineNo, int frameNo, int value)
         if (value >= 0)
         {
             int index = getPreviousKeyFrameIndex(lineNo, frameNo, KeyFrameData::TweenAttribute_any);
-            for (int i = index + 1; i < mKeyFrames[lineNo].count(); i++)
+            for (int i = index + 1; i < mTimeline[lineNo].count(); i++)
             {
-                mKeyFrames[lineNo][i]->mFrameNo += value;
+                mTimeline[lineNo][i]->mFrameNo += value;
             }
 
             emit refreshTimeLine();
@@ -458,7 +458,7 @@ void AnimationModel::reduceFrameLength(int lineNo, int frameNo)
         // If it cannot reduce frame length more, return it
         if (
                 endKeyFrameIndex > 0 &&
-                mKeyFrames[lineNo][endKeyFrameIndex]->mFrameNo - mKeyFrames[lineNo][endKeyFrameIndex - 1]->mFrameNo <= 1
+                mTimeline[lineNo][endKeyFrameIndex]->mFrameNo - mTimeline[lineNo][endKeyFrameIndex - 1]->mFrameNo <= 1
         )
         {
             return;
@@ -468,9 +468,9 @@ void AnimationModel::reduceFrameLength(int lineNo, int frameNo)
         if (endKeyFrameIndex >= 0)
         {
             // Move position of keyframes effected
-            for (int i = endKeyFrameIndex; i < mKeyFrames[lineNo].count(); i++)
+            for (int i = endKeyFrameIndex; i < mTimeline[lineNo].count(); i++)
             {
-                mKeyFrames[lineNo][i]->mFrameNo -= 1;
+                mTimeline[lineNo][i]->mFrameNo -= 1;
             }
 
             emit refreshTimeLine();
@@ -492,8 +492,8 @@ void AnimationModel::clearFrames(int lineNo, int startFrameNo, int endFrameNo)
             int keyframeIndex = getKeyFrameIndex(lineNo, i);
             if (keyframeIndex >= 0)
             {
-                delete mKeyFrames[lineNo][keyframeIndex];
-                mKeyFrames[lineNo].removeAt(keyframeIndex);
+                delete mTimeline[lineNo][keyframeIndex];
+                mTimeline[lineNo].removeAt(keyframeIndex);
             }
         }
     }
@@ -505,10 +505,10 @@ void AnimationModel::clearAllKeyFrames()
 {
     for (int lineNo = 0;  lineNo < LINE_COUNT; lineNo++)
     {
-        for (int frameNo = mKeyFrames[lineNo].count() - 1; frameNo >= 0; frameNo--)
+        for (int frameNo = mTimeline[lineNo].count() - 1; frameNo >= 0; frameNo--)
         {
-            delete mKeyFrames[lineNo][frameNo];
-            mKeyFrames[lineNo].removeAt(frameNo);
+            delete mTimeline[lineNo][frameNo];
+            mTimeline[lineNo].removeAt(frameNo);
         }
     }
     emit refreshTimeLine();
@@ -518,7 +518,7 @@ void AnimationModel::clearAllKeyFrames()
 
 const QList<KeyFrame*>& AnimationModel::getKeyFrameList(int lineNo) const
 {
-    return mKeyFrames[lineNo];
+    return mTimeline[lineNo];
 }
 
 
@@ -835,8 +835,8 @@ bool AnimationModel::copyTweenedAttribute(const GLSprite* pParentGLSprite, GLSpr
     if (startIndex >= 0 && endIndex > startIndex)
     {
         tweenFound = true;
-        KeyFrame* pStartKeyFrame = mKeyFrames[lineNo][startIndex];
-        KeyFrame* pEndKeyFrame = mKeyFrames[lineNo][endIndex];
+        KeyFrame* pStartKeyFrame = mTimeline[lineNo][startIndex];
+        KeyFrame* pEndKeyFrame = mTimeline[lineNo][endIndex];
 
         // Let's skip empty frames
         if (!pStartKeyFrame->mpKeyFrameData || !pStartKeyFrame->mpKeyFrameData){return false;}
@@ -881,7 +881,7 @@ bool AnimationModel::copyTweenedAttribute(const GLSprite* pParentGLSprite, GLSpr
 GLSprite* AnimationModel::tweenFrame(const GLSprite* parentGLSprite, int lineNo, int frameNo) const
 {
     // no keyframes in this line
-    if (mKeyFrames[lineNo].count() == 0) {return NULL;}
+    if (mTimeline[lineNo].count() == 0) {return NULL;}
 
     // exceeds max frame count
     if(frameNo >= getMaxFrameCount(lineNo)){return NULL;}
@@ -890,7 +890,7 @@ GLSprite* AnimationModel::tweenFrame(const GLSprite* parentGLSprite, int lineNo,
     int baseIndex = getPreviousKeyFrameIndex(lineNo, frameNo, KeyFrameData::TweenAttribute_any);
     if (baseIndex < 0){return NULL;} // no keyframe exists
 
-    KeyFrame* pBaseKeyFrame = mKeyFrames[lineNo][baseIndex];
+    KeyFrame* pBaseKeyFrame = mTimeline[lineNo][baseIndex];
     KeyFrameData* pBaseKeyFrameData = pBaseKeyFrame->mpKeyFrameData;
     if (!pBaseKeyFrameData) {return NULL;} // empty keyframe
 
@@ -919,7 +919,7 @@ GLSprite* AnimationModel::tweenFrame(const GLSprite* parentGLSprite, int lineNo,
     }
     else
     {
-        baseSpriteDescriptor.mFrameNo = frameNo - mKeyFrames[lineNo][subAnimationStartIndex]->mFrameNo;
+        baseSpriteDescriptor.mFrameNo = frameNo - mTimeline[lineNo][subAnimationStartIndex]->mFrameNo;
     }
 
     bool isTweenCel  = (pBaseKeyFrame->mFrameNo == frameNo);
@@ -979,14 +979,14 @@ bool AnimationModel::saveData()
     for (int i = 0; i < LINE_COUNT; i++)
     {
         //if no data exists in this line, ignore it.
-        if(mKeyFrames[i].count() == 0)
+        if(mTimeline[i].count() == 0)
         {
             continue;
         }
 
-        for (int j = 0; j < mKeyFrames[i].count(); j++)
+        for (int j = 0; j < mTimeline[i].count(); j++)
         {
-            const KeyFrame* keyframe = mKeyFrames[i][j];
+            const KeyFrame* keyframe = mTimeline[i][j];
 
             Json::Value keyframeData;
             keyframeData["frameNo"] = keyframe->mFrameNo;
@@ -1318,7 +1318,7 @@ void AnimationModel::loadLine(int lineNo, Json::Value& line)
         {
             pKeyFrame = new KeyFrame(lineNo, frameNo, NULL);
         }
-        mKeyFrames[lineNo].push_back(pKeyFrame);
+        mTimeline[lineNo].push_back(pKeyFrame);
     }
 }
 // Load animation file, return true if loading was succeeded
