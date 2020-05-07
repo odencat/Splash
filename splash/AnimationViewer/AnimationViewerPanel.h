@@ -69,7 +69,7 @@ private:
     bool mIsAnimationPlaying;
     bool mCelGrabbed;
     bool mTargetGrabbed;
-    QList<EmittedAnimation*> mEmittedAnimationList[AnimationModel::LINE_COUNT];
+    QList<EmittedAnimation*> mEmittedAnimationList;
     bool mShowAnimationUI;
     bool mShowTarget;
     bool mShowCamera;

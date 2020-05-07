@@ -364,7 +364,7 @@ void GLSprite::render(QPoint offset, QPainter& painter, const GLSprite* pTargetS
                             float speed = randFloat(mSpriteDescriptor.mMinEmitSpeed, mSpriteDescriptor.mMaxEmitSpeed);
                             int angle = randInt(mSpriteDescriptor.mMinEmitAngle, mSpriteDescriptor.mMaxEmitAngle);
 
-                            emittedAnimationList[mLineNo].push_back(new EmittedAnimation(pAnimationModel, this, speed, angle));
+                            emittedAnimationList->push_back(new EmittedAnimation(pAnimationModel, this, speed, angle));
                         }
                         else
                         {

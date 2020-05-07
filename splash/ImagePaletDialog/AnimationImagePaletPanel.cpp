@@ -36,15 +36,7 @@ AnimationImagePaletPanel::~AnimationImagePaletPanel()
 
 bool AnimationImagePaletPanel::isAnimationExist() const
 {
-    bool emittedAnimationExists = false;
-    for (int lineNo = 0; lineNo < AnimationModel::LINE_COUNT; lineNo++)
-    {
-        if (!mEmittedAnimationList[lineNo].empty())
-        {
-            emittedAnimationExists = true;
-        }
-    }
-    return (mAnimationFrameNo < mpPlayingAnimationModel->getMaxFrameCount()) || emittedAnimationExists;
+    return (mAnimationFrameNo < mpPlayingAnimationModel->getMaxFrameCount()) || !mEmittedAnimationList.empty();
 }
 
 void AnimationImagePaletPanel::setSnapGrid(int gridX, int gridY, bool snapGridCheck)
@@ -93,7 +85,7 @@ void AnimationImagePaletPanel::paintEvent(QPaintEvent *event)
                     painter.translate(centerPoint.x(), centerPoint.y());
                     if (glSprite)
                     {
-                        glSprite->render(QPoint(0, 0), painter, mpAnimationModel->getTargetSprite(), true, mEmittedAnimationList);
+                        glSprite->render(QPoint(0, 0), painter, mpAnimationModel->getTargetSprite(), true, &mEmittedAnimationList);
                     }
 
                     painter.translate(-centerPoint.x(), -centerPoint.y());
@@ -101,15 +93,12 @@ void AnimationImagePaletPanel::paintEvent(QPaintEvent *event)
                 }
 
                 // update emitted animationlist
-                for (int lineNo = 0; lineNo < AnimationModel::LINE_COUNT; lineNo++)
+                for (int i = mEmittedAnimationList.count() - 1; i >= 0; i--)
                 {
-                    for (int i = mEmittedAnimationList[lineNo].count() - 1; i >= 0; i--)
+                    mEmittedAnimationList[i]->update();
+                    if (mEmittedAnimationList[i]->isDone())
                     {
-                        mEmittedAnimationList[lineNo][i]->update();
-                        if (mEmittedAnimationList[lineNo][i]->isDone())
-                        {
-                            mEmittedAnimationList[lineNo].removeAt(i);
-                        }
+                        mEmittedAnimationList.removeAt(i);
                     }
                 }
             }
@@ -258,9 +247,8 @@ void AnimationImagePaletPanel::resetAnimation()
 {
     mRenderSpriteList.clear();
     mAnimationFrameNo = 0;
-    for (int lineNo = 0; lineNo < AnimationModel::LINE_COUNT; lineNo++)
-    {
-        while (!mEmittedAnimationList[lineNo].empty()) { delete mEmittedAnimationList[lineNo].takeFirst();}
+    while (!mEmittedAnimationList.empty()) {
+        delete mEmittedAnimationList.takeFirst();
     }
 }
 
@@ -288,12 +276,9 @@ void AnimationImagePaletPanel::onTick()
             mGlSpriteList = mpPlayingAnimationModel->createGLSpriteListAt(NULL, mAnimationFrameNo);
 
             mRenderSpriteList.append(mGlSpriteList);
-            for (int lineNo = 0; lineNo < AnimationModel::LINE_COUNT; lineNo++)
+            for (int i = mEmittedAnimationList.count() - 1; i >= 0; i--)
             {
-                for (int i = mEmittedAnimationList[lineNo].count() - 1; i >= 0; i--)
-                {
-                    mRenderSpriteList.push_back(mEmittedAnimationList[lineNo][i]->getSprite());
-                }
+                mRenderSpriteList.push_back(mEmittedAnimationList[i]->getSprite());
             }
             qSort(mRenderSpriteList.begin(), mRenderSpriteList.end(), GLSprite::priorityLessThan);
 

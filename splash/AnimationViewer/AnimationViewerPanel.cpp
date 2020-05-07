@@ -71,9 +71,9 @@ void AnimationViewerPanel::playAnimation()
 
 void AnimationViewerPanel::stopAnimation()
 {
-    for (int lineNo = 0; lineNo < AnimationModel::LINE_COUNT; lineNo++)
+    while (!mEmittedAnimationList.empty())
     {
-        while (!mEmittedAnimationList[lineNo].empty()) { delete mEmittedAnimationList[lineNo].takeFirst();}
+        delete mEmittedAnimationList.takeFirst();
     }
     mIsAnimationPlaying = false;
 }
@@ -94,15 +94,7 @@ void AnimationViewerPanel::gotoNextFrame()
 
 bool AnimationViewerPanel::isAnimationExist() const
 {
-    bool emittedAnimationExists = false;
-    for (int lineNo = 0; lineNo < AnimationModel::LINE_COUNT; lineNo++)
-    {
-        if (!mEmittedAnimationList[lineNo].empty())
-        {
-            emittedAnimationExists = true;
-        }
-    }
-    return (mpAnimationModel->getCurrentKeyFramePosition().mFrameNo < mpAnimationModel->getMaxFrameCount()) || emittedAnimationExists;
+    return (mpAnimationModel->getCurrentKeyFramePosition().mFrameNo < mpAnimationModel->getMaxFrameCount()) || !mEmittedAnimationList.empty();
 }
 
 void AnimationViewerPanel::resizeEvent(QResizeEvent *event)
@@ -191,12 +183,9 @@ void AnimationViewerPanel::refresh()
     mGlSpriteList = mpAnimationModel->createGLSpriteListAt(NULL, mpAnimationModel->getCurrentKeyFramePosition().mFrameNo);
 
     mRenderSpriteList.append(mGlSpriteList);
-    for (int lineNo = 0; lineNo < AnimationModel::LINE_COUNT; lineNo++)
+    for (int i = mEmittedAnimationList.count() - 1; i >= 0; i--)
     {
-        for (int i = mEmittedAnimationList[lineNo].count() - 1; i >= 0; i--)
-        {
-            mRenderSpriteList.push_back(mEmittedAnimationList[lineNo][i]->getSprite());
-        }
+        mRenderSpriteList.push_back(mEmittedAnimationList[i]->getSprite());
     }
     qSort(mRenderSpriteList.begin(), mRenderSpriteList.end(), GLSprite::priorityLessThan);
 
@@ -284,7 +273,7 @@ void AnimationViewerPanel::renderCelSprites(const QPoint& centerPoint, QPainter&
         painter.translate(centerPoint.x() + dx, centerPoint.y() + dy);
         if (glSprite)
         {
-            glSprite->render(QPoint(0, 0), painter,AnimationModel::getTargetSprite(), mIsAnimationPlaying, mEmittedAnimationList);
+            glSprite->render(QPoint(0, 0), painter,AnimationModel::getTargetSprite(), mIsAnimationPlaying, &mEmittedAnimationList);
         }
 
         painter.translate(-centerPoint.x() - dx, -centerPoint.y() - dy);
@@ -301,15 +290,12 @@ void AnimationViewerPanel::renderCelSprites(const QPoint& centerPoint, QPainter&
     if (mIsAnimationPlaying)
     {
         // update emitted animations
-        for (int lineNo = 0; lineNo < AnimationModel::LINE_COUNT; lineNo++)
+        for (int i = mEmittedAnimationList.count() - 1; i >= 0; i--)
         {
-            for (int i = mEmittedAnimationList[lineNo].count() - 1; i >= 0; i--)
+            mEmittedAnimationList[i]->update();
+            if (mEmittedAnimationList[i]->isDone())
             {
-                mEmittedAnimationList[lineNo][i]->update();
-                if (mEmittedAnimationList[lineNo][i]->isDone())
-                {
-                    mEmittedAnimationList[lineNo].removeAt(i);
-                }
+                mEmittedAnimationList.removeAt(i);
             }
         }
     }
@@ -369,7 +355,7 @@ void AnimationViewerPanel::renderCenterPointSprite(const GLSprite* pGlSprite, co
         QPoint centerPointCenterPoint = centerPoint + offset.toPoint();
 
         painter.translate(centerPointCenterPoint.x(), centerPointCenterPoint.y());
-        centerPointSprite->render(QPoint(0, 0), painter, AnimationModel::getTargetSprite(), false, mEmittedAnimationList);
+        centerPointSprite->render(QPoint(0, 0), painter, AnimationModel::getTargetSprite(), false, &mEmittedAnimationList);
         painter.translate(-centerPointCenterPoint.x(), -centerPointCenterPoint.y());
     }
 }
@@ -379,7 +365,7 @@ void AnimationViewerPanel::renderTargetSprite(const QPoint& centerPoint, QPainte
     painter.setOpacity(mpAnimationModel->getTargetSprite()->mSpriteDescriptor.mAlpha);
 
     painter.translate(centerPoint.x(), centerPoint.y());
-    mpAnimationModel->getTargetSprite()->render(QPoint(0, 0), painter, NULL, false, mEmittedAnimationList);
+    mpAnimationModel->getTargetSprite()->render(QPoint(0, 0), painter, NULL, false, &mEmittedAnimationList);
     painter.translate(-centerPoint.x(), -centerPoint.y());
 }
 
