@@ -118,7 +118,7 @@ public:
 private:
     enum
     {
-        LINE_COUNT = 10
+        MIN_LINE_COUNT = 10
     };
 
     void readCommand(QString command);
@@ -134,7 +134,7 @@ private:
     GLSprite* tweenFrame(const GLSprite* parentGLSprite, int lineNo, int frameNo) const;
 
     // Key Frames
-    QList<KeyFrame*> mTimeline[LINE_COUNT];
+    QList<QList<KeyFrame*>> mTimeline;
     QHash<int, EventList> mEvents;
 
     QString mSelectedSourcePath;

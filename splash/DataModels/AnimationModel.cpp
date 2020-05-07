@@ -125,6 +125,11 @@ void AnimationModel::setup()
 
         spCenterPointSprite = new GLSprite(NULL, NULL, -1, spriteDescriptor, false, spCenterPointPixmap);
     }
+
+    for (int i = 0; i < MIN_LINE_COUNT; i++) {
+        QList<KeyFrame*> q;
+        mTimeline.push_back(q);
+    }
 }
 
 AnimationModel::~AnimationModel()
@@ -175,7 +180,7 @@ int AnimationModel::getLastEventFrameNo()
 }
 
 int AnimationModel::getLineCount() const {
-    return LINE_COUNT;
+    return mTimeline.count();
 }
 
 int AnimationModel::getMaxFrameCount(int lineNo) const
@@ -192,7 +197,7 @@ int AnimationModel::getMaxFrameCount(int lineNo) const
 int AnimationModel::getMaxFrameCount() const
 {
     int max = 0;
-    for (int i = 0; i < LINE_COUNT; i++)
+    for (int i = 0; i < mTimeline.count(); i++)
     {
         int t = getMaxFrameCount(i);
         if (t > max)
@@ -233,7 +238,7 @@ void AnimationModel::setEventText(int frameNo, int index, QString text)
 
 KeyFrame* AnimationModel::getKeyFrame(int lineNo, int frameNo) const
 {
-    if (lineNo >= LINE_COUNT || lineNo < 0 || frameNo < 0){return NULL;}
+    if (lineNo >= mTimeline.count() || lineNo < 0 || frameNo < 0){return NULL;}
     for (int i = 0; i < mTimeline[lineNo].count(); i++)
     {
         if (mTimeline[lineNo][i]->mFrameNo == frameNo)
@@ -351,7 +356,7 @@ void AnimationModel::removeEvent(int frameNo, int index)
 // set new key frame
 void AnimationModel::setKeyFrame(int lineNo, int frameNo, const GLSprite::Point2& position)
 {
-    if (lineNo >= LINE_COUNT){return;}
+    if (lineNo >= mTimeline.count()){return;}
     // if a keframe already exists, don't add any keyframe
     if (getKeyFrameIndex(lineNo, frameNo) == -1)
     {
@@ -371,7 +376,7 @@ void AnimationModel::setKeyFrame(int lineNo, int frameNo, const GLSprite::Point2
 
 void AnimationModel::setKeyFrame(int lineNo, int frameNo, KeyFrameData* pKeyframeData)
 {
-    if (lineNo >= LINE_COUNT){return;}
+    if (lineNo >= mTimeline.count()){return;}
     // if a keframe already exists, don't add any keyframe
     if (getKeyFrameIndex(lineNo, frameNo) == -1)
     {
@@ -385,7 +390,7 @@ void AnimationModel::setKeyFrame(int lineNo, int frameNo, KeyFrameData* pKeyfram
 
 void AnimationModel::insertEmptyKeyFrame(int lineNo, int frameNo)
 {
-    if (lineNo >= LINE_COUNT){return;}
+    if (lineNo >= mTimeline.count()){return;}
     // if a keframe already exists, don't add any keyframe
     if (getKeyFrameIndex(lineNo, frameNo) == -1)
     {
@@ -400,8 +405,8 @@ void AnimationModel::insertEmptyKeyFrame(int lineNo, int frameNo)
 
 void AnimationModel::addFrameLength(int lineNo, int frameNo, int value)
 {
-    if (lineNo > LINE_COUNT) {return;}
-    if (lineNo == LINE_COUNT)
+    if (lineNo > mTimeline.count()) {return;}
+    if (lineNo == mTimeline.count())
     {
         // Event frames control
         int lastFrameNo = getLastEventFrameNo();
@@ -436,9 +441,9 @@ void AnimationModel::addFrameLength(int lineNo, int frameNo, int value)
 
 void AnimationModel::reduceFrameLength(int lineNo, int frameNo)
 {
-    if (lineNo > LINE_COUNT) {return;}
+    if (lineNo > mTimeline.count()) {return;}
 
-    if (lineNo == LINE_COUNT)
+    if (lineNo == mTimeline.count())
     {
         int lastFrameNo = getLastEventFrameNo();
         if (lastFrameNo > 0)
@@ -487,7 +492,7 @@ void AnimationModel::clearFrames(int lineNo, int startFrameNo, int endFrameNo)
     // Remove frames
     for (int i = endFrameNo; i >= startFrameNo; i--)
     {
-        if (lineNo == LINE_COUNT)
+        if (lineNo == mTimeline.count())
         {
             mEvents.remove(i);
         }
@@ -507,14 +512,19 @@ void AnimationModel::clearFrames(int lineNo, int startFrameNo, int endFrameNo)
 
 void AnimationModel::clearAllKeyFrames()
 {
-    for (int lineNo = 0;  lineNo < LINE_COUNT; lineNo++)
+    for (int i = 0;  i < mTimeline.count(); i++)
     {
-        for (int frameNo = mTimeline[lineNo].count() - 1; frameNo >= 0; frameNo--)
+        for (int j = 0;  j < mTimeline[i].count(); j++)
         {
-            delete mTimeline[lineNo][frameNo];
-            mTimeline[lineNo].removeAt(frameNo);
+            delete mTimeline[i][j];
         }
+        mTimeline[i].clear();
     }
+
+    for (int i = mTimeline.count(); i >= MIN_LINE_COUNT; i--) {
+        mTimeline.removeAt(i);
+    }
+
     emit refreshTimeLine();
 }
 
@@ -592,7 +602,7 @@ const QList<const GLSprite*> AnimationModel::createGLSpriteListAt(const GLSprite
 {
     QList<const GLSprite*> glSpriteList;
     const GLSprite* pGLSprite = parentGLSprite;
-    for (int lineNo = 0; lineNo < LINE_COUNT; lineNo++)
+    for (int lineNo = 0; lineNo < mTimeline.count(); lineNo++)
     {
         pGLSprite = createGLSpriteAt(parentGLSprite, frameNo, lineNo);
         if (pGLSprite)
@@ -980,7 +990,7 @@ bool AnimationModel::saveData()
 
     // save keyframes
     Json::Value keyframesData;
-    for (int i = 0; i < LINE_COUNT; i++)
+    for (int i = 0; i < mTimeline.count(); i++)
     {
         //if no data exists in this line, ignore it.
         if(mTimeline[i].count() == 0)
