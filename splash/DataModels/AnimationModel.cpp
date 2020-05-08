@@ -584,7 +584,50 @@ void AnimationModel::setSelectedSourcePath(QString path)
 // Tween Related Stuff
 GLSprite* AnimationModel::createGLSpriteAt(const GLSprite* parentGLSprite, int frameNo, int lineNo) const
 {
-    return tweenFrame(parentGLSprite, lineNo, frameNo);
+    // no keyframes in this line
+    if (mTimeline[lineNo].count() == 0) {return NULL;}
+
+    // exceeds max frame count
+    if(frameNo >= getMaxFrameCount(lineNo)){return NULL;}
+
+    // Set up base for keyframe.(inherit textureID etc from previous keyframe
+    int baseIndex = getPreviousKeyFrameIndex(lineNo, frameNo, KeyFrameData::TweenAttribute_any);
+    if (baseIndex < 0){return NULL;} // no keyframe exists
+
+    KeyFrame* pBaseKeyFrame = mTimeline[lineNo][baseIndex];
+    KeyFrameData* pBaseKeyFrameData = pBaseKeyFrame->mpKeyFrameData;
+    if (!pBaseKeyFrameData) {return NULL;} // empty keyframe
+
+    GLSprite::SpriteDescriptor baseSpriteDescriptor = pBaseKeyFrameData->mSpriteDescriptor;
+
+    setFinalAlpha(parentGLSprite, baseSpriteDescriptor);
+    setFinalPosition(parentGLSprite, baseSpriteDescriptor);
+
+    // Tween for each attribute
+    bool anyTweenFound = false;
+    for (int i = 0; i < KeyFrameData::TweenAttribute_COUNT; i++)
+    {
+        if (copyTweenedAttribute(parentGLSprite, baseSpriteDescriptor, lineNo, frameNo, (KeyFrameData::TweenAttribute)i))
+        {
+            anyTweenFound = true;
+        }
+    }
+
+    // start of subanimation
+    int subAnimationStartIndex = getSubanimationStartKeyFrameIndex(lineNo, frameNo);
+
+    // frame no for subanimation in the frame
+    if (subAnimationStartIndex < 0)
+    {
+        baseSpriteDescriptor.mFrameNo = 0;
+    }
+    else
+    {
+        baseSpriteDescriptor.mFrameNo = frameNo - mTimeline[lineNo][subAnimationStartIndex]->mFrameNo;
+    }
+
+    bool isTweenCel  = (pBaseKeyFrame->mFrameNo == frameNo);
+    return new GLSprite(parentGLSprite, this, lineNo, baseSpriteDescriptor, isTweenCel, lineNo, frameNo, false, 0, 0);
 }
 
 // currently parentGLSprite is used only for emitted animation
@@ -917,55 +960,6 @@ bool AnimationModel::copyTweenedAttribute(const GLSprite* pParentGLSprite, GLSpr
     }
 
     return tweenFound;
-}
-
-// Return true if it find a cel to tween, if not return false;
-GLSprite* AnimationModel::tweenFrame(const GLSprite* parentGLSprite, int lineNo, int frameNo) const
-{
-    // no keyframes in this line
-    if (mTimeline[lineNo].count() == 0) {return NULL;}
-
-    // exceeds max frame count
-    if(frameNo >= getMaxFrameCount(lineNo)){return NULL;}
-
-    // Set up base for keyframe.(inherit textureID etc from previous keyframe
-    int baseIndex = getPreviousKeyFrameIndex(lineNo, frameNo, KeyFrameData::TweenAttribute_any);
-    if (baseIndex < 0){return NULL;} // no keyframe exists
-
-    KeyFrame* pBaseKeyFrame = mTimeline[lineNo][baseIndex];
-    KeyFrameData* pBaseKeyFrameData = pBaseKeyFrame->mpKeyFrameData;
-    if (!pBaseKeyFrameData) {return NULL;} // empty keyframe
-
-    GLSprite::SpriteDescriptor baseSpriteDescriptor = pBaseKeyFrameData->mSpriteDescriptor;
-
-    setFinalAlpha(parentGLSprite, baseSpriteDescriptor);
-    setFinalPosition(parentGLSprite, baseSpriteDescriptor);
-
-    // Tween for each attribute
-    bool anyTweenFound = false;
-    for (int i = 0; i < KeyFrameData::TweenAttribute_COUNT; i++)
-    {
-        if (copyTweenedAttribute(parentGLSprite, baseSpriteDescriptor, lineNo, frameNo, (KeyFrameData::TweenAttribute)i))
-        {
-            anyTweenFound = true;
-        }
-    }
-
-    // start of subanimation
-    int subAnimationStartIndex = getSubanimationStartKeyFrameIndex(lineNo, frameNo);
-
-    // frame no for subanimation in the frame
-    if (subAnimationStartIndex < 0)
-    {
-        baseSpriteDescriptor.mFrameNo = 0;
-    }
-    else
-    {
-        baseSpriteDescriptor.mFrameNo = frameNo - mTimeline[lineNo][subAnimationStartIndex]->mFrameNo;
-    }
-
-    bool isTweenCel  = (pBaseKeyFrame->mFrameNo == frameNo);
-    return new GLSprite(parentGLSprite, this, lineNo, baseSpriteDescriptor, isTweenCel, lineNo, frameNo, false, 0, 0);
 }
 
 KeyFrame::KeyFramePosition AnimationModel::getCurrentKeyFramePosition()
