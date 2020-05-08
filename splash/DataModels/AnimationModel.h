@@ -95,7 +95,7 @@ public:
 
     // Save & Load
     bool saveData();
-    void loadLine(int lineNo, Json::Value& line);
+    QList<KeyFrame*> loadLine(int lineNo, Json::Value& line);
     bool loadData(QString path);
     QString getLoadedAnimationPath() const;
 

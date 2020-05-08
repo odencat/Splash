@@ -1181,8 +1181,9 @@ bool AnimationModel::saveData()
 }
 
 
-void AnimationModel::loadLine(int lineNo, Json::Value& line)
+QList<KeyFrame*> AnimationModel::loadLine(int lineNo, Json::Value& line)
 {
+    QList<KeyFrame*> keyframes;
     for (unsigned int j = 0; j < line.size(); j++)
     {
         Json::Value& keyframe = line[j];
@@ -1325,8 +1326,10 @@ void AnimationModel::loadLine(int lineNo, Json::Value& line)
         {
             pKeyFrame = new KeyFrame(lineNo, frameNo, NULL);
         }
-        mTimeline[lineNo].push_back(pKeyFrame);
+        keyframes.push_back(pKeyFrame);
     }
+
+    return keyframes;
 }
 // Load animation file, return true if loading was succeeded
 bool AnimationModel::loadData(QString path)
@@ -1375,7 +1378,7 @@ bool AnimationModel::loadData(QString path)
         const char* c_str = iter.memberName();
         int lineNo = atoi(c_str);
         Json::Value& line =  *iter;
-        loadLine(lineNo, line);
+        mTimeline[lineNo] = loadLine(lineNo, line);
     }
 
 
