@@ -301,7 +301,7 @@ int AnimationModel::getNextKeyFrameIndex(int lineNo, int frameNo, KeyFrameData::
     for (int i = 0; i < keyframeList.count(); i++)
     {
         const KeyFrame* pKeyframe = keyframeList[i];
-        if (pKeyframe->mFrameNo >= frameNo)
+        if (pKeyframe->mFrameNo > frameNo)
         {
             if (isKeyData(tweenAttribute, pKeyframe))
             {
@@ -463,6 +463,10 @@ void AnimationModel::reduceFrameLength(int lineNo, int frameNo)
     else
     {
         int endKeyFrameIndex = getNextKeyFrameIndex(lineNo, frameNo, KeyFrameData::TweenAttribute_any);
+
+        if (endKeyFrameIndex < 0) {
+            return;
+        }
 
         // If it cannot reduce frame length more, return it
         if (
