@@ -90,7 +90,8 @@ AnimationModel::AnimationModel(QWidget* parent)
       mAnimationName(QString("")),
       mAnimationDirectory(QString("")),
       mAnimationID(QString("")),
-      mOriginalAnimationID(QString(""))
+      mOriginalAnimationID(QString("")),
+      mAnimationType(AnimationType_Normal)
 {
     setup();
 }
@@ -100,7 +101,8 @@ AnimationModel::AnimationModel(QWidget* parent, QString animationDir, QString an
       mAnimationName(QString("")),
       mAnimationDirectory(QString(animationDir)),
       mAnimationID(QString(animationID)),
-      mOriginalAnimationID(QString(animationID))
+      mOriginalAnimationID(QString(animationID)),
+      mAnimationType(AnimationType_Normal)
 {
     setup();
 }
@@ -163,7 +165,7 @@ void AnimationModel::setTargetSpritePosition(float x, float y)
 void AnimationModel::setAnimationType(int type)
 {
     mAnimationType = (AnimationType)type;
-    emit animationTypeChanged(mAnimationType);
+    emit animationTypeChanged((int)mAnimationType);
 }
 
 void AnimationModel::setAnimationName(QString name)
@@ -1009,10 +1011,8 @@ bool AnimationModel::saveData()
     Json::Value root;
 
     // save animation name
-    if (mAnimationName.toStdString() != "")
-    {
-        root["name"] = mAnimationName.toStdString();
-    }
+    root["name"] = mAnimationName.toStdString();
+    root["type"] = (int)mAnimationType;
 
     // save keyframes
     Json::Value keyframesData;
@@ -1386,14 +1386,13 @@ bool AnimationModel::loadData(QString path)
 
     QFileInfo fileInfo = QFileInfo(path);
 
-    mAnimationType = AnimationType_Normal;
     mAnimationDirectory = fileInfo.absolutePath().replace(rootPath, "");
     mOriginalAnimationID = fileInfo.baseName();
     setAnimationID(mOriginalAnimationID);
 
     // load animation name
     setAnimationName(QString::fromStdString(root["name"].asString()).toUtf8());
-
+    setAnimationType(AnimationType(root["type"].asInt()));
     Json::Value& lines = root["keyframes"];
 
     for(Json::Value::iterator iter = lines.begin() ; lines.end() != iter ; iter++)

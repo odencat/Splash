@@ -35,7 +35,7 @@ AnimationViewerPanel::AnimationViewerPanel(QWidget* parent, AnimationModel* pAni
     connect(mpAnimationModel, SIGNAL(refreshTimeLine()), this, SLOT(refresh()));
     connect(mpAnimationModel, SIGNAL(selectedKeyFramePositionChanged(int, int)), this, SLOT(refresh()));
     connect(mpAnimationModel, SIGNAL(targetPositionMoved(int, int)), this, SLOT(refresh()));
-    connect(mpAnimationModel, SIGNAL(animationTypeChanged(AnimationType)), this, SLOT(refresh()));
+    connect(mpAnimationModel, SIGNAL(animationTypeChanged(int)), this, SLOT(refresh()));
 }
 
 AnimationViewerPanel::~AnimationViewerPanel()

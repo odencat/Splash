@@ -155,7 +155,7 @@ public slots:
 signals:
     void animationNameChanged(QString animationName);
     void animationIDChanged(QString animationName);
-    void animationTypeChanged(AnimationType type);
+    void animationTypeChanged(int index);
 
     void selectedPaletChanged(QString path);
     void animationDurationChanged(int length);

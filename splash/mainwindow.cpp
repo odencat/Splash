@@ -35,6 +35,7 @@ void MainWindow::setupConnections()
     connect(ui->lineEditAnimationID, SIGNAL(textChanged(QString)), mpAnimationModel, SLOT(setAnimationID(QString)));
 
     connect(mpAnimationModel, SIGNAL(animationNameChanged(QString)), ui->lineEditAnimationName, SLOT(setText(QString)));
+    connect(mpAnimationModel, SIGNAL(animationTypeChanged(int)), ui->animationTypeComboBox, SLOT(setCurrentIndex(int)));
     connect(mpAnimationModel, SIGNAL(animationIDChanged(QString)), ui->lineEditAnimationID, SLOT(setText(QString)));
 
     connect(ui->animationTreeView->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
