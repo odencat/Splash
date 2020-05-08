@@ -57,6 +57,18 @@ static bool sIsNesting = false;
 }
 ////
 
+QString AnimationModel::animationTypeSting[AnimationModel::AnimationType_COUNT] =
+{
+    "normal",
+    "background"
+};
+
+QSize AnimationModel::animationTypeSize[AnimationModel::AnimationType_COUNT] =
+{
+    QSize(0, 0),
+    QSize(288, 384)
+};
+
 static QPixmap* spTargetPixmap = NULL;
 GLSprite* spTargetSprite = NULL;
 static QPixmap* spCenterPointPixmap = NULL;
@@ -145,6 +157,13 @@ void AnimationModel::setTargetSpritePosition(float x, float y)
 
         emit targetPositionMoved((int)x, (int)y);
     }
+}
+
+
+void AnimationModel::setAnimationType(int type)
+{
+    mAnimationType = (AnimationType)type;
+    emit animationTypeChanged(mAnimationType);
 }
 
 void AnimationModel::setAnimationName(QString name)
@@ -532,7 +551,10 @@ void AnimationModel::clearAllKeyFrames()
     emit refreshTimeLine();
 }
 
-
+QSize AnimationModel::guideSize() const
+{
+    return animationTypeSize[mAnimationType];
+}
 
 const QList<KeyFrame*>& AnimationModel::getKeyFrameList(int lineNo) const
 {
@@ -1364,6 +1386,7 @@ bool AnimationModel::loadData(QString path)
 
     QFileInfo fileInfo = QFileInfo(path);
 
+    mAnimationType = AnimationType_Normal;
     mAnimationDirectory = fileInfo.absolutePath().replace(rootPath, "");
     mOriginalAnimationID = fileInfo.baseName();
     setAnimationID(mOriginalAnimationID);

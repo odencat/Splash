@@ -27,9 +27,7 @@ AnimationViewerPanel::AnimationViewerPanel(QWidget* parent, AnimationModel* pAni
           mTargetGrabbed(false),
           mShowAnimationUI(true),
           mShowTarget(true),
-          mShowCamera(true),
-          mGuideWidth(0),
-          mGuideHeight(0)
+          mShowCamera(true)
 {
     setAutoFillBackground(false);
 
@@ -37,6 +35,7 @@ AnimationViewerPanel::AnimationViewerPanel(QWidget* parent, AnimationModel* pAni
     connect(mpAnimationModel, SIGNAL(refreshTimeLine()), this, SLOT(refresh()));
     connect(mpAnimationModel, SIGNAL(selectedKeyFramePositionChanged(int, int)), this, SLOT(refresh()));
     connect(mpAnimationModel, SIGNAL(targetPositionMoved(int, int)), this, SLOT(refresh()));
+    connect(mpAnimationModel, SIGNAL(animationTypeChanged(AnimationType)), this, SLOT(refresh()));
 }
 
 AnimationViewerPanel::~AnimationViewerPanel()
@@ -105,9 +104,10 @@ void AnimationViewerPanel::resizeEvent(QResizeEvent *event)
 
 QPoint AnimationViewerPanel::getCenterPoint() const
 {
+    QSize guideSize = mpAnimationModel->guideSize();
     return QPoint(
-        (width()) / 2 - mGuideWidth / 2,
-        (height()) / 2 + mGuideHeight / 2
+        (width()) / 2 - guideSize.width() / 2,
+        (height()) / 2 + guideSize.height() / 2
     );
 }
 
@@ -211,12 +211,13 @@ void AnimationViewerPanel::paintEvent(QPaintEvent *event)
 
 void AnimationViewerPanel::renderMask(QPainter& painter) const
 {
-    if (mGuideWidth == 0 || mGuideHeight == 0) {
+    QSize guideSize = mpAnimationModel->guideSize();
+    if (guideSize.width() == 0 || guideSize.height() == 0) {
         return;
     }
     // Background Guide
-    int x1 = (this->width() - mGuideWidth) / 2;
-    int y1 = (this->height() - mGuideHeight) / 2;
+    int x1 = (this->width() - guideSize.width()) / 2;
+    int y1 = (this->height() - guideSize.height()) / 2;
     int x2 = this->width() - x1;
     int y2 = this->height() - y1;
     int w = x1;

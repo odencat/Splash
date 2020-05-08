@@ -75,8 +75,6 @@ private:
     bool mShowAnimationUI;
     bool mShowTarget;
     bool mShowCamera;
-    int mGuideWidth;
-    int mGuideHeight;
 };
 
 #endif // AnimationViewerPanel_H

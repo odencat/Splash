@@ -17,6 +17,13 @@ class AnimationModel : public QObject
 Q_OBJECT
 
 public:
+    enum AnimationType
+    {
+        AnimationType_Normal,
+        AnimationType_Background,
+
+        AnimationType_COUNT
+    };
 
     enum
     {
@@ -28,6 +35,9 @@ public:
     {
         QList<QString> mList;
     };
+
+    static QString animationTypeSting[AnimationType::AnimationType_COUNT];
+    static QSize animationTypeSize[AnimationType::AnimationType_COUNT];
 
     static GLSprite* getTargetSprite();
     static GLSprite* getCenterPointSprite();
@@ -53,7 +63,7 @@ public:
     void setEventList(int frameNo, EventList eventList);
 
     void setEventText(int frameNo, int index, QString text);
-
+    QSize guideSize() const;
     KeyFrame* getKeyFrame(int lineNo, int frameNo) const;
 
     int getKeyFrameIndex(int lineNo, int frameNo) const;
@@ -135,15 +145,17 @@ private:
 
     KeyFrame::KeyFramePosition mSelectedKeyFramePosition;
     KeyFrameData* mpTargetCel;
-
+    AnimationType mAnimationType;
 
 public slots:
     void setAnimationName(QString name);
     void setAnimationID(QString id);
+    void setAnimationType(int index);
 
 signals:
     void animationNameChanged(QString animationName);
     void animationIDChanged(QString animationName);
+    void animationTypeChanged(AnimationType type);
 
     void selectedPaletChanged(QString path);
     void animationDurationChanged(int length);

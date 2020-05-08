@@ -216,13 +216,6 @@
                  </property>
                 </widget>
                </item>
-               <item row="1" column="1">
-                <widget class="QLabel" name="AnimationName">
-                 <property name="text">
-                  <string>Name</string>
-                 </property>
-                </widget>
-               </item>
                <item row="1" column="2">
                 <widget class="QLineEdit" name="lineEditAnimationName">
                  <property name="sizePolicy">
@@ -234,12 +227,19 @@
                 </widget>
                </item>
                <item row="2" column="2">
-                <widget class="QComboBox" name="comboBox"/>
+                <widget class="QComboBox" name="animationTypeComboBox"/>
                </item>
                <item row="2" column="1">
                 <widget class="QLabel" name="label">
                  <property name="text">
-                  <string>TargetType</string>
+                  <string>Type</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLabel" name="AnimationName">
+                 <property name="text">
+                  <string>Name</string>
                  </property>
                 </widget>
                </item>

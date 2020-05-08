@@ -46,6 +46,8 @@ void MainWindow::setupConnections()
 
     connect(mpAnimationModel, SIGNAL(selectedKeyFramePositionChanged(int, int)), this, SLOT(refreshEventList()));
     connect(mpAnimationModel, SIGNAL(refreshTimeLine()), this, SLOT(refreshEventList()));
+
+    connect(ui->animationTypeComboBox, SIGNAL(currentIndexChanged(int)), mpAnimationModel, SLOT(setAnimationType(int)));
 }
 
 void MainWindow::setupModels()
@@ -69,6 +71,13 @@ void MainWindow::setupUIModels()
 void MainWindow::setupUI()
 {
     ui->setupUi(this);
+
+    QStandardItemModel* animationTypeModel = new QStandardItemModel();
+    // Set Tween types
+    for (int i = 0; i < AnimationModel::AnimationType_COUNT; i++) {
+      animationTypeModel->appendRow(new QStandardItem(AnimationModel::animationTypeSting[i]));
+    }
+    ui->animationTypeComboBox->setModel(animationTypeModel);
 
     mpAnimationViewer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     ui->animationViewer->addWidget(mpAnimationViewer);
