@@ -581,8 +581,6 @@ void AnimationViewerPanel::setCenterPoint(QMouseEvent *event)
 
 void AnimationViewerPanel::mouseMoveEvent(QMouseEvent *event)
 {
-
-    printf("%f", event->x());
     QPoint centerPoint = getCenterPoint();
     int newPosX = (event->x() - centerPoint.x()) / ZOOM + mSelectedOffset.x();
     int newPosY = (event->y() - centerPoint.y()) / ZOOM + mSelectedOffset.y();
