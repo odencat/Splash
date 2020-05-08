@@ -255,13 +255,9 @@ void AnimationViewer::onCelSelected(KeyFrameData* pKeyFrameData)
         bool positionTypeOptionEnabled = m_ui->positionTypeComboBox->currentIndex() != 0;
         m_ui->positionTypeOptionComboBox->setEnabled(positionTypeOptionEnabled);
 
-        bool specialCelSelected = (mpAnimationModel->getCurrentKeyFramePosition().mLineNo == AnimationModel::LINE_target || mpAnimationModel->getCurrentKeyFramePosition().mLineNo == AnimationModel::LINE_camera);
-
-        m_ui->facingOptionCombobox->setEnabled(!specialCelSelected);
-        m_ui->positionTypeOptionComboBox->setEnabled(!specialCelSelected);
-
-        specialCelSelected = (mpAnimationModel->getCurrentKeyFramePosition().mLineNo == AnimationModel::LINE_target);
-        m_ui->positionTypeComboBox->setEnabled(!specialCelSelected);
+        m_ui->facingOptionCombobox->setEnabled(true);
+        m_ui->positionTypeOptionComboBox->setEnabled(true);
+        m_ui->positionTypeComboBox->setEnabled(true);
 
         if (pKeyFrameData->mSpriteDescriptor.isImage())
         {

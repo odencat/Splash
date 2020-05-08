@@ -24,12 +24,6 @@ public:
         TARGET_originY = 0
     };
 
-    enum
-    {
-        LINE_target = 8,
-        LINE_camera = 9
-    };
-
     struct EventList
     {
         QList<QString> mList;

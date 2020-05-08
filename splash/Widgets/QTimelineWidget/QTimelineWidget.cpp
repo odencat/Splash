@@ -378,8 +378,6 @@ void QTimelineWidget::refreshTimeLine()
          this->item(row, column)->setBackground(sBrushes[selection][cellType]);
      }
 
-     this->setVerticalHeaderItem(AnimationModel::LINE_target, new QTableWidgetItem(QString("T")));
-     this->setVerticalHeaderItem(AnimationModel::LINE_camera, new QTableWidgetItem(QString("C")));
      this->setVerticalHeaderItem(mpAnimationModel->getLineCount(), new QTableWidgetItem(QString("E")));
  }
 

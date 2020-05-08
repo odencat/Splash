@@ -163,23 +163,6 @@ void AnimationViewerPanel::refresh()
         }
     }
 
-     // Update target info
-    GLSprite* pTargetMonsterSprite = mpAnimationModel->createGLSpriteAt(NULL, mpAnimationModel->getCurrentKeyFramePosition().mFrameNo, AnimationModel::LINE_target);
-    if (pTargetMonsterSprite)
-    {
-        if (pTargetMonsterSprite->mLineNo == AnimationModel::LINE_target)
-        {
-            GLSprite::Point2 pt = spTargetSprite->mSpriteDescriptor.mPosition;
-            pt.mX = pTargetMonsterSprite->mSpriteDescriptor.mPosition.mX + AnimationModel::TARGET_originX;
-            pt.mY = pTargetMonsterSprite->mSpriteDescriptor.mPosition.mY + AnimationModel::TARGET_originY;
-            spTargetSprite->mSpriteDescriptor.mPosition = pt;
-            //spTargetSprite->mSpriteDescriptor.mTextureSrcRect = pTargetMonsterSprite->mSpriteDescriptor.mTextureSrcRect;
-            spTargetSprite->mSpriteDescriptor.mCenter.mX = 0;
-            spTargetSprite->mSpriteDescriptor.mCenter.mY = 0;
-        }
-        delete pTargetMonsterSprite;
-    }
-
     mGlSpriteList = mpAnimationModel->createGLSpriteListAt(NULL, mpAnimationModel->getCurrentKeyFramePosition().mFrameNo);
 
     mRenderSpriteList.append(mGlSpriteList);
@@ -241,34 +224,10 @@ void AnimationViewerPanel::renderCelSprites(const QPoint& centerPoint, QPainter&
     {
         GLSprite* glSprite = (GLSprite*)*iter;
 
-        if (glSprite->mLineNo == AnimationModel::LINE_target)
-        {
-            if (!mShowTarget)
-            {
-                iter++;
-                continue;
-            }
-            GLSprite::Point2 position;
-            position.mX = glSprite->mSpriteDescriptor.mPosition.mX + AnimationModel::TARGET_originX;
-            position.mY = glSprite->mSpriteDescriptor.mPosition.mY + AnimationModel::TARGET_originY;
-            glSprite->mSpriteDescriptor.mPosition = position;
-         }
-
-        if (!mShowCamera && glSprite->mLineNo == AnimationModel::LINE_camera)
-        {
-           iter++;
-           continue;
-        }
-
         // render sprite
         // Move rendering position depends on targeting position option
         int dx = 0;
         int dy = 0;
-//        i/*f (glSprite->mLineNo == AnimationModel::LINE_target)
-//        {
-//            dx = glSprite->mSpriteDescriptor.mTextureSrcRect.width() / 2;
-//            dy = glSprite->mSpriteDescriptor.mTextureSrcRect.height() / 2;
-//        }*/
 
         painter.translate(centerPoint.x() + dx, centerPoint.y() + dy);
         if (glSprite)
@@ -602,11 +561,6 @@ void AnimationViewerPanel::mouseMoveEvent(QMouseEvent *event)
                 newPosY -= (int)mpAnimationModel->getTargetSprite()->mSpriteDescriptor.mPosition.mY;
             }
 
-            if(keyframePosition.mLineNo == AnimationModel::LINE_target)
-            {
-                newPosX -= AnimationModel::TARGET_originX;
-                newPosY -= AnimationModel::TARGET_originY;
-            }
             mpSelectedCelModel->setPositionX(newPosX);
             mpSelectedCelModel->setPositionY(newPosY);
         }

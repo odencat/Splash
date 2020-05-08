@@ -1131,18 +1131,7 @@ bool AnimationModel::saveData()
                 keyframeData["isEmpty"] = true;
             }
 
-            if (i == LINE_target)
-            {
-                root["target_timeline"][j] = keyframeData;
-            }
-            else if (i == LINE_camera)
-            {
-                root["camera_timeline"][j] = keyframeData;
-            }
-            else
-            {
-                keyframesData[QString::number(i).toStdString()][j] = keyframeData;
-            }
+            keyframesData[QString::number(i).toStdString()][j] = keyframeData;
         }
     }
 
@@ -1380,9 +1369,6 @@ bool AnimationModel::loadData(QString path)
     setAnimationName(QString::fromStdString(root["name"].asString()).toUtf8());
 
     Json::Value& lines = root["keyframes"];
-
-    loadLine(LINE_target, root["target_timeline"]);
-    loadLine(LINE_camera, root["camera_timeline"]);
 
     for(Json::Value::iterator iter = lines.begin() ; lines.end() != iter ; iter++)
     {
