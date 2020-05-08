@@ -437,6 +437,52 @@ void AnimationViewerPanel::grabCel(QPoint& relativePressedPosition)
     }
 }
 
+void AnimationViewerPanel::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    // only for edit mode
+    if (mIsAnimationPlaying)
+    {
+        return;
+    }
+
+    this->setFocus();
+
+    // Get center point here
+    QPoint centerPoint = getCenterPoint();
+    // Calculate pressed position relative from center
+    QPoint relativePressedPosition = (QPoint(event->x(), event->y()) - centerPoint)  / ZOOM;
+
+    if (mpAnimationModel->getLoadedAnimationPath() == mpAnimationModel->getSelectedSourcePath())
+    {
+      QMessageBox::information(window(), tr("Animation nest error"),
+             tr("You cannot nest the same animation"));
+    }
+    else
+    {
+        KeyFrame::KeyFramePosition currentPosition = mpAnimationModel->getCurrentKeyFramePosition();
+        switch(ResourceManager::getFileType(mpAnimationModel->getSelectedSourcePath()))
+        {
+            case ResourceManager::FileType_Animation:
+            case ResourceManager::FileType_Image:
+                for (int i = 0; i < mpAnimationModel->getLineCount(); i++) {
+                    if (mpAnimationModel->getKeyFrameIndex(i, currentPosition.mFrameNo) == -1)
+                    {
+                        GLSprite::Point2 pt;
+                        pt.mX = relativePressedPosition.x();
+                        pt.mY = relativePressedPosition.y();
+
+                        mpAnimationModel->setKeyFrame(i, currentPosition.mFrameNo, pt);
+                        break;
+                    }
+                }
+            break;
+
+            default:
+            break;
+        }
+    }
+}
+
 void AnimationViewerPanel::mousePressEvent(QMouseEvent *event)
 {
     this->setFocus();
@@ -452,52 +498,47 @@ void AnimationViewerPanel::mousePressEvent(QMouseEvent *event)
     grabTarget(relativePressedPosition);
 
     // only for edit mode
-    if (!mIsAnimationPlaying && !mTargetGrabbed)
+    if (mIsAnimationPlaying || mTargetGrabbed)
     {
-        // center point mode
-        if (event->modifiers() & Qt::ControlModifier)
+        return;
+    }
+
+    // center point mode
+    if (event->modifiers() & Qt::ControlModifier)
+    {
+        setCenterPoint(event);
+        return;
+    }
+
+    grabCel(relativePressedPosition);
+
+    if(mCelGrabbed)
+    {
+        return;
+    }
+    if (mpAnimationModel->getLoadedAnimationPath() == mpAnimationModel->getSelectedSourcePath())
+    {
+        QMessageBox::information(window(), tr("Animation nest error"),
+            tr("You cannot nest the same animation"));
+    }
+    else
+    {
+        KeyFrame::KeyFramePosition currentPosition = mpAnimationModel->getCurrentKeyFramePosition();
+        switch(ResourceManager::getFileType(mpAnimationModel->getSelectedSourcePath()))
         {
-            setCenterPoint(event);
-            return;
-        }
-
-        grabCel(relativePressedPosition);
-
-        if(!mCelGrabbed)
-        {
-          if (mpAnimationModel->getLoadedAnimationPath() == mpAnimationModel->getSelectedSourcePath())
-          {
-              QMessageBox::information(window(), tr("Animation nest error"),
-                     tr("You cannot nest the same animation"));
-          }
-          else
-          {
-            KeyFrame::KeyFramePosition currentPosition = mpAnimationModel->getCurrentKeyFramePosition();
-            switch(ResourceManager::getFileType(mpAnimationModel->getSelectedSourcePath()))
-            {
-                case ResourceManager::FileType_Animation:
-                case ResourceManager::FileType_Image:
-                    if (mpAnimationModel->getKeyFrameIndex(currentPosition.mLineNo, currentPosition.mFrameNo) == -1)
+            case ResourceManager::FileType_Animation:
+            case ResourceManager::FileType_Image:
+                if (mpAnimationModel->getKeyFrameIndex(currentPosition.mLineNo, currentPosition.mFrameNo) > -1)
+                {
+                    if (event->modifiers() & Qt::ShiftModifier)
                     {
-                        GLSprite::Point2 pt;
-                        pt.mX = relativePressedPosition.x();
-                        pt.mY = relativePressedPosition.y();
-
-                        mpAnimationModel->setKeyFrame(currentPosition.mLineNo, currentPosition.mFrameNo, pt);
+                        swapSourceTexture();
                     }
-                    else
-                    {
-                        if (event->modifiers() & Qt::ShiftModifier)
-                        {
-                            swapSourceTexture();
-                        }
-                    }
-                break;
+                }
+            break;
 
-                default:
-                break;
-            }
-          }
+            default:
+            break;
         }
     }
 }
