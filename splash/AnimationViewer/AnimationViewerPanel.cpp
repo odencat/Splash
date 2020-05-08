@@ -27,7 +27,9 @@ AnimationViewerPanel::AnimationViewerPanel(QWidget* parent, AnimationModel* pAni
           mTargetGrabbed(false),
           mShowAnimationUI(true),
           mShowTarget(true),
-          mShowCamera(true)
+          mShowCamera(true),
+          mGuideWidth(0),
+          mGuideHeight(0)
 {
     setAutoFillBackground(false);
 
@@ -104,8 +106,8 @@ void AnimationViewerPanel::resizeEvent(QResizeEvent *event)
 QPoint AnimationViewerPanel::getCenterPoint() const
 {
     return QPoint(
-        (width()) / 2,
-        (height()) / 2
+        (width()) / 2 - mGuideWidth / 2,
+        (height()) / 2 + mGuideHeight / 2
     );
 }
 
@@ -139,11 +141,14 @@ void AnimationViewerPanel::refresh()
         float targetY = mpAnimationModel->getTargetSprite()->mSpriteDescriptor.mPosition.mY;
 
         QPoint centerPoint = getCenterPoint();
-
-        if (targetX < -centerPoint.x()){targetX = -centerPoint.x();}
-        if (targetX > centerPoint.x()){targetX = centerPoint.x();}
-        if (targetY < -centerPoint.y()){targetY = -centerPoint.y();}
-        if (targetY > centerPoint.y()){targetY = centerPoint.y();}
+        int x1 = -centerPoint.x();
+        int y1 = -centerPoint.y();
+        int x2 = width() - centerPoint.x();
+        int y2 = height() - centerPoint.y();
+        if (targetX < x1){targetX = x1;}
+        if (targetX > x2){targetX = x2;}
+        if (targetY < y1){targetY = y1;}
+        if (targetY > y2){targetY = y2;}
 
         mpAnimationModel->setTargetSpritePosition(targetX, targetY);
 
@@ -194,20 +199,52 @@ void AnimationViewerPanel::paintEvent(QPaintEvent *event)
     painter.scale(ZOOM, ZOOM);
     painter.translate(-width() / 2, -height() / 2);
 
-
-    if (mShowAnimationUI) { renderCross(painter); }
     renderCelSprites(centerPoint, painter);
-    if (mShowAnimationUI) { renderTargetSprite(centerPoint, painter);}
+    if (mShowAnimationUI) {
+        renderMask(painter);
+        renderCross(painter);
+        renderTargetSprite(centerPoint, painter);
+    }
 
     painter.end();
 }
 
-
-void AnimationViewerPanel::renderCross(QPainter& painter)
+void AnimationViewerPanel::renderMask(QPainter& painter) const
 {
+    if (mGuideWidth == 0 || mGuideHeight == 0) {
+        return;
+    }
+    // Background Guide
+    int x1 = (this->width() - mGuideWidth) / 2;
+    int y1 = (this->height() - mGuideHeight) / 2;
+    int x2 = this->width() - x1;
+    int y2 = this->height() - y1;
+    int w = x1;
+    int h = y1;
+
+    painter.setPen(QColor(220, 150, 200, 100));
+    painter.drawLine(QLine(x1, y1, x1, y2));
+    painter.drawLine(QLine(x1, y2, x2, y2));
+    painter.drawLine(QLine(x2, y2, x2, y1));
+    painter.drawLine(QLine(x2, y1, x1, y1));
+    if (mIsAnimationPlaying) {
+        painter.fillRect(QRect(0, 0, w, this->height()), QColor(0,0,0,255));
+        painter.fillRect(QRect(this->width() - w, 0, w, this->height()), QColor(0,0,0,255));
+        painter.fillRect(QRect(0, 0, this->width(), h), QColor(0,0,0,255));
+        painter.fillRect(QRect(0, this->height() - h, this->width(), h), QColor(0,0,0,255));
+    }
+}
+
+void AnimationViewerPanel::renderCross(QPainter& painter) const
+{
+    QPoint centerPoint = getCenterPoint();
+    // Background Guide
+    int x1 = centerPoint.x();
+    int y1 = centerPoint.y();
+
     painter.setPen(QColor(120, 150, 200));
-    painter.drawLine(QPoint(0, height() / 2), QPoint(width(), height() / 2));
-    painter.drawLine(QPoint(width() / 2, 0), QPoint(width() / 2, height()));
+    painter.drawLine(QPoint(0, y1), QPoint(width(), y1));
+    painter.drawLine(QPoint(x1, 0), QPoint(x1, height()));
 }
 
 void AnimationViewerPanel::renderCelSprites(const QPoint& centerPoint, QPainter& painter)

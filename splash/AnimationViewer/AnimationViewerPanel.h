@@ -50,7 +50,8 @@ private slots:
 private:
     QPoint getCenterPoint() const;
     void setCenterPoint(QMouseEvent *event);
-    void renderCross(QPainter& painter);
+    void renderMask(QPainter& painter) const;
+    void renderCross(QPainter& painter) const;
     void renderCelSprites(const QPoint& centerPoint, QPainter& painter);
     void renderCelBox(QPainter& painter, const GLSprite* glSprite, QPoint spriteRenderPoint);
     void renderCenterPointSprite(const GLSprite* pGlSprite, const QPoint& centerPoint, QPainter& painter);
@@ -74,6 +75,8 @@ private:
     bool mShowAnimationUI;
     bool mShowTarget;
     bool mShowCamera;
+    int mGuideWidth;
+    int mGuideHeight;
 };
 
 #endif // AnimationViewerPanel_H
