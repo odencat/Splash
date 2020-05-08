@@ -117,7 +117,7 @@ void AnimationViewerPanel::keyPressEvent (QKeyEvent* e)
         switch(e->key())
         {
             // Delete selected cel
-            case Qt::Key_Delete:
+            case Qt::Key_D:
                 mpAnimationModel->clearFrames(currentPosition.mLineNo, currentPosition.mFrameNo, currentPosition.mFrameNo);
             break;
         }
