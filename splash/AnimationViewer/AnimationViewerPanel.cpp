@@ -480,15 +480,23 @@ void AnimationViewerPanel::mouseDoubleClickEvent(QMouseEvent *event)
         {
             case ResourceManager::FileType_Animation:
             case ResourceManager::FileType_Image:
-                for (int i = 0; i < mpAnimationModel->getLineCount(); i++) {
-                    if (mpAnimationModel->getKeyFrameIndex(i, currentPosition.mFrameNo) == -1)
-                    {
-                        GLSprite::Point2 pt;
-                        pt.mX = relativePressedPosition.x();
-                        pt.mY = relativePressedPosition.y();
+                if (mpAnimationModel->getKeyFrameIndex(currentPosition.mLineNo, currentPosition.mFrameNo) == -1) {
+                    GLSprite::Point2 pt;
+                    pt.mX = relativePressedPosition.x();
+                    pt.mY = relativePressedPosition.y();
 
-                        mpAnimationModel->setKeyFrame(i, currentPosition.mFrameNo, pt);
-                        break;
+                    mpAnimationModel->setKeyFrame(currentPosition.mLineNo, currentPosition.mFrameNo, pt);
+                } else {
+                    for (int i = 0; i < mpAnimationModel->getLineCount(); i++) {
+                        if (mpAnimationModel->getKeyFrameIndex(i, currentPosition.mFrameNo) == -1)
+                        {
+                            GLSprite::Point2 pt;
+                            pt.mX = relativePressedPosition.x();
+                            pt.mY = relativePressedPosition.y();
+
+                            mpAnimationModel->setKeyFrame(i, currentPosition.mFrameNo, pt);
+                            break;
+                        }
                     }
                 }
             break;
