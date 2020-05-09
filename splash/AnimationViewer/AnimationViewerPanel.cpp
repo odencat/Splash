@@ -561,8 +561,9 @@ void AnimationViewerPanel::setCenterPoint(QMouseEvent *event)
     if (pKeyFrameData && pKeyFrameData->mSpriteDescriptor.isImage())
     {
         QPoint centerPoint = getCenterPoint();
-        int centerX = (int)((event->x() - centerPoint.x()) / mZoom - pKeyFrameData->mSpriteDescriptor.mPosition.mX + pKeyFrameData->mSpriteDescriptor.mCenter.mX);
-        int centerY = (int)((event->y() - centerPoint.y()) / mZoom - pKeyFrameData->mSpriteDescriptor.mPosition.mY + pKeyFrameData->mSpriteDescriptor.mCenter.mY);
+        QSize guideSize = mpAnimationModel->guideSize();
+        int centerX = (int)((event->x() - centerPoint.x() + guideSize.width() / 2) / mZoom - pKeyFrameData->mSpriteDescriptor.mPosition.mX + pKeyFrameData->mSpriteDescriptor.mCenter.mX);
+        int centerY = (int)((event->y() - centerPoint.y() - guideSize.height() / 2) / mZoom - pKeyFrameData->mSpriteDescriptor.mPosition.mY + pKeyFrameData->mSpriteDescriptor.mCenter.mY);
 
         int w = pKeyFrameData->mSpriteDescriptor.mTextureSrcRect.width() / 2;
         int h = pKeyFrameData->mSpriteDescriptor.mTextureSrcRect.height() / 2;
