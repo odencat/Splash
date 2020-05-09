@@ -17,6 +17,7 @@ QT += multimedia
 TARGET = Splash
 TEMPLATE = app
 SOURCES += main.cpp \
+    SpriteDescriptor.cpp \
     mainwindow.cpp \
     GLSprite.cpp \
     ResourceManager.cpp \
@@ -26,6 +27,7 @@ HEADERS += mainwindow.h \
     Macros.h \
     ResourceManager.h \
     EmittedAnimation.h \
+    SpriteDescriptor.h \
     Types.h
 FORMS += mainwindow.ui
 RESOURCES += ui.qrc

@@ -14,7 +14,7 @@ EmittedAnimation::EmittedAnimation(AnimationModel* pAnimationModel, const GLSpri
     float speedX = speed * dx /(std::fabs(dx) + std::fabs(dy));
     float speedY = speed * dy /(std::fabs(dx) + std::fabs(dy));
 
-    GLSprite::SpriteDescriptor spriteDescriptor = pParentGLSprite->mSpriteDescriptor;
+    SpriteDescriptor spriteDescriptor = pParentGLSprite->mSpriteDescriptor;
 
     // Kinda hacky. I couldn't decompose transformation to each attribute
     spriteDescriptor.mOptionalTransform = pParentGLSprite->getParentTransform();

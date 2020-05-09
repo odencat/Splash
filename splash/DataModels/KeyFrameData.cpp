@@ -1,6 +1,6 @@
 #include "KeyFrameData.h"
 #include "GLSprite.h"
-
+#include "SpriteDescriptor.h"
 
 QString KeyFrameData::swapTargetTypeString[KeyFrameData::SwapTargetType_COUNT] =
 {
@@ -101,7 +101,7 @@ KeyFrameData::TweenType KeyFrameData::getTweenTypeByString(QString typeString)
 
 KeyFrameData::KeyFrameData()
 {
-    mSpriteDescriptor = GLSprite::makeDefaultSpriteDescriptor();
+    mSpriteDescriptor = SpriteDescriptor::makeDefaultSpriteDescriptor();
 
     for (int i = 0; i < TweenAttribute_COUNT; i++)
     {

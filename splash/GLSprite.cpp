@@ -17,60 +17,6 @@ bool GLSprite::priorityLessThan(const GLSprite* pItem1, const GLSprite* pItem2)
     return pItem1->mSpriteDescriptor.mPriority < pItem2->mSpriteDescriptor.mPriority;
 }
 
-QPoint GLSprite::getPositionWithPositionType(QPointF basePosition, PositionTypeOption positionTypeOption, int width, int height, int selfWidth, int selfHeight)
-{
-    int dx = 0;
-    int dy = 0;
-    switch(positionTypeOption)
-    {
-        case PositionTypeOption_TopLeft:
-            dx = -1;
-            dy = -1;
-        break;
-        case PositionTypeOption_TopCenter:
-            dx = 0;
-            dy = -1;
-        break;
-        case PositionTypeOption_TopRight:
-            dx = 1;
-            dy = -1;
-        break;
-        break;
-        case PositionTypeOption_CenterLeft:
-            dx = -1;
-            dy = 0;
-        break;
-        case PositionTypeOption_Center:
-            dx = 0;
-            dy = 0;
-        break;
-        case PositionTypeOption_CenterRight:
-            dx = 1;
-            dy = 0;
-        break;
-        case PositionTypeOption_BottomLeft:
-            dx = -1;
-            dy = 1;
-        break;
-        case PositionTypeOption_BottomCenter:
-            dx = 0;
-            dy = 1;
-        break;
-        case PositionTypeOption_BottomRight:
-            dx = 1;
-            dy = 1;
-        break;
-        default:
-        break;
-    }
-
-    int deltaY = 0;
-    if (dy == 1) {
-        deltaY = -selfHeight;
-    }
-    return QPointF(basePosition.x() + dx * width, basePosition.y() + dy * height + deltaY).toPoint();
-}
-
 QString GLSprite::blendTypeSting[eBT_COUNT] =
 {
     "alpha",
@@ -107,44 +53,6 @@ FacingOptionType GLSprite::getFacingOptionTypeByString(QString typeString)
         }
     }
     return FacingOptionType_none;
-}
-
-GLSprite::SpriteDescriptor GLSprite::makeDefaultSpriteDescriptor()
-{
-    GLSprite::SpriteDescriptor spriteDescriptor;
-    spriteDescriptor.mSourcePath = "";
-    spriteDescriptor.mBlendType = eBT_Alpha;
-    spriteDescriptor.mFacingOptionType = FacingOptionType_none;
-    spriteDescriptor.mPositionType = PositionType_None;
-    spriteDescriptor.mPositionTypeOption = PositionTypeOption_Center;
-
-    spriteDescriptor.mCenter.mX = 0;
-    spriteDescriptor.mCenter.mY = 0;
-    spriteDescriptor.mFrameNo = 0;
-
-    spriteDescriptor.mColor.mR = 0;
-    spriteDescriptor.mColor.mG = 0;
-    spriteDescriptor.mColor.mB = 0;
-
-    spriteDescriptor.mAlpha = 1.0;
-    spriteDescriptor.mPriority = 0.5;
-    spriteDescriptor.mPosition.mX = 0;
-    spriteDescriptor.mPosition.mY = 0;
-
-    spriteDescriptor.mRotation = 0;
-
-    spriteDescriptor.mScale.mX = 1.0f;
-    spriteDescriptor.mScale.mY = 1.0f;
-
-    spriteDescriptor.mEmitter = false;
-    spriteDescriptor.mMinEmitSpeed = 0;
-    spriteDescriptor.mMaxEmitSpeed = 0;
-    spriteDescriptor.mMinEmitAngle = 0;
-    spriteDescriptor.mMaxEmitAngle = 0;
-
-    spriteDescriptor.mTextureSrcRect = QRect(0, 0, 0, 0);
-
-    return spriteDescriptor;
 }
 
 static QPainter::CompositionMode sCompositionMode[eBT_COUNT] =

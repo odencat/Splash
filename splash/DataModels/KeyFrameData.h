@@ -1,6 +1,7 @@
 #ifndef BaseKEYFRAME_H
 #define BaseKEYFRAME_H
 
+#include "SpriteDescriptor.h"
 #include "GLSprite.h"
 class KeyFrameData
 {
@@ -41,7 +42,7 @@ public:
 
     KeyFrameData();
 
-    GLSprite::SpriteDescriptor mSpriteDescriptor;
+    SpriteDescriptor mSpriteDescriptor;
     SwapTargetType mSwapTargetType;
     bool mHideActor;
     TweenType mTweenTypes[TweenAttribute_COUNT];

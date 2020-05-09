@@ -1,5 +1,8 @@
 #ifndef TYPES_H
 #define TYPES_H
+
+#include "qgl.h"
+
 enum PositionType
 {
     PositionType_None,
@@ -110,4 +113,58 @@ struct Color
         mB = b;
     }
 };
+
+static QPoint getPositionWithPositionType(QPointF basePosition, PositionTypeOption positionTypeOption, int width, int height, int selfWidth, int selfHeight)
+{
+    int dx = 0;
+    int dy = 0;
+    switch(positionTypeOption)
+    {
+        case PositionTypeOption_TopLeft:
+            dx = -1;
+            dy = -1;
+        break;
+        case PositionTypeOption_TopCenter:
+            dx = 0;
+            dy = -1;
+        break;
+        case PositionTypeOption_TopRight:
+            dx = 1;
+            dy = -1;
+        break;
+        break;
+        case PositionTypeOption_CenterLeft:
+            dx = -1;
+            dy = 0;
+        break;
+        case PositionTypeOption_Center:
+            dx = 0;
+            dy = 0;
+        break;
+        case PositionTypeOption_CenterRight:
+            dx = 1;
+            dy = 0;
+        break;
+        case PositionTypeOption_BottomLeft:
+            dx = -1;
+            dy = 1;
+        break;
+        case PositionTypeOption_BottomCenter:
+            dx = 0;
+            dy = 1;
+        break;
+        case PositionTypeOption_BottomRight:
+            dx = 1;
+            dy = 1;
+        break;
+        default:
+        break;
+    }
+
+    int deltaY = 0;
+    if (dy == 1) {
+        deltaY = -selfHeight;
+    }
+    return QPointF(basePosition.x() + dx * width, basePosition.y() + dy * height + deltaY).toPoint();
+}
 #endif // TYPES_H

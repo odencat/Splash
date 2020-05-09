@@ -6,6 +6,7 @@
 #include "DataModels/KeyFrame.h"
 #include "ResourceManager.h"
 #include "EmittedAnimation.h"
+#include "SpriteDescriptor.h"
 
 class QPainter;
 class QPoint;
@@ -14,106 +15,10 @@ class QPixmap;
 class GLSprite
 {
 public:
-    struct SpriteDescriptor
-    {
-        QString mSourcePath;
-
-        PositionType mPositionType;
-        PositionTypeOption mPositionTypeOption;
-        FacingOptionType mFacingOptionType;
-
-        QRect mTextureSrcRect; // only valid when it is not a child animation
-        BlendType mBlendType;
-
-        Point2 mCenter;
-        Point2 mScale;
-        Point2 mPosition;
-        int mRotation;
-
-        Color mColor;
-
-        float mAlpha;
-        float mPriority;
-
-        // Sub animation data
-        int mFrameNo; // frameNo for sub animation
-
-        // tell whether this is an emitter of subanimation (valid only this sprite is sub animation
-        bool mEmitter;
-
-        float mMinEmitSpeed;
-        float mMaxEmitSpeed;
-        int mMinEmitAngle;
-        int mMaxEmitAngle;
-
-        void operator=(SpriteDescriptor spriteDescriptor)
-        {
-            mEmitter = spriteDescriptor.mEmitter;
-            mSourcePath = spriteDescriptor.mSourcePath;
-            mPositionType = spriteDescriptor.mPositionType;
-            mPositionTypeOption = spriteDescriptor.mPositionTypeOption;
-            mFacingOptionType = spriteDescriptor.mFacingOptionType;
-            mAlpha = spriteDescriptor.mAlpha;
-            mPriority = spriteDescriptor.mPriority;
-            mTextureSrcRect = spriteDescriptor.mTextureSrcRect;
-            mBlendType = spriteDescriptor.mBlendType;
-            mCenter = spriteDescriptor.mCenter;
-            mScale = spriteDescriptor.mScale;
-            mPosition = spriteDescriptor.mPosition;
-            mRotation = spriteDescriptor.mRotation;
-            mColor = spriteDescriptor.mColor;
-
-            mMinEmitSpeed = spriteDescriptor.mMinEmitSpeed;
-            mMaxEmitSpeed = spriteDescriptor.mMaxEmitSpeed;
-            mMinEmitAngle = spriteDescriptor.mMinEmitAngle;
-            mMaxEmitAngle = spriteDescriptor.mMaxEmitAngle;
-        }
-
-        QTransform mOptionalTransform;
-        QTransform getTransform() const
-        {
-            QTransform transform;
-            transform.translate(mPosition.mX, mPosition.mY);
-            transform.rotate(mRotation);
-            transform.scale(mScale.mX, mScale.mY);
-
-            return transform * mOptionalTransform;
-        }
-
-        bool isImage() const
-        {
-            return ResourceManager::getFileType(mSourcePath) == ResourceManager::FileType_Image;
-        }
-
-        QPoint textureCenter() const
-        {
-            return QPoint(mTextureSrcRect.width()/2, mTextureSrcRect.height()/2);
-        }
-
-        QPoint center() const
-        {
-            return QPointF(textureCenter().x() + mCenter.mX, textureCenter().y() + mCenter.mY).toPoint();
-        }
-
-        QPoint getPosition(const GLSprite* pTargetSprite) const
-        {
-            if (mPositionType != PositionType_None)
-            {
-                int selfWidth = this->mTextureSrcRect.width();
-                int selfHeight = this->mTextureSrcRect.height();
-
-                return getPositionWithPositionType(QPointF(mPosition.mX, mPosition.mY), mPositionTypeOption, pTargetSprite->mSpriteDescriptor.mTextureSrcRect.width(), pTargetSprite->mSpriteDescriptor.mTextureSrcRect.height(), selfWidth, selfHeight);
-            }
-            return QPointF(mPosition.mX, mPosition.mY).toPoint();
-        }
-    };
-
-    static QPoint getPositionWithPositionType(QPointF basePosition, PositionTypeOption positionTypeOption, int width, int height, int selfWidth, int selfHeight);
     static QString blendTypeSting[eBT_COUNT];
     static BlendType getBlendTypeByString(QString typeString) ;
     static QString facingOptionTypeSting[eBT_COUNT];
     static FacingOptionType getFacingOptionTypeByString(QString typeString) ;
-    static SpriteDescriptor makeDefaultSpriteDescriptor();
     static bool priorityLessThan(const GLSprite* pItem1, const GLSprite* pItem2);
 
     GLSprite(const GLSprite* pGLSprite, const AnimationModel* pAnimationModel, const int& id,  const SpriteDescriptor& spriteDescriptor, bool selectable, int lineNo, int frameNo, bool emitted, float dx, float dy);

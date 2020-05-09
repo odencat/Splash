@@ -102,7 +102,7 @@ public:
     GLSprite* createGLSpriteAt(const GLSprite* parentGLSprite, int frameNo, int lineNo) const;
     GLSprite* createGLSpriteAt(const GLSprite* parentGLSprite, QList<KeyFrame::KeyFramePosition>nodePath) const;
     const QList<const GLSprite*> createGLSpriteListAt(const GLSprite* parentGLSprite, int frameNo) const;
-    bool copyTweenedAttribute(const GLSprite* parentGLSprite, GLSprite::SpriteDescriptor& spriteDescriptor, int lineNo, int frameNo, KeyFrameData::TweenAttribute tweenAttribute) const;
+    bool copyTweenedAttribute(const GLSprite* parentGLSprite, SpriteDescriptor& spriteDescriptor, int lineNo, int frameNo, KeyFrameData::TweenAttribute tweenAttribute) const;
 
     // Save & Load
     bool saveData();
@@ -132,10 +132,10 @@ private:
     QString mAnimationID;
     QString mOriginalAnimationID;
 
-    void setFinalAlpha(const GLSprite* parentGLSprite, GLSprite::SpriteDescriptor& spriteDescriptor) const;
-    void setFinalPosition(const GLSprite* parentGLSprite, GLSprite::SpriteDescriptor& spriteDescriptor) const;
-    void setFinalRotation(const GLSprite* parentGLSprite, int lineNo, int frameNo, GLSprite::SpriteDescriptor& spriteDescriptor) const;
-    void tweenElement(GLSprite::SpriteDescriptor& spriteDescriptor, KeyFrameData::TweenAttribute tweenAttribute, KeyFrameData::TweenType tweenType, GLSprite::SpriteDescriptor& startDescriptor, GLSprite::SpriteDescriptor& endDescriptor, int lineNo, int frameNo, int startFrameNo, int endFrameNo) const;
+    void setFinalAlpha(const GLSprite* parentGLSprite, SpriteDescriptor& spriteDescriptor) const;
+    void setFinalPosition(const GLSprite* parentGLSprite, SpriteDescriptor& spriteDescriptor) const;
+    void setFinalRotation(const GLSprite* parentGLSprite, int lineNo, int frameNo, SpriteDescriptor& spriteDescriptor) const;
+    void tweenElement(SpriteDescriptor& spriteDescriptor, KeyFrameData::TweenAttribute tweenAttribute, KeyFrameData::TweenType tweenType, SpriteDescriptor& startDescriptor, SpriteDescriptor& endDescriptor, int lineNo, int frameNo, int startFrameNo, int endFrameNo) const;
 
     // Key Frames
     QList<QList<KeyFrame*>> mTimeline;
