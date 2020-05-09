@@ -373,6 +373,7 @@ void AnimationModel::addEvent(int frameNo)
         mEvents.insert(frameNo, EventList());
     }
     mEvents[frameNo].mList.push_back(QString(""));
+    mIsDataChanged = true;
 }
 
 void AnimationModel::removeEvent(int frameNo, int index)
@@ -384,6 +385,7 @@ void AnimationModel::removeEvent(int frameNo, int index)
         {
             mEvents.remove(frameNo);
         }
+        mIsDataChanged = true;
     }
 }
 
@@ -405,6 +407,7 @@ void AnimationModel::setKeyFrame(int lineNo, int frameNo, const Point2& position
         mTimeline[lineNo].insert(index + 1, pKeyFrame);
 
         emit refreshTimeLine();
+        mIsDataChanged = true;
     }
 }
 
@@ -419,6 +422,7 @@ void AnimationModel::setKeyFrame(int lineNo, int frameNo, KeyFrameData* pKeyfram
         mTimeline[lineNo].insert(index + 1, pKeyFrame);
 
         emit refreshTimeLine();
+        mIsDataChanged = true;
     }
 }
 
@@ -434,6 +438,7 @@ void AnimationModel::insertEmptyKeyFrame(int lineNo, int frameNo)
         mTimeline[lineNo].insert(index + 1, pKeyframe);
 
         emit refreshTimeLine();
+        mIsDataChanged = true;
     }
 }
 
@@ -457,6 +462,7 @@ void AnimationModel::addFrameLength(int lineNo, int frameNo, int value)
         }
 
         emit refreshTimeLine();
+        mIsDataChanged = true;
     }
     else
     {
@@ -469,6 +475,7 @@ void AnimationModel::addFrameLength(int lineNo, int frameNo, int value)
             }
 
             emit refreshTimeLine();
+            mIsDataChanged = true;
         }
     }
 }
@@ -493,6 +500,7 @@ void AnimationModel::reduceFrameLength(int lineNo, int frameNo)
         }
 
         emit refreshTimeLine();
+        mIsDataChanged = true;
     }
     else
     {
@@ -521,6 +529,7 @@ void AnimationModel::reduceFrameLength(int lineNo, int frameNo)
             }
 
             emit refreshTimeLine();
+            mIsDataChanged = true;
         }
     }
 }
@@ -546,6 +555,7 @@ void AnimationModel::clearFrames(int lineNo, int startFrameNo, int endFrameNo)
     }
 
     emit refreshTimeLine();
+    mIsDataChanged = true;
 }
 
 void AnimationModel::clearAllKeyFrames()
@@ -1206,6 +1216,7 @@ bool AnimationModel::saveData()
 
     mOriginalAnimationID = mAnimationID;
     emit fileChanged();
+    mIsDataChanged = false;
 
     return true;
 }
