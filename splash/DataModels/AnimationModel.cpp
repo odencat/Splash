@@ -97,7 +97,8 @@ AnimationModel::AnimationModel(QWidget* parent)
       mAnimationDirectory(QString("")),
       mAnimationID(QString("")),
       mOriginalAnimationID(QString("")),
-      mAnimationType(AnimationType_Normal)
+      mAnimationType(AnimationType_Normal),
+      mIsDataChanged(false)
 {
     setup();
 }
@@ -108,7 +109,8 @@ AnimationModel::AnimationModel(QWidget* parent, QString animationDir, QString an
       mAnimationDirectory(QString(animationDir)),
       mAnimationID(QString(animationID)),
       mOriginalAnimationID(QString(animationID)),
-      mAnimationType(AnimationType_Normal)
+      mAnimationType(AnimationType_Normal),
+      mIsDataChanged(false)
 {
     setup();
 }
@@ -233,6 +235,12 @@ int AnimationModel::getMaxFrameCount() const
     }
 
     return max;
+}
+
+bool AnimationModel::isDataChanged() const
+{
+    // TODO Implement
+    return mIsDataChanged;
 }
 
 AnimationModel::EventList AnimationModel::getEventList(int frameNo) const
@@ -1356,6 +1364,7 @@ QList<KeyFrame*> AnimationModel::loadLine(int lineNo, Json::Value& line)
 // Load animation file, return true if loading was succeeded
 bool AnimationModel::loadData(QString path)
 {
+    mIsDataChanged = false;
     clearAllKeyFrames();
     mEvents.clear();
 

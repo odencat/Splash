@@ -59,6 +59,7 @@ public:
     int getLineCount() const;
     int getMaxFrameCount(int lineNo) const;
     int getMaxFrameCount() const;
+    bool isDataChanged() const;
 
     EventList getEventList(int frameNo) const;
     void setEventList(int frameNo, EventList eventList);
@@ -146,6 +147,7 @@ private:
     KeyFrame::KeyFramePosition mSelectedKeyFramePosition;
     KeyFrameData* mpTargetCel;
     AnimationType mAnimationType;
+    bool mIsDataChanged;
 
 public slots:
     void setAnimationName(QString name);

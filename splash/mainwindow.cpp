@@ -9,6 +9,7 @@
 #include "QTimelineWidget/QTimelinePanel.h"
 #include <QDirModel>
 #include <QFileDialog>
+#include <QMessageBox>
 #include "ResourceTree/ResourceTree.h"
 #include "AnimationViewer/AnimationViewerPanel.h"
 
@@ -156,8 +157,13 @@ void MainWindow::onAnimationSelected(int index)
 
 ---------------------------------------------------------------------*/
 
+static bool selectionCanceled = false;
 void MainWindow::onSelectionChanged(const QItemSelection& item1, const QItemSelection& item2)
 {
+    if (selectionCanceled) {
+        return;
+    }
+
     QModelIndexList indexes = item1.indexes();
     QModelIndex index = indexes.takeFirst();
 
@@ -165,6 +171,28 @@ void MainWindow::onSelectionChanged(const QItemSelection& item1, const QItemSele
     QFileInfo fileInfo = QFileInfo (path);
     if (fileInfo.isFile())
     {
+        if (mpAnimationModel->isDataChanged()) {
+            QMessageBox::StandardButton reply;
+            reply = QMessageBox::question(this, "Save", "The animation is not saved. \nDo you want to change anywys?",
+                                          QMessageBox::Yes|QMessageBox::No);
+
+            if (reply == QMessageBox::Yes) {
+            }
+
+            if (reply == QMessageBox::No) {
+                selectionCanceled = true;
+                if (item2.indexes().length() > 0) {
+                    ui->animationTreeView->selectionModel()->clear();
+                    ui->animationTreeView->selectionModel()->select(item2.indexes()[0], QItemSelectionModel::SelectionFlag::Select);
+                    selectionCanceled = false;
+                } else {
+                    ui->animationTreeView->selectionModel()->clear();
+                    selectionCanceled = false;
+                }
+                return;
+            }
+        }
+
         if (mpAnimationModel->loadData(path))
         {
             for(int i = ui->eventTableWidget->rowCount() - 1; i >= 0; i--)
