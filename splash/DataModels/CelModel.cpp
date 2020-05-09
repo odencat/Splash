@@ -38,13 +38,13 @@ SETSLOT(TweenTypes[KeyFrameData::TweenAttribute_alpha], AlphaTweenType, alphaTwe
 SETSLOT(TweenTypes[KeyFrameData::TweenAttribute_color], ColorTweenType, colorTweenType,  int, KeyFrameData::TweenType);
 SETSLOT(SwapTargetType, SwapTargetType, swapTargetType,  int, KeyFrameData::SwapTargetType);
 SETSLOT(HideActor, HideActor, hideActor,  bool, bool);
-SETSLOT(SpriteDescriptor.mPositionType, PositionType, positionType, int, GLSprite::PositionType);
-SETSLOT(SpriteDescriptor.mPositionTypeOption, PositionTypeOption, positionTypeOption, int, GLSprite::PositionTypeOption);
+SETSLOT(SpriteDescriptor.mPositionType, PositionType, positionType, int, PositionType);
+SETSLOT(SpriteDescriptor.mPositionTypeOption, PositionTypeOption, positionTypeOption, int, PositionTypeOption);
 
-SETSLOT(SpriteDescriptor.mFacingOptionType, FacingOptionType, facingOptionType, int, GLSprite::FacingOptionType);
+SETSLOT(SpriteDescriptor.mFacingOptionType, FacingOptionType, facingOptionType, int, FacingOptionType);
 
 SETSLOT(SpriteDescriptor.mTextureSrcRect, TextureSrcRect, textureSrcRect, QRect, QRect);
-SETSLOT(SpriteDescriptor.mBlendType, BlendType, blendType, int, GLSprite::BlendType);
+SETSLOT(SpriteDescriptor.mBlendType, BlendType, blendType, int, BlendType);
 
 SETSLOT(SpriteDescriptor.mPosition.mX, PositionX, positionX, int, int);
 SETSLOT(SpriteDescriptor.mPosition.mY, PositionY, positionY, int, int);

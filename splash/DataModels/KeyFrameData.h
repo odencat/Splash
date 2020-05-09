@@ -49,15 +49,15 @@ public:
     bool allAttributesNone() const;
 
     static QString swapTargetTypeString[SwapTargetType_COUNT];
-    static QString positionTypeString[GLSprite::PositionType_COUNT];
-    static QString positionTypeOptionString[GLSprite::PositionTypeOption_COUNT];
+    static QString positionTypeString[PositionType_COUNT];
+    static QString positionTypeOptionString[PositionTypeOption_COUNT];
     static QString tweenAttributeSting[TweenAttribute_COUNT];
     static QString tweenTypeSting[eTT_COUNT];
 
 
-    static GLSprite::PositionTypeOption getPositionTypeOptionByString(QString typeString);
+    static PositionTypeOption getPositionTypeOptionByString(QString typeString);
     static SwapTargetType getSwapTargetTypeByString(QString typeString);
-    static GLSprite::PositionType getPositionTypeByString(QString typeString);
+    static PositionType getPositionTypeByString(QString typeString);
     static TweenType getTweenTypeByString(QString typeString);
 };
 

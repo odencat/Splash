@@ -17,7 +17,7 @@ bool GLSprite::priorityLessThan(const GLSprite* pItem1, const GLSprite* pItem2)
     return pItem1->mSpriteDescriptor.mPriority < pItem2->mSpriteDescriptor.mPriority;
 }
 
-QPoint GLSprite::getPositionWithPositionType(QPointF basePosition, GLSprite::PositionTypeOption positionTypeOption, int width, int height, int selfWidth, int selfHeight)
+QPoint GLSprite::getPositionWithPositionType(QPointF basePosition, PositionTypeOption positionTypeOption, int width, int height, int selfWidth, int selfHeight)
 {
     int dx = 0;
     int dy = 0;
@@ -71,39 +71,39 @@ QPoint GLSprite::getPositionWithPositionType(QPointF basePosition, GLSprite::Pos
     return QPointF(basePosition.x() + dx * width, basePosition.y() + dy * height + deltaY).toPoint();
 }
 
-QString GLSprite::blendTypeSting[GLSprite::eBT_COUNT] =
+QString GLSprite::blendTypeSting[eBT_COUNT] =
 {
     "alpha",
     "add",
     "sub"
 };
 
-GLSprite::BlendType GLSprite::getBlendTypeByString(QString typeString)
+BlendType GLSprite::getBlendTypeByString(QString typeString)
 {
     for (int i = 0; i < eBT_COUNT; i++)
     {
         if (typeString == blendTypeSting[i])
         {
-            return static_cast<GLSprite::BlendType>(i);;
+            return static_cast<BlendType>(i);;
         }
     }
     return eBT_Alpha;
 }
 
-QString GLSprite::facingOptionTypeSting[GLSprite::FacingOptionType_COUNT] =
+QString GLSprite::facingOptionTypeSting[FacingOptionType_COUNT] =
 {
     "none",
     "lookAtTarget",
     "faceToMov"
 };
 
-GLSprite::FacingOptionType GLSprite::getFacingOptionTypeByString(QString typeString)
+FacingOptionType GLSprite::getFacingOptionTypeByString(QString typeString)
 {
     for (int i = 0; i < eBT_COUNT; i++)
     {
         if (typeString == facingOptionTypeSting[i])
         {
-            return static_cast<GLSprite::FacingOptionType>(i);
+            return static_cast<FacingOptionType>(i);
         }
     }
     return FacingOptionType_none;
@@ -113,10 +113,10 @@ GLSprite::SpriteDescriptor GLSprite::makeDefaultSpriteDescriptor()
 {
     GLSprite::SpriteDescriptor spriteDescriptor;
     spriteDescriptor.mSourcePath = "";
-    spriteDescriptor.mBlendType = GLSprite::eBT_Alpha;
+    spriteDescriptor.mBlendType = eBT_Alpha;
     spriteDescriptor.mFacingOptionType = FacingOptionType_none;
-    spriteDescriptor.mPositionType = GLSprite::PositionType_None;
-    spriteDescriptor.mPositionTypeOption = GLSprite::PositionTypeOption_Center;
+    spriteDescriptor.mPositionType = PositionType_None;
+    spriteDescriptor.mPositionTypeOption = PositionTypeOption_Center;
 
     spriteDescriptor.mCenter.mX = 0;
     spriteDescriptor.mCenter.mY = 0;
@@ -147,7 +147,7 @@ GLSprite::SpriteDescriptor GLSprite::makeDefaultSpriteDescriptor()
     return spriteDescriptor;
 }
 
-static QPainter::CompositionMode sCompositionMode[GLSprite::eBT_COUNT] =
+static QPainter::CompositionMode sCompositionMode[eBT_COUNT] =
 {
     QPainter::CompositionMode_SourceOver,
     QPainter::CompositionMode_Plus,
@@ -418,7 +418,7 @@ float GLSprite::getAbsoluteAlpha() const
     return alpha;
 }
 
-GLSprite::Color GLSprite::getAbsoluteColor() const
+Color GLSprite::getAbsoluteColor() const
 {
     Color color = mSpriteDescriptor.mColor;
 

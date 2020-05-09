@@ -25,7 +25,8 @@ HEADERS += mainwindow.h \
     GLSprite.h \
     Macros.h \
     ResourceManager.h \
-    EmittedAnimation.h
+    EmittedAnimation.h \
+    Types.h
 FORMS += mainwindow.ui
 RESOURCES += ui.qrc
 RC_FILE = Splash.rc

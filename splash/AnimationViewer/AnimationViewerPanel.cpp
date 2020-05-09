@@ -403,7 +403,7 @@ void AnimationViewerPanel::addNewCel(QPoint& relativePressedPosition)
 {
     if (mpAnimationModel->getSelectedSourcePath() != "")
     {
-        GLSprite::Point2 position;
+        Point2 position;
         position.mX = relativePressedPosition.x();
         position.mY = relativePressedPosition.y();
 
@@ -481,7 +481,7 @@ void AnimationViewerPanel::mouseDoubleClickEvent(QMouseEvent *event)
             case ResourceManager::FileType_Animation:
             case ResourceManager::FileType_Image:
                 if (mpAnimationModel->getKeyFrameIndex(currentPosition.mLineNo, currentPosition.mFrameNo) == -1) {
-                    GLSprite::Point2 pt;
+                    Point2 pt;
                     pt.mX = relativePressedPosition.x();
                     pt.mY = relativePressedPosition.y();
 
@@ -490,7 +490,7 @@ void AnimationViewerPanel::mouseDoubleClickEvent(QMouseEvent *event)
                     for (int i = 0; i < mpAnimationModel->getLineCount(); i++) {
                         if (mpAnimationModel->getKeyFrameIndex(i, currentPosition.mFrameNo) == -1)
                         {
-                            GLSprite::Point2 pt;
+                            Point2 pt;
                             pt.mX = relativePressedPosition.x();
                             pt.mY = relativePressedPosition.y();
 
@@ -620,7 +620,7 @@ void AnimationViewerPanel::mouseMoveEvent(QMouseEvent *event)
         if (pKeyFrameData)
         {
             const KeyFrame::KeyFramePosition& keyframePosition = mpAnimationModel->getCurrentKeyFramePosition();
-            if (pKeyFrameData->mSpriteDescriptor.mPositionType != GLSprite::PositionType_None)
+            if (pKeyFrameData->mSpriteDescriptor.mPositionType != PositionType_None)
             {
                 newPosX -= (int)mpAnimationModel->getTargetSprite()->mSpriteDescriptor.mPosition.mX;
                 newPosY -= (int)mpAnimationModel->getTargetSprite()->mSpriteDescriptor.mPosition.mY;

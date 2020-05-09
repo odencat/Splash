@@ -380,7 +380,7 @@ void AnimationModel::removeEvent(int frameNo, int index)
 }
 
 // set new key frame
-void AnimationModel::setKeyFrame(int lineNo, int frameNo, const GLSprite::Point2& position)
+void AnimationModel::setKeyFrame(int lineNo, int frameNo, const Point2& position)
 {
     if (lineNo >= mTimeline.count()){return;}
     // if a keframe already exists, don't add any keyframe
@@ -734,10 +734,10 @@ void AnimationModel::setFinalAlpha(const GLSprite* parentGLSprite, GLSprite::Spr
 
 void AnimationModel::setFinalPosition(const GLSprite* parentGLSprite, GLSprite::SpriteDescriptor& spriteDescriptor) const
 {
-    if(spriteDescriptor.mPositionType != GLSprite::PositionType_None)
+    if(spriteDescriptor.mPositionType != PositionType_None)
     {
         QPoint point = spriteDescriptor.getPosition(spTargetSprite);
-        if(spriteDescriptor.mPositionType == GLSprite::PositionType_RelativeToTarget)
+        if(spriteDescriptor.mPositionType == PositionType_RelativeToTarget)
         {
             // Transform current position based on target point
             if(parentGLSprite)
@@ -750,7 +750,7 @@ void AnimationModel::setFinalPosition(const GLSprite* parentGLSprite, GLSprite::
             }
 
         }
-        else if(spriteDescriptor.mPositionType == GLSprite::PositionType_RelativeToTargetOrigin)
+        else if(spriteDescriptor.mPositionType == PositionType_RelativeToTargetOrigin)
         {
             QPoint targetPoint = GLSprite::getPositionWithPositionType(QPoint(TARGET_originX, TARGET_originY), spriteDescriptor.mPositionTypeOption, spTargetSprite->mSpriteDescriptor.mTextureSrcRect.width(), spTargetSprite->mSpriteDescriptor.mTextureSrcRect.height(), spriteDescriptor.mTextureSrcRect.width(), spriteDescriptor.mTextureSrcRect.height());
             QTransform transform;
@@ -781,7 +781,7 @@ void AnimationModel::setFinalRotation(const GLSprite* parentGLSprite, int lineNo
     switch(spriteDescriptor.mFacingOptionType)
     {
         // Look at target sprite
-        case GLSprite::FacingOptionType_lookAtTarget:
+        case FacingOptionType_lookAtTarget:
         {
             QPoint point = QPointF(spriteDescriptor.mPosition.mX, spriteDescriptor.mPosition.mY).toPoint();
 
@@ -822,7 +822,7 @@ void AnimationModel::setFinalRotation(const GLSprite* parentGLSprite, int lineNo
        break;
 
        // Face to the direction where it is going to move
-       case GLSprite::FacingOptionType_FaceToMovingDir:
+       case FacingOptionType_FaceToMovingDir:
            {
                 const AnimationModel* pAnimationModel = this;
                 QList<KeyFrame::KeyFramePosition> list;
@@ -1036,17 +1036,17 @@ bool AnimationModel::saveData()
                 KeyFrameData* pKeyFrameData = keyframe->mpKeyFrameData;
                 keyframeData["sourcePath"] = pKeyFrameData->mSpriteDescriptor.mSourcePath.toStdString();
 
-                if (pKeyFrameData->mSpriteDescriptor.mFacingOptionType != GLSprite::FacingOptionType_none)
+                if (pKeyFrameData->mSpriteDescriptor.mFacingOptionType != FacingOptionType_none)
                 {
                     keyframeData["facingOption"] = GLSprite::facingOptionTypeSting[pKeyFrameData->mSpriteDescriptor.mFacingOptionType].toStdString();
                 }
 
-                if (pKeyFrameData->mSpriteDescriptor.mPositionTypeOption != GLSprite::PositionTypeOption_Center)
+                if (pKeyFrameData->mSpriteDescriptor.mPositionTypeOption != PositionTypeOption_Center)
                 {
                     keyframeData["positionTypeOption"] = KeyFrameData::positionTypeOptionString[pKeyFrameData->mSpriteDescriptor.mPositionTypeOption].toStdString();
                 }
 
-                if (pKeyFrameData->mSpriteDescriptor.mPositionType != GLSprite::PositionType_None)
+                if (pKeyFrameData->mSpriteDescriptor.mPositionType != PositionType_None)
                 {
                     keyframeData["positionType"] = KeyFrameData::positionTypeString[pKeyFrameData->mSpriteDescriptor.mPositionType].toStdString();
                 }
@@ -1086,7 +1086,7 @@ bool AnimationModel::saveData()
                     keyframeData["hideActor"] = pKeyFrameData->mHideActor;
                 }
 
-                if (pKeyFrameData->mSpriteDescriptor.mBlendType != GLSprite::eBT_Alpha)
+                if (pKeyFrameData->mSpriteDescriptor.mBlendType != eBT_Alpha)
                 {
                     keyframeData["blendType"] = GLSprite::blendTypeSting[pKeyFrameData->mSpriteDescriptor.mBlendType].toStdString();
                 }
@@ -1120,7 +1120,7 @@ bool AnimationModel::saveData()
                     keyframeData["rotation"] = pKeyFrameData->mSpriteDescriptor.mRotation;
                  }
 
-                 if (pKeyFrameData->mSpriteDescriptor.mColor != GLSprite::Color(0, 0, 0))
+                 if (pKeyFrameData->mSpriteDescriptor.mColor != Color(0, 0, 0))
                  {
                     Json::Value color;
                     color[static_cast<unsigned int>(0)] = pKeyFrameData->mSpriteDescriptor.mColor.mR;

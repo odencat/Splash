@@ -21,7 +21,7 @@ KeyFrameData::SwapTargetType KeyFrameData::getSwapTargetTypeByString(QString typ
     return SwapTargetType_None;
 }
 
-QString KeyFrameData::positionTypeOptionString[GLSprite::PositionTypeOption_COUNT] =
+QString KeyFrameData::positionTypeOptionString[PositionTypeOption_COUNT] =
 {
     "topLeft",
     "topCenter",
@@ -36,36 +36,36 @@ QString KeyFrameData::positionTypeOptionString[GLSprite::PositionTypeOption_COUN
     "bottomRight"
 };
 
-GLSprite::PositionTypeOption KeyFrameData::getPositionTypeOptionByString(QString typeString)
+PositionTypeOption KeyFrameData::getPositionTypeOptionByString(QString typeString)
 {
-    for (int i = 0; i < GLSprite::PositionTypeOption_COUNT; i++)
+    for (int i = 0; i < PositionTypeOption_COUNT; i++)
     {
         if (typeString == positionTypeOptionString[i])
         {
-            return static_cast<GLSprite::PositionTypeOption>(i);
+            return static_cast<PositionTypeOption>(i);
         }
     }
-    return GLSprite::PositionTypeOption_Center;
+    return PositionTypeOption_Center;
 }
 
 
-QString KeyFrameData::positionTypeString[GLSprite::PositionType_COUNT] =
+QString KeyFrameData::positionTypeString[PositionType_COUNT] =
 {
     "none",
     "relativeToTarget",
     "relativeToTargetOrigin"
 };
 
-GLSprite::PositionType KeyFrameData::getPositionTypeByString(QString typeString)
+PositionType KeyFrameData::getPositionTypeByString(QString typeString)
 {
-    for (int i = 0; i < GLSprite::PositionType_COUNT; i++)
+    for (int i = 0; i < PositionType_COUNT; i++)
     {
         if (typeString == positionTypeString[i])
         {
-            return static_cast<GLSprite::PositionType>(i);
+            return static_cast<PositionType>(i);
         }
     }
-    return GLSprite::PositionType_None;
+    return PositionType_None;
 }
 
 QString KeyFrameData::tweenAttributeSting[KeyFrameData::TweenAttribute_COUNT] =

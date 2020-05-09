@@ -77,7 +77,7 @@ public:
     void addEvent(int frameNo);
     void removeEvent(int frameNo, int index);
 
-    void setKeyFrame(int lineNo, int frameNo, const GLSprite::Point2& position);
+    void setKeyFrame(int lineNo, int frameNo, const Point2& position);
     void setKeyFrame(int lineNo, int frameNo, KeyFrameData* pKeyframeData);
 
     void insertEmptyKeyFrame(int lineNo, int frameNo);
