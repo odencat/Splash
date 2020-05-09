@@ -625,6 +625,7 @@ GLSprite* AnimationModel::createGLSpriteAt(const GLSprite* parentGLSprite, int f
     {
         baseSpriteDescriptor.mFrameNo = frameNo - mTimeline[lineNo][subAnimationStartIndex]->mFrameNo;
     }
+    baseSpriteDescriptor.mPriority += lineNo * 0.001f;
 
     bool isTweenCel  = (pBaseKeyFrame->mFrameNo == frameNo);
     return new GLSprite(parentGLSprite, this, lineNo, baseSpriteDescriptor, isTweenCel, lineNo, frameNo, false, 0, 0);
