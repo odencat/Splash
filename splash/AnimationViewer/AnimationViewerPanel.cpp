@@ -13,6 +13,7 @@
 
 #define TARGET_SCREEN_WIDTH 320
 #define TARGET_SCREEN_HEIGHT 240
+#define SNAP_PIXELS 5
 
 AnimationViewerPanel::AnimationViewerPanel(QWidget* parent, AnimationModel* pAnimationModel, CelModel* const pSelectedCelModel)
         : QGLWidget(parent),
@@ -597,6 +598,36 @@ void AnimationViewerPanel::setCenterPoint(QMouseEvent *event)
         QPoint centerPoint = getCenterPoint();
         int centerX = (int)((event->x() - centerPoint.x()) / mZoom - pKeyFrameData->mSpriteDescriptor.mPosition.mX + pKeyFrameData->mSpriteDescriptor.mCenter.mX);
         int centerY = (int)((event->y() - centerPoint.y()) / mZoom - pKeyFrameData->mSpriteDescriptor.mPosition.mY + pKeyFrameData->mSpriteDescriptor.mCenter.mY);
+
+        int w = pKeyFrameData->mSpriteDescriptor.mTextureSrcRect.width() / 2;
+        int h = pKeyFrameData->mSpriteDescriptor.mTextureSrcRect.height() / 2;
+
+        // Snap!
+        if (centerX > -w-SNAP_PIXELS && centerX < -w + SNAP_PIXELS) {
+            centerX = -w;
+        }
+
+        if (centerX > -SNAP_PIXELS && centerX < SNAP_PIXELS) {
+            centerX = 0;
+        }
+
+
+        if (centerX  > w -SNAP_PIXELS && centerX < w+SNAP_PIXELS) {
+            centerX = w;
+        }
+
+
+        if (centerY > -h-SNAP_PIXELS && centerY < -h+SNAP_PIXELS) {
+            centerY = -h;
+        }
+
+        if (centerY > -SNAP_PIXELS && centerY < SNAP_PIXELS) {
+            centerY = 0;
+        }
+
+        if (centerY  > h -SNAP_PIXELS && centerY < h+SNAP_PIXELS) {
+            centerY = h;
+        }
 
         mpSelectedCelModel->setCenterX(centerX);// / pKeyFrameData->mSpriteDescriptor.textureCenter().x());
         mpSelectedCelModel->setCenterY(centerY);// / pKeyFrameData->mSpriteDescriptor.textureCenter().y());
