@@ -48,9 +48,9 @@ AnimationViewer::AnimationViewer(QWidget* parent, AnimationModel* animationModel
     mpAnimationViewerPanel->setMinimumWidth(480);
     mpAnimationViewerPanel->setMinimumHeight(320);
     m_ui->animationViewerContainer->addWidget(mpAnimationViewerPanel);
-    m_ui->zoomSlider->setMinimum(100);
+    m_ui->zoomSlider->setMinimum(50);
     m_ui->zoomSlider->setMaximum(500);
-    m_ui->zoomSpinBox->setMinimum(100);
+    m_ui->zoomSpinBox->setMinimum(50);
     m_ui->zoomSpinBox->setMaximum(500);
 
     // connect Cel model and controls
