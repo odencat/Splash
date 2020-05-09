@@ -111,30 +111,6 @@ KeyFrameData::KeyFrameData()
     mHideActor = false;
 }
 
-void KeyFrameData::copyAttribute(KeyFrameData::TweenAttribute tweenAttribute, KeyFrameData* item)
-{
-    switch(tweenAttribute)
-    {
-        case TweenAttribute_position:
-            mSpriteDescriptor.mPosition = item->mSpriteDescriptor.mPosition;
-        break;
-        case TweenAttribute_rotation:
-            mSpriteDescriptor.mRotation = item->mSpriteDescriptor.mRotation;
-        break;
-        case TweenAttribute_scale:
-            mSpriteDescriptor.mScale = item->mSpriteDescriptor.mScale;
-        break;
-        case TweenAttribute_alpha:
-            mSpriteDescriptor.mAlpha = item->mSpriteDescriptor.mAlpha;
-        break;
-        case TweenAttribute_color:
-            mSpriteDescriptor.mColor = item->mSpriteDescriptor.mColor;
-        break;
-        default:
-        break;
-    }
-}
-
 bool KeyFrameData::hasTween() const
 {
     bool tween = false;
