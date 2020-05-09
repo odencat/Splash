@@ -30,6 +30,7 @@ void CelModel::set##name1(type1 value)\
     }\
 }
 
+
 SETSLOT(TweenTypes[KeyFrameData::TweenAttribute_position], PositionTweenType, positionTweenType, int, KeyFrameData::TweenType);
 SETSLOT(TweenTypes[KeyFrameData::TweenAttribute_rotation], RotationTweenType, rotationTweenType, int, KeyFrameData::TweenType);
 SETSLOT(TweenTypes[KeyFrameData::TweenAttribute_scale], ScaleTweenType, scaleTweenType, int, KeyFrameData::TweenType);
@@ -64,6 +65,14 @@ SETSLOT(SpriteDescriptor.mMinEmitSpeed, MinEmitSpeed, minEmitSpeed, double, floa
 SETSLOT(SpriteDescriptor.mMaxEmitSpeed, MaxEmitSpeed, maxEmitSpeed, double, float);
 SETSLOT(SpriteDescriptor.mMinEmitAngle, MinEmitAngle, minEmitAngle, int, int);
 SETSLOT(SpriteDescriptor.mMaxEmitAngle, MaxEmitAngle, maxEmitAngle, int, int);
+
+void CelModel::movePosition(int x, int y)
+{
+    mpKeyFrameData->mSpriteDescriptor.mPosition.mX += x;
+    mpKeyFrameData->mSpriteDescriptor.mPosition.mY += y;
+    emit positionXChanged(mpKeyFrameData->mSpriteDescriptor.mPosition.mX);
+    emit positionYChanged(mpKeyFrameData->mSpriteDescriptor.mPosition.mY);
+}
 
 void CelModel::setCenterX(int value)
 {

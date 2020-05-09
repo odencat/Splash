@@ -37,6 +37,7 @@ public slots:
     void setPositionX(int value);
     void setPositionY(int value);
     void setPositionTweenType(int index);
+    void movePosition(int x, int y);
 
     void setRotation(int value);
     void setRotationTweenType(int index);

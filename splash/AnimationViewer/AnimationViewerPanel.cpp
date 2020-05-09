@@ -122,6 +122,18 @@ void AnimationViewerPanel::keyPressEvent (QKeyEvent* e)
             case Qt::Key_D:
                 mpAnimationModel->clearFrames(currentPosition.mLineNo, currentPosition.mFrameNo, currentPosition.mFrameNo);
             break;
+        case Qt::Key_Right:
+            mpSelectedCelModel->movePosition(1, 0);
+        break;
+        case Qt::Key_Up:
+            mpSelectedCelModel->movePosition(0, -1);
+        break;
+        case Qt::Key_Left:
+            mpSelectedCelModel->movePosition(-1, 0);
+        break;
+        case Qt::Key_Down:
+            mpSelectedCelModel->movePosition(0, 1);
+        break;
         }
     }
 }
