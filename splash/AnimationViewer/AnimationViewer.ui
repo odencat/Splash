@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>847</width>
-    <height>576</height>
+    <height>596</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -793,13 +793,16 @@
      </item>
      <item>
       <widget class="QGroupBox" name="verticalGroupBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="title">
         <string>Tool option</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_8">
-        <property name="spacing">
-         <number>2</number>
-        </property>
+       <layout class="QGridLayout" name="gridLayout">
         <property name="leftMargin">
          <number>2</number>
         </property>
@@ -812,7 +815,7 @@
         <property name="bottomMargin">
          <number>2</number>
         </property>
-        <item>
+        <item row="0" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout_15">
           <item>
            <widget class="QCheckBox" name="loopPlayCheckbox">
@@ -833,7 +836,7 @@
           </item>
          </layout>
         </item>
-        <item>
+        <item row="1" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout_17">
           <item>
            <widget class="QCheckBox" name="showTargetCheckbox">
@@ -845,24 +848,59 @@
             </property>
            </widget>
           </item>
+         </layout>
+        </item>
+        <item row="4" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
           <item>
-           <widget class="QCheckBox" name="showCameraCheckbox">
-            <property name="text">
-             <string>Show Camera</string>
+           <widget class="QLabel" name="label_11">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="checked">
-             <bool>true</bool>
+            <property name="minimumSize">
+             <size>
+              <width>60</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Zoom</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSlider" name="zoomSlider">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="zoomSpinBox">
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
             </property>
            </widget>
           </item>
          </layout>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="hideActorCheckbox">
-          <property name="text">
-           <string>Hide Actor</string>
-          </property>
-         </widget>
         </item>
        </layout>
       </widget>

@@ -38,6 +38,7 @@ public:
 
     static QString animationTypeSting[AnimationType::AnimationType_COUNT];
     static QSize animationTypeSize[AnimationType::AnimationType_COUNT];
+    static int animationTypeDefaultZoom[AnimationType::AnimationType_COUNT];
 
     static GLSprite* getTargetSprite();
     static GLSprite* getCenterPointSprite();

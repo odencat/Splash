@@ -13,7 +13,6 @@
 
 #define TARGET_SCREEN_WIDTH 320
 #define TARGET_SCREEN_HEIGHT 240
-#define ZOOM 1.0f
 
 AnimationViewerPanel::AnimationViewerPanel(QWidget* parent, AnimationModel* pAnimationModel, CelModel* const pSelectedCelModel)
         : QGLWidget(parent),
@@ -46,6 +45,12 @@ AnimationViewerPanel::~AnimationViewerPanel()
 bool AnimationViewerPanel::isAnimationPlaying() const
 {
     return mIsAnimationPlaying;
+}
+
+
+void AnimationViewerPanel::setZoom(float value) {
+    mZoom = value;
+    refresh();
 }
 
 void AnimationViewerPanel::setShowAnimationUI(bool showUI)
@@ -208,13 +213,15 @@ void AnimationViewerPanel::paintEvent(QPaintEvent *event)
     painter.fillRect(QRect(0, 0, width() , height() ), Qt::SolidPattern);
 
     painter.translate(width() / 2, height() / 2);
-    painter.scale(ZOOM, ZOOM);
+    painter.scale(mZoom, mZoom);
     painter.translate(-width() / 2, -height() / 2);
 
     renderCelSprites(centerPoint, painter);
     if (mShowAnimationUI) {
         renderMask(painter);
         renderCross(painter);
+    }
+    if (mShowTarget) {
         renderTargetSprite(centerPoint, painter);
     }
 
@@ -459,7 +466,7 @@ void AnimationViewerPanel::mouseDoubleClickEvent(QMouseEvent *event)
     // Get center point here
     QPoint centerPoint = getCenterPoint();
     // Calculate pressed position relative from center
-    QPoint relativePressedPosition = (QPoint(event->x(), event->y()) - centerPoint)  / ZOOM;
+    QPoint relativePressedPosition = (QPoint(event->x(), event->y()) - centerPoint)  / mZoom;
 
     if (mpAnimationModel->getLoadedAnimationPath() == mpAnimationModel->getSelectedSourcePath())
     {
@@ -499,7 +506,7 @@ void AnimationViewerPanel::mousePressEvent(QMouseEvent *event)
     // Get center point here
     QPoint centerPoint = getCenterPoint();
     // Calculate pressed position relative from center
-    QPoint relativePressedPosition = (QPoint(event->x(), event->y()) - centerPoint)  / ZOOM;
+    QPoint relativePressedPosition = (QPoint(event->x(), event->y()) - centerPoint)  / mZoom;
 
     mTargetGrabbed  = false;
     mCelGrabbed = false;
@@ -580,8 +587,8 @@ void AnimationViewerPanel::setCenterPoint(QMouseEvent *event)
     if (pKeyFrameData && pKeyFrameData->mSpriteDescriptor.isImage())
     {
         QPoint centerPoint = getCenterPoint();
-        int centerX = (int)((event->x() - centerPoint.x()) / ZOOM - pKeyFrameData->mSpriteDescriptor.mPosition.mX + pKeyFrameData->mSpriteDescriptor.mCenter.mX);
-        int centerY = (int)((event->y() - centerPoint.y()) / ZOOM - pKeyFrameData->mSpriteDescriptor.mPosition.mY + pKeyFrameData->mSpriteDescriptor.mCenter.mY);
+        int centerX = (int)((event->x() - centerPoint.x()) / mZoom - pKeyFrameData->mSpriteDescriptor.mPosition.mX + pKeyFrameData->mSpriteDescriptor.mCenter.mX);
+        int centerY = (int)((event->y() - centerPoint.y()) / mZoom - pKeyFrameData->mSpriteDescriptor.mPosition.mY + pKeyFrameData->mSpriteDescriptor.mCenter.mY);
 
         mpSelectedCelModel->setCenterX(centerX);// / pKeyFrameData->mSpriteDescriptor.textureCenter().x());
         mpSelectedCelModel->setCenterY(centerY);// / pKeyFrameData->mSpriteDescriptor.textureCenter().y());
@@ -591,8 +598,8 @@ void AnimationViewerPanel::setCenterPoint(QMouseEvent *event)
 void AnimationViewerPanel::mouseMoveEvent(QMouseEvent *event)
 {
     QPoint centerPoint = getCenterPoint();
-    int newPosX = (event->x() - centerPoint.x()) / ZOOM + mSelectedOffset.x();
-    int newPosY = (event->y() - centerPoint.y()) / ZOOM + mSelectedOffset.y();
+    int newPosX = (event->x() - centerPoint.x()) / mZoom + mSelectedOffset.x();
+    int newPosY = (event->y() - centerPoint.y()) / mZoom + mSelectedOffset.y();
     KeyFrameData* pKeyFrameData = mpSelectedCelModel->getKeyFrameDataReference();
 
     if (event->modifiers() & Qt::ControlModifier)

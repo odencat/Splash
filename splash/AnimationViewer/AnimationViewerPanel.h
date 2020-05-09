@@ -22,6 +22,7 @@ public:
     bool isAnimationExist() const;
     void stopAnimation();
     void gotoNextFrame();
+    void setZoom(float value);
 
 protected:
     void keyPressEvent(QKeyEvent *event);
@@ -75,6 +76,7 @@ private:
     bool mShowAnimationUI;
     bool mShowTarget;
     bool mShowCamera;
+    float mZoom;
 };
 
 #endif // AnimationViewerPanel_H

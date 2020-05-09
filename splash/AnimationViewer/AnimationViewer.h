@@ -25,6 +25,8 @@ public:
     Ui::AnimationViewer *m_ui;
 
 public slots:
+    void onAnimationTypeChanged(int type);
+    void setZoom(int value);
     void stopAnimation();
 
 private slots:

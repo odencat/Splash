@@ -48,6 +48,10 @@ AnimationViewer::AnimationViewer(QWidget* parent, AnimationModel* animationModel
     mpAnimationViewerPanel->setMinimumWidth(480);
     mpAnimationViewerPanel->setMinimumHeight(320);
     m_ui->animationViewerContainer->addWidget(mpAnimationViewerPanel);
+    m_ui->zoomSlider->setMinimum(100);
+    m_ui->zoomSlider->setMaximum(500);
+    m_ui->zoomSpinBox->setMinimum(100);
+    m_ui->zoomSpinBox->setMaximum(500);
 
     // connect Cel model and controls
     connect(m_ui->alphaSpinBox, SIGNAL(valueChanged(double)), mpSelectedCelModel, SLOT(setAlpha(double)));
@@ -93,7 +97,7 @@ AnimationViewer::AnimationViewer(QWidget* parent, AnimationModel* animationModel
 
     // Special
 //    connect(m_ui->swapTargetComboBox, SIGNAL(currentIndexChanged(int)), mpSelectedCelModel, SLOT(setSwapTargetType(int)));
-    connect(m_ui->hideActorCheckbox, SIGNAL(toggled(bool)), mpSelectedCelModel, SLOT(setHideActor(bool)));
+//    connect(m_ui->hideActorCheckbox, SIGNAL(toggled(bool)), mpSelectedCelModel, SLOT(setHideActor(bool)));
 
     // Selected Model changed
     connect(mpSelectedCelModel, SIGNAL(alphaChanged(double)), m_ui->alphaSpinBox, SLOT(setValue(double)));
@@ -132,13 +136,15 @@ AnimationViewer::AnimationViewer(QWidget* parent, AnimationModel* animationModel
     connect(m_ui->positionTypeComboBox, SIGNAL(currentIndexChanged(int)), mpAnimationViewerPanel, SLOT(refresh()));
     connect(m_ui->positionTypeOptionComboBox, SIGNAL(currentIndexChanged(int)), mpAnimationViewerPanel, SLOT(refresh()));
     connect(m_ui->emitterCheckBox, SIGNAL(toggled(bool)), mpAnimationViewerPanel, SLOT(refresh()));
-    connect(m_ui->hideActorCheckbox, SIGNAL(toggled(bool)), mpAnimationViewerPanel, SLOT(refresh()));
+//    connect(m_ui->hideActorCheckbox, SIGNAL(toggled(bool)), mpAnimationViewerPanel, SLOT(refresh()));
 
     connect(m_ui->centerXSpinBox, SIGNAL(valueChanged(int)), mpAnimationViewerPanel, SLOT(refresh()));
     connect(m_ui->centerYSpinBox, SIGNAL(valueChanged(int)), mpAnimationViewerPanel, SLOT(refresh()));
     connect(m_ui->showAnimationUICheckBox, SIGNAL(toggled(bool)), mpAnimationViewerPanel, SLOT(setShowAnimationUI(bool)));
-    connect(m_ui->showCameraCheckbox, SIGNAL(toggled(bool)), mpAnimationViewerPanel, SLOT(setShowCamera(bool)));
+//    connect(m_ui->showCameraCheckbox, SIGNAL(toggled(bool)), mpAnimationViewerPanel, SLOT(setShowCamera(bool)));
     connect(m_ui->showTargetCheckbox, SIGNAL(toggled(bool)), mpAnimationViewerPanel, SLOT(setShowTarget(bool)));
+    connect(m_ui->zoomSlider, SIGNAL(valueChanged(int)), this, SLOT(setZoom(int)));
+    connect(m_ui->zoomSpinBox, SIGNAL(valueChanged(int)), this, SLOT(setZoom(int)));
 
     connect(m_ui->loopPlayCheckbox, SIGNAL(toggled(bool)), this, SLOT(setLoopPlay(bool)));
 
@@ -179,6 +185,20 @@ void AnimationViewer::changeEvent(QEvent *e)
     }
 }
 
+void AnimationViewer::onAnimationTypeChanged(int type)
+{
+    setZoom(AnimationModel::animationTypeDefaultZoom[type]);
+}
+
+void AnimationViewer::setZoom(int value)
+{
+    float zoom = value / 100.0f;
+    mpAnimationViewerPanel->setZoom(zoom);
+    m_ui->zoomSpinBox->setValue(value);
+    m_ui->zoomSlider->setValue(value);
+}
+
+
 void AnimationViewer::setLoopPlay(bool loop)
 {
     mLoop = loop;
@@ -197,7 +217,7 @@ void AnimationViewer::blockSignals(bool block)
     m_ui->positionTypeComboBox->blockSignals(block);
     m_ui->positionTypeOptionComboBox->blockSignals(block);
     m_ui->emitterCheckBox->blockSignals(block);
-    m_ui->hideActorCheckbox->blockSignals(block);
+//    m_ui->hideActorCheckbox->blockSignals(block);
     m_ui->facingOptionCombobox->blockSignals(block);
     m_ui->blendTypeComboBox->blockSignals(block);
     m_ui->centerXSpinBox->blockSignals(block);
@@ -250,7 +270,7 @@ void AnimationViewer::onCelSelected(KeyFrameData* pKeyFrameData)
         m_ui->minEmitAngleSpinBox->setValue(pKeyFrameData->mSpriteDescriptor.mMinEmitAngle);
         m_ui->maxEmitAngleSpinBox->setValue(pKeyFrameData->mSpriteDescriptor.mMaxEmitAngle);
 
-        m_ui->hideActorCheckbox->setChecked(pKeyFrameData->mHideActor);
+//        m_ui->hideActorCheckbox->setChecked(pKeyFrameData->mHideActor);
 
         bool positionTypeOptionEnabled = m_ui->positionTypeComboBox->currentIndex() != 0;
         m_ui->positionTypeOptionComboBox->setEnabled(positionTypeOptionEnabled);

@@ -69,6 +69,12 @@ QSize AnimationModel::animationTypeSize[AnimationModel::AnimationType_COUNT] =
     QSize(288, 384)
 };
 
+int AnimationModel::animationTypeDefaultZoom[AnimationModel::AnimationType_COUNT] =
+{
+    200,
+    100
+};
+
 static QPixmap* spTargetPixmap = NULL;
 GLSprite* spTargetSprite = NULL;
 static QPixmap* spCenterPointPixmap = NULL;
@@ -160,7 +166,6 @@ void AnimationModel::setTargetSpritePosition(float x, float y)
         emit targetPositionMoved((int)x, (int)y);
     }
 }
-
 
 void AnimationModel::setAnimationType(int type)
 {
