@@ -27,7 +27,8 @@ AnimationViewerPanel::AnimationViewerPanel(QWidget* parent, AnimationModel* pAni
           mTargetGrabbed(false),
           mShowAnimationUI(true),
           mShowTarget(true),
-          mShowCamera(true)
+          mShowCamera(true),
+          mZoom(0)
 {
     setAutoFillBackground(false);
 
@@ -110,10 +111,13 @@ void AnimationViewerPanel::resizeEvent(QResizeEvent *event)
 
 QPoint AnimationViewerPanel::getCenterPoint() const
 {
-    QSize guideSize = mpAnimationModel->guideSize();
+    if (mZoom == 0) {
+        return QPoint(width() / 2, height() / 2);
+    }
+
     return QPoint(
-        (width()) / 2 - guideSize.width() / 2,
-        (height()) / 2 + guideSize.height() / 2
+        (width()) / 2,
+        (height()) / 2
     );
 }
 
@@ -213,9 +217,12 @@ void AnimationViewerPanel::paintEvent(QPaintEvent *event)
     painter.setBrush(Qt::NoBrush);
     painter.fillRect(QRect(0, 0, width() , height() ), Qt::SolidPattern);
 
+    QSize guideSize = mpAnimationModel->guideSize();
+    painter.translate(-guideSize.width() / 2, guideSize.height() / 2);
     painter.translate(width() / 2, height() / 2);
     painter.scale(mZoom, mZoom);
     painter.translate(-width() / 2, -height() / 2);
+
 
     renderCelSprites(centerPoint, painter);
     if (mShowAnimationUI) {
@@ -232,40 +239,58 @@ void AnimationViewerPanel::paintEvent(QPaintEvent *event)
 void AnimationViewerPanel::renderMask(QPainter& painter) const
 {
     QSize guideSize = mpAnimationModel->guideSize();
-    if (guideSize.width() == 0 || guideSize.height() == 0) {
+    QPoint centerPoint = getCenterPoint();
+    int gw = guideSize.width();
+    int gh = guideSize.height();
+    if (gw == 0 || gh == 0 || mZoom == 0) {
         return;
     }
+    float zoom = mZoom;
+    if (zoom > 1) {
+        zoom = 1;
+    }
+
     // Background Guide
-    int x1 = (this->width() - guideSize.width()) / 2;
-    int y1 = (this->height() - guideSize.height()) / 2;
-    int x2 = this->width() - x1;
-    int y2 = this->height() - y1;
-    int w = x1;
-    int h = y1;
+    int x1 = centerPoint.x();
+    int y1 = centerPoint.y();
+    int x2 = centerPoint.x() + gw;
+    int y2 = centerPoint.y() - gh;
+    int sx = (gw/2 - centerPoint.x()) / zoom;
+    int sy = (gh/2 + height()) / zoom;
+    int ex = (gw/2 + width()) / zoom;
+    int ey = (-centerPoint.y() - gh/2) / zoom;
 
     painter.setPen(QColor(220, 150, 200, 100));
     painter.drawLine(QLine(x1, y1, x1, y2));
     painter.drawLine(QLine(x1, y2, x2, y2));
     painter.drawLine(QLine(x2, y2, x2, y1));
     painter.drawLine(QLine(x2, y1, x1, y1));
-    if (mIsAnimationPlaying) {
-        painter.fillRect(QRect(0, 0, w, this->height()), QColor(0,0,0,255));
-        painter.fillRect(QRect(this->width() - w, 0, w, this->height()), QColor(0,0,0,255));
-        painter.fillRect(QRect(0, 0, this->width(), h), QColor(0,0,0,255));
-        painter.fillRect(QRect(0, this->height() - h, this->width(), h), QColor(0,0,0,255));
-    }
+//    if (mIsAnimationPlaying) {
+
+        painter.fillRect(QRect(sx, sy, x1 - sx, ey - sy), QColor(0,0,0,255));
+        painter.fillRect(QRect(x2, sy, ex - x2, ey - sy), QColor(0,0,0,255));
+        painter.fillRect(QRect(sx, y1, ex - sx, sy - y1), QColor(0,0,0,255));
+        painter.fillRect(QRect(sx, ey, ex - sx, y2 - ey), QColor(0,0,0,255));
+//    }
 }
 
 void AnimationViewerPanel::renderCross(QPainter& painter) const
 {
+    QSize guideSize = mpAnimationModel->guideSize();
     QPoint centerPoint = getCenterPoint();
+    int gw = guideSize.width();
+    int gh = + guideSize.width();
     // Background Guide
+    int sx = (gw / 2 - centerPoint.x()) / mZoom;
+    int sy = (-centerPoint.y() - gh / 2) / mZoom;
     int x1 = centerPoint.x();
     int y1 = centerPoint.y();
+    int x2 = centerPoint.x() + width() / mZoom;
+    int y2 = centerPoint.y() + height() / mZoom;
 
     painter.setPen(QColor(120, 150, 200));
-    painter.drawLine(QPoint(0, y1), QPoint(width(), y1));
-    painter.drawLine(QPoint(x1, 0), QPoint(x1, height()));
+    painter.drawLine(QPoint(sx, y1), QPoint(x2, y1));
+    painter.drawLine(QPoint(x1, sy), QPoint(x1, y2));
 }
 
 void AnimationViewerPanel::renderCelSprites(const QPoint& centerPoint, QPainter& painter)
@@ -508,66 +533,6 @@ void AnimationViewerPanel::mouseDoubleClickEvent(QMouseEvent *event)
     }
 }
 
-void AnimationViewerPanel::mousePressEvent(QMouseEvent *event)
-{
-    this->setFocus();
-
-    // Get center point here
-    QPoint centerPoint = getCenterPoint();
-    // Calculate pressed position relative from center
-    QPoint relativePressedPosition = (QPoint(event->x(), event->y()) - centerPoint)  / mZoom;
-
-    mTargetGrabbed  = false;
-    mCelGrabbed = false;
-
-    grabTarget(relativePressedPosition);
-
-    // only for edit mode
-    if (mIsAnimationPlaying || mTargetGrabbed)
-    {
-        return;
-    }
-
-    // center point mode
-    if (event->modifiers() & Qt::ControlModifier)
-    {
-        setCenterPoint(event);
-        return;
-    }
-
-    grabCel(relativePressedPosition);
-
-    if(mCelGrabbed)
-    {
-        return;
-    }
-    if (mpAnimationModel->getLoadedAnimationPath() == mpAnimationModel->getSelectedSourcePath())
-    {
-        QMessageBox::information(window(), tr("Animation nest error"),
-            tr("You cannot nest the same animation"));
-    }
-    else
-    {
-        KeyFrame::KeyFramePosition currentPosition = mpAnimationModel->getCurrentKeyFramePosition();
-        switch(ResourceManager::getFileType(mpAnimationModel->getSelectedSourcePath()))
-        {
-            case ResourceManager::FileType_Animation:
-            case ResourceManager::FileType_Image:
-                if (mpAnimationModel->getKeyFrameIndex(currentPosition.mLineNo, currentPosition.mFrameNo) > -1)
-                {
-                    if (event->modifiers() & Qt::ShiftModifier)
-                    {
-                        swapSourceTexture();
-                    }
-                }
-            break;
-
-            default:
-            break;
-        }
-    }
-}
-
 // When the user clicked on the canvas with Shift key pressed,
 // it causes the cel to swap its texture to currenly selected palet
 void AnimationViewerPanel::swapSourceTexture()
@@ -634,11 +599,75 @@ void AnimationViewerPanel::setCenterPoint(QMouseEvent *event)
     }
 }
 
+void AnimationViewerPanel::mousePressEvent(QMouseEvent *event)
+{
+    this->setFocus();
+
+    // Get center point here
+    QPoint centerPoint = getCenterPoint();
+    QSize guideSize = mpAnimationModel->guideSize();
+    // Calculate pressed position relative from center
+    QPoint relativePressedPosition = (QPoint(event->x() + guideSize.width() / 2, event->y()-guideSize.height() / 2) - centerPoint)  / mZoom;
+
+    mTargetGrabbed  = false;
+    mCelGrabbed = false;
+
+    grabTarget(relativePressedPosition);
+
+    // only for edit mode
+    if (mIsAnimationPlaying || mTargetGrabbed)
+    {
+        return;
+    }
+
+    // center point mode
+    if (event->modifiers() & Qt::ControlModifier)
+    {
+        setCenterPoint(event);
+        return;
+    }
+
+    grabCel(relativePressedPosition);
+
+    if(mCelGrabbed)
+    {
+        return;
+    }
+    if (mpAnimationModel->getLoadedAnimationPath() == mpAnimationModel->getSelectedSourcePath())
+    {
+        QMessageBox::information(window(), tr("Animation nest error"),
+            tr("You cannot nest the same animation"));
+    }
+    else
+    {
+        KeyFrame::KeyFramePosition currentPosition = mpAnimationModel->getCurrentKeyFramePosition();
+        switch(ResourceManager::getFileType(mpAnimationModel->getSelectedSourcePath()))
+        {
+            case ResourceManager::FileType_Animation:
+            case ResourceManager::FileType_Image:
+                if (mpAnimationModel->getKeyFrameIndex(currentPosition.mLineNo, currentPosition.mFrameNo) > -1)
+                {
+                    if (event->modifiers() & Qt::ShiftModifier)
+                    {
+                        swapSourceTexture();
+                    }
+                }
+            break;
+
+            default:
+            break;
+        }
+    }
+}
+
 void AnimationViewerPanel::mouseMoveEvent(QMouseEvent *event)
 {
     QPoint centerPoint = getCenterPoint();
-    int newPosX = (event->x() - centerPoint.x()) / mZoom + mSelectedOffset.x();
-    int newPosY = (event->y() - centerPoint.y()) / mZoom + mSelectedOffset.y();
+    QSize guideSize = mpAnimationModel->guideSize();
+    int newPosX = (event->x() - centerPoint.x() + guideSize.width() / 2) / mZoom + mSelectedOffset.x();
+    int newPosY = (event->y() - centerPoint.y() - guideSize.height() / 2) / mZoom + mSelectedOffset.y();
+
+
     KeyFrameData* pKeyFrameData = mpSelectedCelModel->getKeyFrameDataReference();
 
     if (event->modifiers() & Qt::ControlModifier)
