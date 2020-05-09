@@ -6,7 +6,6 @@
 #include <QPixmap>
 #include <QPainter>
 #include "DataModels/AnimationModel.h"
-#include "DataModels/KeyFrame.h"
 #include "ResourceManager.h"
 
 static uint tempColorTable[256];
