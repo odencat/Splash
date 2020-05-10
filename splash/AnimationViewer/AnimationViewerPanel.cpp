@@ -265,13 +265,12 @@ void AnimationViewerPanel::renderMask(QPainter& painter) const
     painter.drawLine(QLine(x1, y2, x2, y2));
     painter.drawLine(QLine(x2, y2, x2, y1));
     painter.drawLine(QLine(x2, y1, x1, y1));
-//    if (mIsAnimationPlaying) {
-
+    if (mIsAnimationPlaying) {
         painter.fillRect(QRect(sx, sy, x1 - sx, ey - sy), QColor(0,0,0,255));
         painter.fillRect(QRect(x2, sy, ex - x2, ey - sy), QColor(0,0,0,255));
         painter.fillRect(QRect(sx, y1, ex - sx, sy - y1), QColor(0,0,0,255));
         painter.fillRect(QRect(sx, ey, ex - sx, y2 - ey), QColor(0,0,0,255));
-//    }
+    }
 }
 
 void AnimationViewerPanel::renderCross(QPainter& painter) const
