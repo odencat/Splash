@@ -81,10 +81,10 @@ QTimelineWidget::QTimelineWidget(AnimationModel* pAnimationModel, QWidget *paren
     this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     this->setMinimumHeight(200);
     this->horizontalHeader()->setStretchLastSection(false);
-    this->horizontalHeader()->setDefaultSectionSize(6);
+    this->horizontalHeader()->setDefaultSectionSize(18);
 
     this->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
-    this->horizontalHeader()->setVisible(false);
+//    this->horizontalHeader()->setVisible(false);
 
     this->verticalHeader()->setStretchLastSection(false);
     this->verticalHeader()->setDefaultSectionSize(24);
