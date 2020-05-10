@@ -209,9 +209,6 @@ bool GLSprite::renderColored(QPainter& painter, const QPointF& dstPoint, const Q
 
 void GLSprite::render(QPoint offset, QPainter& painter, const GLSprite* pTargetSprite, bool isPlaying, QList<EmittedAnimation*>* emittedAnimationList) const
 {
-    QPointF spritePosition = QPointF(mSpriteDescriptor.mPosition.mX, mSpriteDescriptor.mPosition.mY);
-    QPointF spriteRenderPoint = spritePosition;
-
     // Choose Blend Type
     painter.setCompositionMode(sCompositionMode[mSpriteDescriptor.mBlendType]);
 
