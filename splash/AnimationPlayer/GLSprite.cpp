@@ -100,7 +100,7 @@ QTransform GLSprite::getParentTransform() const
     QTransform transform;
     if (mpParentGLSprite)
     {
-        transform = transform * mpParentGLSprite->getCombinedTransform();
+        transform = transform * mpParentGLSprite->getTotalTransform();
     }
     return transform;
 }
@@ -346,7 +346,7 @@ QTransform GLSprite::getTransform() const
     return mSpriteDescriptor.getTransform();
 }
 
-QTransform GLSprite::getCombinedTransform() const
+QTransform GLSprite::getTotalTransform() const
 {
     return getParentTransform() * getTransform();
 }
