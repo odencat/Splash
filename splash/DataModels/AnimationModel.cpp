@@ -668,6 +668,9 @@ const QList<const GLSprite*> AnimationModel::createGLSpriteListAt(const GLSprite
 
 template <class T> T AnimationModel::tweenValue(KeyFrameData::TweenType tweenType, T startValue, T endValue, int frameNo, int startFrameNo, int endFrameNo) const
 {
+    if (endFrameNo <= startFrameNo) {
+        return startValue;
+    }
     switch (tweenType){
     case KeyFrameData::eTT_EaseIn:
         return EASE_IN(startValue, endValue, frameNo, startFrameNo, endFrameNo);
@@ -918,7 +921,10 @@ bool AnimationModel::copyTweenedAttribute(const GLSprite* pParentGLSprite, Sprit
     bool tweenFound = false;
     int startIndex = getPreviousKeyFrameIndex(lineNo, frameNo, tweenAttribute);
     int endIndex = getNextKeyFrameIndex(lineNo, frameNo, tweenAttribute);
-    if (startIndex >= 0 && endIndex > startIndex)
+    if (endIndex < 0) {
+        endIndex = startIndex;
+    }
+    if (startIndex >= 0 && endIndex >= startIndex)
     {
         tweenFound = true;
         KeyFrame* pStartKeyFrame = mTimeline[lineNo][startIndex];
