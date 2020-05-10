@@ -1,4 +1,4 @@
-#include "AnimationImagePaletpanel.h"
+#include "AnimationImagePaletPanel.h"
 #include "ResourceManager.h"
 #include "AnimationPlayer/GLSprite.h"
 #include <QPainter>

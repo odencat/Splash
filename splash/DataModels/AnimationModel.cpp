@@ -685,11 +685,11 @@ template <class T> T AnimationModel::tweenValue(KeyFrameData::TweenType tweenTyp
         return LERP(startValue, startValue, frameNo, startFrameNo, endFrameNo);
     break;
     default:
-    break;
+        return startValue;
     }
 }
 
-void AnimationModel::tweenElement(SpriteDescriptor& spriteDescriptor, KeyFrameData::TweenAttribute tweenAttribute, KeyFrameData::TweenType tweenType, SpriteDescriptor& startDescriptor, SpriteDescriptor& endDescriptor, int lineNo, int frameNo, int startFrameNo, int endFrameNo) const
+void AnimationModel::tweenElement(SpriteDescriptor& spriteDescriptor, KeyFrameData::TweenAttribute tweenAttribute, KeyFrameData::TweenType tweenType, SpriteDescriptor& startDescriptor, SpriteDescriptor& endDescriptor, int frameNo, int startFrameNo, int endFrameNo) const
 {
     switch(tweenAttribute)
     {
@@ -750,7 +750,7 @@ void AnimationModel::setFinalPosition(const GLSprite* parentGLSprite, SpriteDesc
         }
         else if(spriteDescriptor.mPositionType == PositionType_RelativeToTargetOrigin)
         {
-            QPoint targetPoint = getPositionWithPositionType(QPoint(TARGET_originX, TARGET_originY), spriteDescriptor.mPositionTypeOption, spTargetSprite->mSpriteDescriptor.mTextureSrcRect.width(), spTargetSprite->mSpriteDescriptor.mTextureSrcRect.height(), spriteDescriptor.mTextureSrcRect.width(), spriteDescriptor.mTextureSrcRect.height());
+            QPoint targetPoint = getPositionWithPositionType(QPoint(TARGET_originX, TARGET_originY), spriteDescriptor.mPositionTypeOption, spTargetSprite->mSpriteDescriptor.mTextureSrcRect.width(), spTargetSprite->mSpriteDescriptor.mTextureSrcRect.height(),spriteDescriptor.mTextureSrcRect.height());
             QTransform transform;
             transform.translate(targetPoint.x(), targetPoint.y());
             transform.rotate(0);
@@ -950,7 +950,7 @@ bool AnimationModel::copyTweenedAttribute(const GLSprite* pParentGLSprite, Sprit
             endDescriptor = startDescriptor;
         }
 
-        tweenElement(spriteDescriptor, tweenAttribute, pStartKeyFrame->mpKeyFrameData->mTweenTypes[tweenAttribute], startDescriptor, endDescriptor, lineNo, frameNo, pStartKeyFrame->mFrameNo, pEndKeyFrame->mFrameNo);
+        tweenElement(spriteDescriptor, tweenAttribute, pStartKeyFrame->mpKeyFrameData->mTweenTypes[tweenAttribute], startDescriptor, endDescriptor, frameNo, pStartKeyFrame->mFrameNo, pEndKeyFrame->mFrameNo);
 
         if(tweenAttribute == KeyFrameData::TweenAttribute_rotation)
         {

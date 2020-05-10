@@ -114,7 +114,7 @@ struct Color
     }
 };
 
-static QPoint getPositionWithPositionType(QPointF basePosition, PositionTypeOption positionTypeOption, int width, int height, int selfWidth, int selfHeight)
+static QPoint getPositionWithPositionType(QPointF basePosition, PositionTypeOption positionTypeOption, int width, int height, int selfHeight)
 {
     int dx = 0;
     int dy = 0;

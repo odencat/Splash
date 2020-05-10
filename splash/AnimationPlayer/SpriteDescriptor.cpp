@@ -53,10 +53,9 @@ QPoint SpriteDescriptor::getPosition(const GLSprite* pTargetSprite) const
 {
     if (mPositionType != PositionType_None)
     {
-        int selfWidth = this->mTextureSrcRect.width();
         int selfHeight = this->mTextureSrcRect.height();
 
-        return getPositionWithPositionType(QPointF(mPosition.mX, mPosition.mY), mPositionTypeOption, pTargetSprite->mSpriteDescriptor.mTextureSrcRect.width(), pTargetSprite->mSpriteDescriptor.mTextureSrcRect.height(), selfWidth, selfHeight);
+        return getPositionWithPositionType(QPointF(mPosition.mX, mPosition.mY), mPositionTypeOption, pTargetSprite->mSpriteDescriptor.mTextureSrcRect.width(), pTargetSprite->mSpriteDescriptor.mTextureSrcRect.height(), selfHeight);
     }
     return QPointF(mPosition.mX, mPosition.mY).toPoint();
 }
