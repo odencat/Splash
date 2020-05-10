@@ -666,7 +666,7 @@ const QList<const GLSprite*> AnimationModel::createGLSpriteListAt(const GLSprite
     return glSpriteList;
 }
 
-int AnimationModel::tweenValue(KeyFrameData::TweenType tweenType, int startValue, int endValue, int frameNo, int startFrameNo, int endFrameNo) const
+template <class T> T AnimationModel::tweenValue(KeyFrameData::TweenType tweenType, T startValue, T endValue, int frameNo, int startFrameNo, int endFrameNo) const
 {
     switch (tweenType){
     case KeyFrameData::eTT_EaseIn:
@@ -691,23 +691,23 @@ void AnimationModel::tweenElement(SpriteDescriptor& spriteDescriptor, KeyFrameDa
     switch(tweenAttribute)
     {
         case KeyFrameData::TweenAttribute_alpha:
-            spriteDescriptor.mAlpha = tweenValue(tweenType, startDescriptor.mAlpha, endDescriptor.mAlpha, frameNo, startFrameNo, endFrameNo);
+            spriteDescriptor.mAlpha = tweenValue<float>(tweenType, startDescriptor.mAlpha, endDescriptor.mAlpha, frameNo, startFrameNo, endFrameNo);
             break;
         case KeyFrameData::TweenAttribute_position:
-            spriteDescriptor.mPosition.mX = tweenValue(tweenType, startDescriptor.mPosition.mX, endDescriptor.mPosition.mX, frameNo, startFrameNo, endFrameNo);
-            spriteDescriptor.mPosition.mY = tweenValue(tweenType, startDescriptor.mPosition.mY, endDescriptor.mPosition.mY, frameNo, startFrameNo, endFrameNo);
+            spriteDescriptor.mPosition.mX = tweenValue<int>(tweenType, startDescriptor.mPosition.mX, endDescriptor.mPosition.mX, frameNo, startFrameNo, endFrameNo);
+            spriteDescriptor.mPosition.mY = tweenValue<int>(tweenType, startDescriptor.mPosition.mY, endDescriptor.mPosition.mY, frameNo, startFrameNo, endFrameNo);
             break;
         case KeyFrameData::TweenAttribute_rotation:
-            spriteDescriptor.mRotation = tweenValue(tweenType, startDescriptor.mRotation, endDescriptor.mRotation, frameNo, startFrameNo, endFrameNo);
+            spriteDescriptor.mRotation = tweenValue<int>(tweenType, startDescriptor.mRotation, endDescriptor.mRotation, frameNo, startFrameNo, endFrameNo);
             break;
         case KeyFrameData::TweenAttribute_scale:
-            spriteDescriptor.mScale.mX = tweenValue(tweenType, startDescriptor.mScale.mX, endDescriptor.mScale.mX, frameNo, startFrameNo, endFrameNo);
-            spriteDescriptor.mScale.mY = tweenValue(tweenType, startDescriptor.mScale.mY, endDescriptor.mScale.mY, frameNo, startFrameNo, endFrameNo);
+            spriteDescriptor.mScale.mX = tweenValue<float>(tweenType, startDescriptor.mScale.mX, endDescriptor.mScale.mX, frameNo, startFrameNo, endFrameNo);
+            spriteDescriptor.mScale.mY = tweenValue<float>(tweenType, startDescriptor.mScale.mY, endDescriptor.mScale.mY, frameNo, startFrameNo, endFrameNo);
             break;
         case KeyFrameData::TweenAttribute_color:
-            spriteDescriptor.mColor.mR = tweenValue(tweenType, startDescriptor.mColor.mR, endDescriptor.mColor.mR, frameNo, startFrameNo, endFrameNo);
-            spriteDescriptor.mColor.mG = tweenValue(tweenType, startDescriptor.mColor.mG, endDescriptor.mColor.mG, frameNo, startFrameNo, endFrameNo);
-            spriteDescriptor.mColor.mB = tweenValue(tweenType, startDescriptor.mColor.mB, endDescriptor.mColor.mB, frameNo, startFrameNo, endFrameNo);
+            spriteDescriptor.mColor.mR = tweenValue<float>(tweenType, startDescriptor.mColor.mR, endDescriptor.mColor.mR, frameNo, startFrameNo, endFrameNo);
+            spriteDescriptor.mColor.mG = tweenValue<float>(tweenType, startDescriptor.mColor.mG, endDescriptor.mColor.mG, frameNo, startFrameNo, endFrameNo);
+            spriteDescriptor.mColor.mB = tweenValue<float>(tweenType, startDescriptor.mColor.mB, endDescriptor.mColor.mB, frameNo, startFrameNo, endFrameNo);
             break;
         default:
             break;

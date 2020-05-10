@@ -136,7 +136,7 @@ private:
     void setFinalAlpha(const GLSprite* parentGLSprite, SpriteDescriptor& spriteDescriptor) const;
     void setFinalPosition(const GLSprite* parentGLSprite, SpriteDescriptor& spriteDescriptor) const;
     void setFinalRotation(const GLSprite* parentGLSprite, int lineNo, int frameNo, SpriteDescriptor& spriteDescriptor) const;
-    int tweenValue(KeyFrameData::TweenType tweenType, int startValue, int endValue, int frameNo, int startFrameNo, int endFrameNo) const;
+    template <class T> T tweenValue(KeyFrameData::TweenType tweenType, T startValue, T endValue, int frameNo, int startFrameNo, int endFrameNo) const;
     void tweenElement(SpriteDescriptor& spriteDescriptor, KeyFrameData::TweenAttribute tweenAttribute, KeyFrameData::TweenType tweenType, SpriteDescriptor& startDescriptor, SpriteDescriptor& endDescriptor, int lineNo, int frameNo, int startFrameNo, int endFrameNo) const;
 
     // Key Frames
