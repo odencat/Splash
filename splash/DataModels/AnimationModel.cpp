@@ -1397,10 +1397,9 @@ bool AnimationModel::loadData(QString path)
     setAnimationName(QString::fromStdString(root["name"].asString()).toUtf8());
     setAnimationType(AnimationType(root["type"].asInt()));
     Json::Value& lines = root["keyframes"];
-
     for(Json::Value::iterator iter = lines.begin() ; lines.end() != iter ; iter++)
     {
-        const char* c_str = iter.memberName();
+        const char* c_str = iter.name().c_str();
         int lineNo = atoi(c_str);
         Json::Value& line =  *iter;
         mTimeline[lineNo] = loadLine(lineNo, line);
@@ -1413,7 +1412,7 @@ bool AnimationModel::loadData(QString path)
         for(Json::Value::iterator iter = events.begin() ; events.end() != iter ; iter++)
         {
             // Get frameNo for the event and add to hash
-            const char* c_str = iter.memberName();
+            const char* c_str = iter.name().c_str();
             int frameNo = atoi(c_str);
             mEvents.insert(frameNo, EventList());
 
