@@ -2,7 +2,7 @@
 
 #include "Macros.h"
 #include <math.h>
-#include <QGlobal.h>
+#include <qglobal.h>
 #include <QPixmap>
 #include <QPainter>
 #include "DataModels/AnimationModel.h"
@@ -304,7 +304,7 @@ const GLSprite* GLSprite::getRootSprite() const
     const GLSprite* pRootSprite = this;
 
     const GLSprite* pSprite = this;
-    while (pSprite = pSprite->getParentSprite())
+    while ((pSprite = pSprite->getParentSprite()))
     {
         pRootSprite = pSprite;
     }
@@ -316,7 +316,7 @@ float GLSprite::getAbsoluteAlpha() const
     float alpha = mSpriteDescriptor.mAlpha;
 
     const GLSprite* pSprite = this;
-    while (pSprite = pSprite->getParentSprite())
+    while ((pSprite = pSprite->getParentSprite()))
     {
         alpha *= pSprite->mSpriteDescriptor.mAlpha;
     }
@@ -328,7 +328,7 @@ Color GLSprite::getAbsoluteColor() const
     Color color = mSpriteDescriptor.mColor;
 
     const GLSprite* pSprite = this;
-    while (pSprite = pSprite->getParentSprite())
+    while ((pSprite = pSprite->getParentSprite()))
     {
         color.mR += pSprite->mSpriteDescriptor.mColor.mR;
         color.mG += pSprite->mSpriteDescriptor.mColor.mG;
@@ -363,7 +363,7 @@ QList<KeyFrame::KeyFramePosition> GLSprite::getNodePath() const
 
     bool isRootEmitted = false;
     const GLSprite* pSprite = this;
-    while(pSprite = pSprite->getParentSprite())
+    while((pSprite = pSprite->getParentSprite()))
     {
         isRootEmitted = pSprite->isEmitted();
         list.push_front(KeyFrame::KeyFramePosition(pSprite->mLineNo, pSprite->mFrameNo));
