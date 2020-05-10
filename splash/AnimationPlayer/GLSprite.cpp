@@ -95,16 +95,6 @@ GLSprite::GLSprite(const GLSprite* pGLSprite, const AnimationModel* pAnimationMo
 {
 }
 
-QTransform GLSprite::getParentTransform() const
-{
-    QTransform transform;
-    if (mpParentGLSprite)
-    {
-        transform = transform * mpParentGLSprite->getTotalTransform();
-    }
-    return transform;
-}
-
 const GLSprite* GLSprite::getParentSprite() const
 {
     return mpParentGLSprite;
@@ -349,6 +339,16 @@ QTransform GLSprite::getTransform() const
 QTransform GLSprite::getTotalTransform() const
 {
     return getParentTransform() * getTransform();
+}
+
+QTransform GLSprite::getParentTransform() const
+{
+    QTransform transform;
+    if (mpParentGLSprite)
+    {
+        transform = transform * mpParentGLSprite->getTotalTransform();
+    }
+    return transform;
 }
 
 bool GLSprite::isEmitted() const

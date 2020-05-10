@@ -30,7 +30,6 @@ public:
     float getAbsoluteAlpha() const;
     Color getAbsoluteColor() const;
 
-    QTransform getTransform() const;
     bool isEmitted() const;
     QList<KeyFrame::KeyFramePosition> getNodePath() const;
 
@@ -42,7 +41,9 @@ public:
     void render(QPoint offset, QPainter& painter, const GLSprite* pTargetSprite, bool isPlaying, QList<EmittedAnimation*>* emittedAnimationList) const;
     QRect getRect() const;
     bool contains(QPoint point) const;
-    QTransform getCombinedTransform() const;
+
+    QTransform getTransform() const;
+    QTransform getTotalTransform() const;
     QTransform getParentTransform() const;
 
     int mID;

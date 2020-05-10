@@ -740,7 +740,7 @@ void AnimationModel::setFinalPosition(const GLSprite* parentGLSprite, SpriteDesc
             // Transform current position based on target point
             if(parentGLSprite)
             {
-                point = point * spTargetSprite->getCombinedTransform() * parentGLSprite->getCombinedTransform().inverted();
+                point = point * spTargetSprite->getTotalTransform() * parentGLSprite->getTotalTransform().inverted();
             }
             else
             {
@@ -759,7 +759,7 @@ void AnimationModel::setFinalPosition(const GLSprite* parentGLSprite, SpriteDesc
             // Transform current position based on target point
             if(parentGLSprite)
             {
-                point = point * transform * parentGLSprite->getCombinedTransform().inverted();
+                point = point * transform * parentGLSprite->getTotalTransform().inverted();
             }
             else
             {
@@ -786,16 +786,16 @@ void AnimationModel::setFinalRotation(const GLSprite* parentGLSprite, int lineNo
             // Transform current position to screen coordinate
             if (parentGLSprite)
             {
-                point = point * (parentGLSprite->getCombinedTransform());
+                point = point * (parentGLSprite->getTotalTransform());
             }
             else
             {
-                point = point * (spTargetSprite->getCombinedTransform() * spTargetSprite->getTransform().inverted());
+                point = point * (spTargetSprite->getTotalTransform() * spTargetSprite->getTransform().inverted());
             }
 
             // Transform target position to screen coordinate
             QPointF targetPoint = QPointF(spTargetSprite->mSpriteDescriptor.mPosition.mX, spTargetSprite->mSpriteDescriptor.mPosition.mY);
-            targetPoint = targetPoint * spTargetSprite->getCombinedTransform() * spTargetSprite->getTransform().inverted();
+            targetPoint = targetPoint * spTargetSprite->getTotalTransform() * spTargetSprite->getTransform().inverted();
 
             // Compare target and current sprite in screen coordinate
             float dx = targetPoint.x() - point.x();
@@ -868,22 +868,22 @@ void AnimationModel::setFinalRotation(const GLSprite* parentGLSprite, int lineNo
                     // Transform current position to screen coordinate
                     if (parentGLSprite)
                     {
-                        point = point * (parentGLSprite->getCombinedTransform());
+                        point = point * (parentGLSprite->getTotalTransform());
                     }
                     else
                     {
                         // The use of spTargetSprite is very tricky, it is nothing to do with target sprite position
-                        point = point * (spTargetSprite->getCombinedTransform() * spTargetSprite->getTransform().inverted());
+                        point = point * (spTargetSprite->getTotalTransform() * spTargetSprite->getTransform().inverted());
                     }
                     // Transform target position to screen coordinate
                     QPointF targetPoint = QPointF(pTargetSprite->mSpriteDescriptor.mPosition.mX, pTargetSprite->mSpriteDescriptor.mPosition.mY);
                     if (pTargetSprite->getParentSprite())
                     {
-                        targetPoint = targetPoint * pTargetSprite->getParentSprite()->getCombinedTransform();
+                        targetPoint = targetPoint * pTargetSprite->getParentSprite()->getTotalTransform();
                     }
                     else
                     {
-                        targetPoint = targetPoint * (spTargetSprite->getCombinedTransform() * spTargetSprite->getTransform().inverted());
+                        targetPoint = targetPoint * (spTargetSprite->getTotalTransform() * spTargetSprite->getTransform().inverted());
                     }
                     // Compare target and current sprite in screen coordinate
                     float dx = targetPoint.x() - point.x();
