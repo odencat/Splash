@@ -14,49 +14,6 @@
 
 static bool sIsNesting = false;
 
-// Macros
-#define TweenValue(field, startValue, endValue, frameNo, startFrameNo, endFrameNo)\
-{\
-   switch (tweenType){\
-   case KeyFrameData::eTT_EaseIn:\
-       field = LERP(startValue, endValue, frameNo, startFrameNo, endFrameNo);\
-   break;\
-   case KeyFrameData::eTT_EaseOut:\
-       field = LERP(startValue, endValue, frameNo, startFrameNo, endFrameNo);\
-   break;\
-   case KeyFrameData::eTT_Linear:\
-       field = LERP(startValue, endValue, frameNo, startFrameNo, endFrameNo);\
-   break;\
-   case KeyFrameData::eTT_Fix:\
-       field = LERP(startValue, startValue, frameNo, startFrameNo, endFrameNo);\
-   break;\
-   default:\
-   break;\
-   }\
-}
-
-
-#define Tween(tweenType, startValue, endValue, field, frameNo, startFrameNo, endFrameNo)\
-{\
-   switch (tweenType){\
-   case KeyFrameData::eTT_EaseIn:\
-       field = EASE_IN(startValue, endValue, frameNo, startFrameNo, endFrameNo);\
-   break;\
-   case KeyFrameData::eTT_EaseOut:\
-       field = EASE_OUT(startValue, endValue, frameNo, startFrameNo, endFrameNo);\
-   break;\
-   case KeyFrameData::eTT_Linear:\
-       field = LERP(startValue, endValue, frameNo, startFrameNo, endFrameNo);\
-   break;\
-   case KeyFrameData::eTT_Fix:\
-       field = LERP(startValue, startValue, frameNo, startFrameNo, endFrameNo);\
-   break;\
-   default:\
-   break;\
-   }\
-}
-////
-
 QString AnimationModel::animationTypeSting[AnimationModel::AnimationType_COUNT] =
 {
     "normal",
@@ -335,7 +292,7 @@ int AnimationModel::getNextKeyFrameIndex(int lineNo, int frameNo, KeyFrameData::
     for (int i = 0; i < keyframeList.count(); i++)
     {
         const KeyFrame* pKeyframe = keyframeList[i];
-        if (pKeyframe->mFrameNo > frameNo)
+        if (pKeyframe->mFrameNo >= frameNo)
         {
             if (isKeyData(tweenAttribute, pKeyframe))
             {
@@ -709,28 +666,48 @@ const QList<const GLSprite*> AnimationModel::createGLSpriteListAt(const GLSprite
     return glSpriteList;
 }
 
+int AnimationModel::tweenValue(KeyFrameData::TweenType tweenType, int startValue, int endValue, int frameNo, int startFrameNo, int endFrameNo) const
+{
+    switch (tweenType){
+    case KeyFrameData::eTT_EaseIn:
+        return EASE_IN(startValue, endValue, frameNo, startFrameNo, endFrameNo);
+    break;
+    case KeyFrameData::eTT_EaseOut:
+        return EASE_OUT(startValue, endValue, frameNo, startFrameNo, endFrameNo);
+    break;
+    case KeyFrameData::eTT_Linear:
+        return LERP(startValue, endValue, frameNo, startFrameNo, endFrameNo);
+    break;
+    case KeyFrameData::eTT_Fix:
+        return LERP(startValue, startValue, frameNo, startFrameNo, endFrameNo);
+    break;
+    default:
+    break;
+    }
+}
+
 void AnimationModel::tweenElement(SpriteDescriptor& spriteDescriptor, KeyFrameData::TweenAttribute tweenAttribute, KeyFrameData::TweenType tweenType, SpriteDescriptor& startDescriptor, SpriteDescriptor& endDescriptor, int lineNo, int frameNo, int startFrameNo, int endFrameNo) const
 {
     switch(tweenAttribute)
     {
         case KeyFrameData::TweenAttribute_alpha:
-            Tween(tweenType, startDescriptor.mAlpha, endDescriptor.mAlpha, spriteDescriptor.mAlpha, frameNo, startFrameNo, endFrameNo);
+            spriteDescriptor.mAlpha = tweenValue(tweenType, startDescriptor.mAlpha, endDescriptor.mAlpha, frameNo, startFrameNo, endFrameNo);
             break;
         case KeyFrameData::TweenAttribute_position:
-            Tween(tweenType, startDescriptor.mPosition.mX, endDescriptor.mPosition.mX, spriteDescriptor.mPosition.mX, frameNo, startFrameNo, endFrameNo);
-            Tween(tweenType, startDescriptor.mPosition.mY, endDescriptor.mPosition.mY, spriteDescriptor.mPosition.mY, frameNo, startFrameNo, endFrameNo);
+            spriteDescriptor.mPosition.mX = tweenValue(tweenType, startDescriptor.mPosition.mX, endDescriptor.mPosition.mX, frameNo, startFrameNo, endFrameNo);
+            spriteDescriptor.mPosition.mY = tweenValue(tweenType, startDescriptor.mPosition.mY, endDescriptor.mPosition.mY, frameNo, startFrameNo, endFrameNo);
             break;
         case KeyFrameData::TweenAttribute_rotation:
-            Tween(tweenType, startDescriptor.mRotation, endDescriptor.mRotation, spriteDescriptor.mRotation, frameNo, startFrameNo, endFrameNo);
+            spriteDescriptor.mRotation = tweenValue(tweenType, startDescriptor.mRotation, endDescriptor.mRotation, frameNo, startFrameNo, endFrameNo);
             break;
         case KeyFrameData::TweenAttribute_scale:
-            Tween(tweenType, startDescriptor.mScale.mX, endDescriptor.mScale.mX, spriteDescriptor.mScale.mX, frameNo, startFrameNo, endFrameNo);
-            Tween(tweenType, startDescriptor.mScale.mY, endDescriptor.mScale.mY, spriteDescriptor.mScale.mY, frameNo, startFrameNo, endFrameNo);
+            spriteDescriptor.mScale.mX = tweenValue(tweenType, startDescriptor.mScale.mX, endDescriptor.mScale.mX, frameNo, startFrameNo, endFrameNo);
+            spriteDescriptor.mScale.mY = tweenValue(tweenType, startDescriptor.mScale.mY, endDescriptor.mScale.mY, frameNo, startFrameNo, endFrameNo);
             break;
         case KeyFrameData::TweenAttribute_color:
-            Tween(tweenType, startDescriptor.mColor.mR, endDescriptor.mColor.mR, spriteDescriptor.mColor.mR, frameNo, startFrameNo, endFrameNo);
-            Tween(tweenType, startDescriptor.mColor.mG, endDescriptor.mColor.mG, spriteDescriptor.mColor.mG, frameNo, startFrameNo, endFrameNo);
-            Tween(tweenType, startDescriptor.mColor.mB, endDescriptor.mColor.mB, spriteDescriptor.mColor.mB, frameNo, startFrameNo, endFrameNo);
+            spriteDescriptor.mColor.mR = tweenValue(tweenType, startDescriptor.mColor.mR, endDescriptor.mColor.mR, frameNo, startFrameNo, endFrameNo);
+            spriteDescriptor.mColor.mG = tweenValue(tweenType, startDescriptor.mColor.mG, endDescriptor.mColor.mG, frameNo, startFrameNo, endFrameNo);
+            spriteDescriptor.mColor.mB = tweenValue(tweenType, startDescriptor.mColor.mB, endDescriptor.mColor.mB, frameNo, startFrameNo, endFrameNo);
             break;
         default:
             break;
