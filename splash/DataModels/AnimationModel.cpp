@@ -584,13 +584,9 @@ GLSprite* AnimationModel::createGLSpriteAt(const GLSprite* parentGLSprite, int f
     setFinalPosition(parentGLSprite, baseSpriteDescriptor);
 
     // Tween for each attribute
-    bool anyTweenFound = false;
     for (int i = 0; i < KeyFrameData::TweenAttribute_COUNT; i++)
     {
-        if (copyTweenedAttribute(parentGLSprite, baseSpriteDescriptor, lineNo, frameNo, (KeyFrameData::TweenAttribute)i))
-        {
-            anyTweenFound = true;
-        }
+        copyTweenedAttribute(parentGLSprite, baseSpriteDescriptor, lineNo, frameNo, (KeyFrameData::TweenAttribute)i);
     }
 
     // start of subanimation
@@ -916,7 +912,7 @@ void AnimationModel::setFinalRotation(const GLSprite* parentGLSprite, int lineNo
     sIsNesting = false;
 }
 
-bool AnimationModel::copyTweenedAttribute(const GLSprite* pParentGLSprite, SpriteDescriptor& spriteDescriptor, int lineNo, int frameNo, KeyFrameData::TweenAttribute tweenAttribute) const
+void AnimationModel::copyTweenedAttribute(const GLSprite* pParentGLSprite, SpriteDescriptor& spriteDescriptor, int lineNo, int frameNo, KeyFrameData::TweenAttribute tweenAttribute) const
 {
     bool tweenFound = false;
     int startIndex = getPreviousKeyFrameIndex(lineNo, frameNo, tweenAttribute);
@@ -931,7 +927,10 @@ bool AnimationModel::copyTweenedAttribute(const GLSprite* pParentGLSprite, Sprit
         KeyFrame* pEndKeyFrame = mTimeline[lineNo][endIndex];
 
         // Let's skip empty frames
-        if (!pStartKeyFrame->mpKeyFrameData || !pStartKeyFrame->mpKeyFrameData){return false;}
+        if (!pStartKeyFrame->mpKeyFrameData || !pStartKeyFrame->mpKeyFrameData)
+        {
+            return;
+        }
 
         SpriteDescriptor startDescriptor = pStartKeyFrame->mpKeyFrameData->mSpriteDescriptor;
 
@@ -965,8 +964,6 @@ bool AnimationModel::copyTweenedAttribute(const GLSprite* pParentGLSprite, Sprit
             setFinalRotation(pParentGLSprite, lineNo, frameNo, spriteDescriptor);
         }
     }
-
-    return tweenFound;
 }
 
 KeyFrame::KeyFramePosition AnimationModel::getCurrentKeyFramePosition()

@@ -47,7 +47,7 @@ public:
     AnimationModel(QWidget* parent, QString animationDir, QString animationID);
 
     ~AnimationModel();
-    
+
     void setup();
 
     void setTargetSpritePosition(float x, float y);
@@ -103,7 +103,7 @@ public:
     GLSprite* createGLSpriteAt(const GLSprite* parentGLSprite, int frameNo, int lineNo) const;
     GLSprite* createGLSpriteAt(const GLSprite* parentGLSprite, QList<KeyFrame::KeyFramePosition>nodePath) const;
     const QList<const GLSprite*> createGLSpriteListAt(const GLSprite* parentGLSprite, int frameNo) const;
-    bool copyTweenedAttribute(const GLSprite* parentGLSprite, SpriteDescriptor& spriteDescriptor, int lineNo, int frameNo, KeyFrameData::TweenAttribute tweenAttribute) const;
+    void copyTweenedAttribute(const GLSprite* parentGLSprite, SpriteDescriptor& spriteDescriptor, int lineNo, int frameNo, KeyFrameData::TweenAttribute tweenAttribute) const;
 
     // Save & Load
     bool saveData();
