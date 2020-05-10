@@ -1,0 +1,111 @@
+{
+   "keyframes" : {
+      "0" : [
+         {
+            "frameNo" : 0,
+            "positionTween" : "fix",
+            "sourcePath" : "Characters/soraFall.png",
+            "textureRect" : [ 0, 0, 32, 32 ]
+         },
+         {
+            "frameNo" : 19,
+            "position" : [ 10, 3 ],
+            "sourcePath" : "Characters/soraFall.png",
+            "textureRect" : [ 32, 0, 32, 32 ]
+         },
+         {
+            "frameNo" : 22,
+            "positionTween" : "fix",
+            "sourcePath" : "Characters/soraFall.png",
+            "textureRect" : [ 64, 0, 32, 32 ]
+         },
+         {
+            "frameNo" : 24,
+            "position" : [ -3, 0 ],
+            "positionTween" : "fix",
+            "sourcePath" : "Characters/soraFall.png",
+            "textureRect" : [ 96, 0, 32, 32 ]
+         },
+         {
+            "frameNo" : 26,
+            "position" : [ -8, 0 ],
+            "positionTween" : "fix",
+            "sourcePath" : "Characters/soraFall.png",
+            "textureRect" : [ 128, 0, 32, 32 ]
+         },
+         {
+            "frameNo" : 28,
+            "position" : [ -3, 0 ],
+            "positionTween" : "fix",
+            "sourcePath" : "Characters/soraFall.png",
+            "textureRect" : [ 160, 0, 32, 32 ]
+         },
+         {
+            "frameNo" : 30,
+            "position" : [ -3, 0 ],
+            "positionTween" : "fix",
+            "sourcePath" : "Characters/soraFall.png",
+            "textureRect" : [ 192, 0, 32, 32 ]
+         },
+         {
+            "frameNo" : 32,
+            "position" : [ -3, 0 ],
+            "positionTween" : "fix",
+            "sourcePath" : "Characters/soraFall.png",
+            "textureRect" : [ 224, 0, 32, 32 ]
+         },
+         {
+            "frameNo" : 45,
+            "position" : [ -1, 0 ],
+            "sourcePath" : "Characters/soraFall.png",
+            "textureRect" : [ 224, 0, 32, 32 ]
+         }
+      ],
+      "1" : [
+         {
+            "frameNo" : 0,
+            "position" : [ -63, -29 ],
+            "positionTween" : "linear",
+            "sourcePath" : "Combat/Common/MumoJump.ani"
+         },
+         {
+            "frameNo" : 19,
+            "position" : [ -63, -29 ],
+            "sourcePath" : "Combat/Common/MumoJump.ani"
+         },
+         {
+            "frameNo" : 27,
+            "position" : [ -4, 1 ],
+            "positionTween" : "fix",
+            "sourcePath" : "Combat/Common/MumoJump.ani"
+         },
+         {
+            "frameNo" : 30,
+            "position" : [ -12, -3 ],
+            "sourcePath" : "Characters/momoJump.png",
+            "textureRect" : [ 168, 0, 24, 24 ]
+         },
+         {
+            "frameNo" : 32,
+            "position" : [ -5, 1 ],
+            "sourcePath" : "Characters/momoJump.png",
+            "textureRect" : [ 168, 0, 24, 24 ]
+         },
+         {
+            "frameNo" : 34,
+            "position" : [ -4, 3 ],
+            "positionTween" : "fix",
+            "sourcePath" : "Characters/momoJump.png",
+            "textureRect" : [ 168, 0, 24, 24 ]
+         },
+         {
+            "frameNo" : 45,
+            "position" : [ -3, 0 ],
+            "sourcePath" : "Characters/momoJump.png",
+            "textureRect" : [ 168, 0, 24, 24 ]
+         }
+      ]
+   },
+   "name" : "",
+   "type" : 0
+}

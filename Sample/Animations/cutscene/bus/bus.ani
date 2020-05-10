@@ -1,0 +1,43 @@
+{
+   "keyframes" : {
+      "0" : [
+         {
+            "center" : [ 0.0, 42.0 ],
+            "frameNo" : 0,
+            "positionTween" : "fix",
+            "sourcePath" : "bg/bus_160_85_loop.png",
+            "textureRect" : [ 0, 0, 160, 85 ]
+         },
+         {
+            "center" : [ 0.0, 42.0 ],
+            "frameNo" : 7,
+            "position" : [ -57, -49 ],
+            "sourcePath" : "bg/bus_160_85_loop.png",
+            "textureRect" : [ 160, 0, 160, 85 ]
+         },
+         {
+            "center" : [ 0.0, 42.0 ],
+            "frameNo" : 15,
+            "position" : [ -44, -22 ],
+            "sourcePath" : "bg/bus_160_85_loop.png",
+            "textureRect" : [ 320, 0, 160, 85 ]
+         },
+         {
+            "center" : [ 0.0, 42.0 ],
+            "frameNo" : 23,
+            "position" : [ -26, -42 ],
+            "sourcePath" : "bg/bus_160_85_loop.png",
+            "textureRect" : [ 480, 0, 160, 85 ]
+         },
+         {
+            "center" : [ 0.0, 42.0 ],
+            "frameNo" : 31,
+            "position" : [ -26, -42 ],
+            "sourcePath" : "bg/bus_160_85_loop.png",
+            "textureRect" : [ 480, 0, 160, 85 ]
+         }
+      ]
+   },
+   "name" : "",
+   "type" : 0
+}

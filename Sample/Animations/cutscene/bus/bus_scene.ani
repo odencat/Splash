@@ -1,0 +1,112 @@
+{
+   "keyframes" : {
+      "0" : [
+         {
+            "frameNo" : 0,
+            "position" : [ 0, -192 ],
+            "positionTween" : "fix",
+            "sourcePath" : "cutscene/bus/bus_scene_scroll_sky.ani"
+         },
+         {
+            "frameNo" : 255,
+            "position" : [ 0, -192 ],
+            "sourcePath" : "cutscene/bus/bus_scene_scroll_sky.ani"
+         }
+      ],
+      "1" : [
+         {
+            "frameNo" : 0,
+            "position" : [ 0, -209 ],
+            "positionTween" : "fix",
+            "sourcePath" : "cutscene/bus/bus_scene_scroll_0.ani"
+         },
+         {
+            "frameNo" : 255,
+            "position" : [ -109, -121 ],
+            "sourcePath" : "cutscene/bus/bus_scene_scroll_0.ani"
+         }
+      ],
+      "2" : [
+         {
+            "frameNo" : 0,
+            "position" : [ 0, -163 ],
+            "positionTween" : "fix",
+            "sourcePath" : "cutscene/bus/bus_scene_scroll_1.ani"
+         },
+         {
+            "frameNo" : 255,
+            "position" : [ 0, -168 ],
+            "sourcePath" : "cutscene/bus/bus_scene_scroll_1.ani"
+         }
+      ],
+      "3" : [
+         {
+            "frameNo" : 0,
+            "position" : [ 0, -149 ],
+            "positionTween" : "fix",
+            "sourcePath" : "cutscene/bus/bus_scene_scroll_2.ani"
+         },
+         {
+            "frameNo" : 255,
+            "position" : [ -1, -239 ],
+            "sourcePath" : "cutscene/bus/bus_scene_scroll_2.ani"
+         }
+      ],
+      "4" : [
+         {
+            "frameNo" : 0,
+            "position" : [ 0, -124 ],
+            "positionTween" : "fix",
+            "sourcePath" : "cutscene/bus/bus_scene_scroll_3.ani"
+         },
+         {
+            "frameNo" : 255,
+            "position" : [ 0, -124 ],
+            "sourcePath" : "cutscene/bus/bus_scene_scroll_3.ani"
+         }
+      ],
+      "5" : [
+         {
+            "frameNo" : 0,
+            "position" : [ 0, -53 ],
+            "positionTween" : "fix",
+            "sourcePath" : "cutscene/bus/bus_scene_scroll_4.ani"
+         },
+         {
+            "frameNo" : 255,
+            "position" : [ 84, -49 ],
+            "sourcePath" : "cutscene/bus/bus_scene_scroll_4.ani"
+         }
+      ],
+      "6" : [
+         {
+            "frameNo" : 0,
+            "positionTween" : "fix",
+            "sourcePath" : "cutscene/bus/bus_scene_scroll_5.ani"
+         },
+         {
+            "frameNo" : 255,
+            "position" : [ 53, -247 ],
+            "sourcePath" : "cutscene/bus/bus_scene_scroll_5.ani"
+         }
+      ],
+      "7" : [
+         {
+            "frameNo" : 0,
+            "position" : [ 144, -77 ],
+            "positionTween" : "fix",
+            "scale" : [ -1.0, 1.0 ],
+            "scaleTween" : "fix",
+            "sourcePath" : "cutscene/bus/bus.ani"
+         },
+         {
+            "frameNo" : 255,
+            "position" : [ 228, -77 ],
+            "scale" : [ -1.0, 1.0 ],
+            "sourcePath" : "cutscene/bus/bus.ani"
+         }
+      ]
+   },
+   "name" : "",
+   "type" : 1
+}

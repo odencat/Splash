@@ -1,0 +1,36 @@
+{
+   "keyframes" : {
+      "0" : [
+         {
+            "center" : [ -144.0, 96.0 ],
+            "frameNo" : 0,
+            "positionTween" : "linear",
+            "sourcePath" : "bg/pastbusroad_sky.png"
+         },
+         {
+            "center" : [ -144.0, 96.0 ],
+            "frameNo" : 255,
+            "position" : [ -288, 0 ],
+            "positionTween" : "fix",
+            "sourcePath" : "bg/pastbusroad_sky.png"
+         }
+      ],
+      "1" : [
+         {
+            "center" : [ -144.0, 96.0 ],
+            "frameNo" : 0,
+            "position" : [ 288, 0 ],
+            "positionTween" : "linear",
+            "sourcePath" : "bg/pastbusroad_sky.png"
+         },
+         {
+            "center" : [ -144.0, 96.0 ],
+            "frameNo" : 255,
+            "positionTween" : "fix",
+            "sourcePath" : "bg/pastbusroad_sky.png"
+         }
+      ]
+   },
+   "name" : "",
+   "type" : 1
+}

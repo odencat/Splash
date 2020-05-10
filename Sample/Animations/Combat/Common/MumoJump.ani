@@ -1,0 +1,38 @@
+{
+   "keyframes" : {
+      "0" : [
+         {
+            "frameNo" : 0,
+            "positionTween" : "fix",
+            "sourcePath" : "Characters/momoFly.png",
+            "textureRect" : [ 0, 0, 24, 24 ]
+         },
+         {
+            "frameNo" : 2,
+            "position" : [ 26, -26 ],
+            "sourcePath" : "Characters/momoFly.png",
+            "textureRect" : [ 24, 0, 24, 24 ]
+         },
+         {
+            "frameNo" : 4,
+            "position" : [ 1, -1 ],
+            "sourcePath" : "Characters/momoFly.png",
+            "textureRect" : [ 48, 0, 24, 24 ]
+         },
+         {
+            "frameNo" : 6,
+            "positionTween" : "fix",
+            "sourcePath" : "Characters/momoFly.png",
+            "textureRect" : [ 72, 0, 24, 24 ]
+         },
+         {
+            "frameNo" : 7,
+            "positionTween" : "fix",
+            "sourcePath" : "Characters/momoFly.png",
+            "textureRect" : [ 72, 0, 24, 24 ]
+         }
+      ]
+   },
+   "name" : "",
+   "type" : 0
+}

@@ -1,0 +1,37 @@
+{
+   "keyframes" : {
+      "0" : [
+         {
+            "center" : [ -144.0, 24.0 ],
+            "frameNo" : 0,
+            "positionTween" : "linear",
+            "sourcePath" : "bg/pastbusroad_wheatField_02.png"
+         },
+         {
+            "center" : [ -144.0, 24.0 ],
+            "frameNo" : 47,
+            "position" : [ -279, 0 ],
+            "positionTween" : "fix",
+            "sourcePath" : "bg/pastbusroad_wheatField_02.png"
+         }
+      ],
+      "1" : [
+         {
+            "center" : [ -144.0, 24.0 ],
+            "frameNo" : 0,
+            "position" : [ 288, 0 ],
+            "positionTween" : "linear",
+            "sourcePath" : "bg/pastbusroad_wheatField_02.png"
+         },
+         {
+            "center" : [ -144.0, 24.0 ],
+            "frameNo" : 47,
+            "position" : [ 9, 0 ],
+            "positionTween" : "fix",
+            "sourcePath" : "bg/pastbusroad_wheatField_02.png"
+         }
+      ]
+   },
+   "name" : "",
+   "type" : 1
+}
