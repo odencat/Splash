@@ -4,7 +4,7 @@
 #include <QFileInfo>
 #include <QSound>
 #include "DataModels/AnimationModel.h"
-#include "GLSprite.h"
+#include "AnimationPlayer/GLSprite.h"
 #include "FileLoader.h"
 #include <QTextStream>
 #include <QImage>

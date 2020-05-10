@@ -9,7 +9,7 @@
 #include <QDir>
 
 #include "KeyFrameData.h"
-#include "GLSprite.h"
+#include "AnimationPlayer/GLSprite.h"
 #include "DataModels/KeyFrame.h"
 
 class AnimationModel : public QObject

@@ -1,6 +1,6 @@
 #include "KeyFrameData.h"
-#include "GLSprite.h"
-#include "SpriteDescriptor.h"
+#include "AnimationPlayer/GLSprite.h"
+#include "AnimationPlayer/SpriteDescriptor.h"
 
 QString KeyFrameData::swapTargetTypeString[KeyFrameData::SwapTargetType_COUNT] =
 {

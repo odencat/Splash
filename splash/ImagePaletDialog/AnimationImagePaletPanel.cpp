@@ -1,6 +1,6 @@
 #include "AnimationImagePaletpanel.h"
 #include "ResourceManager.h"
-#include "GLSprite.h"
+#include "AnimationPlayer/GLSprite.h"
 #include <QPainter>
 #include <QPaintEvent>
 #include <QPixmap>

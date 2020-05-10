@@ -3,7 +3,7 @@
 
 #include <QGLWidget>
 #include "DataModels/AnimationModel.h"
-#include "EmittedAnimation.h"
+#include "AnimationPlayer/EmittedAnimation.h"
 
 class CelModel;
 class GLSprite;

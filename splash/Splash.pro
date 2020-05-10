@@ -7,6 +7,7 @@ include(../Shared/irrKlang/irrKlang.pri)
 
 include(ImagePaletDialog/ImagePaletDialog.pri)
 include(DataModels/DataModels.pri)
+include(AnimationPlayer/AnimationPlayer.pri)
 include(AnimationViewer/AnimationViewer.pri)
 include(Widgets/QTimelineWidget/QTimelineWidget.pri)
 include(Widgets/ResourceTree/ResourceTree.pri)
@@ -17,18 +18,11 @@ QT += multimedia
 TARGET = Splash
 TEMPLATE = app
 SOURCES += main.cpp \
-    SpriteDescriptor.cpp \
     mainwindow.cpp \
-    GLSprite.cpp \
-    ResourceManager.cpp \
-    EmittedAnimation.cpp
+    ResourceManager.cpp
 HEADERS += mainwindow.h \
-    GLSprite.h \
     Macros.h \
-    ResourceManager.h \
-    EmittedAnimation.h \
-    SpriteDescriptor.h \
-    Types.h
+    ResourceManager.h
 FORMS += mainwindow.ui
 RESOURCES += ui.qrc
 RC_FILE = Splash.rc

@@ -1,8 +1,8 @@
 #ifndef BaseKEYFRAME_H
 #define BaseKEYFRAME_H
 
-#include "SpriteDescriptor.h"
-#include "GLSprite.h"
+#include "AnimationPlayer/SpriteDescriptor.h"
+#include "AnimationPlayer/GLSprite.h"
 class KeyFrameData
 {
 public:

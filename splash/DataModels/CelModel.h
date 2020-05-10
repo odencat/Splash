@@ -1,7 +1,7 @@
 #ifndef CelModel_H
 #define CelModel_H
 #include <QObject>
-#include "GLSprite.h"
+#include "AnimationPlayer/GLSprite.h"
 
 class KeyFrameData;
 class CelModel : public QObject

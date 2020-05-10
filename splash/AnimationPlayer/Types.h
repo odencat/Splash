@@ -1,5 +1,5 @@
-#ifndef TYPES_H
-#define TYPES_H
+#ifndef ANIMATION_TYPES_H
+#define ANIMATION_TYPES_H
 
 #include "qgl.h"
 
@@ -167,4 +167,4 @@ static QPoint getPositionWithPositionType(QPointF basePosition, PositionTypeOpti
     }
     return QPointF(basePosition.x() + dx * width, basePosition.y() + dy * height + deltaY).toPoint();
 }
-#endif // TYPES_H
+#endif // ANIMATION_TYPES_H

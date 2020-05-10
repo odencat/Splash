@@ -1,9 +1,9 @@
 #include "AnimationViewerPanel.h"
+#include "AnimationPlayer/GLSprite.h"
 #include "DataModels/CelModel.h"
 #include "DataModels/KeyFrame.h"
 #include "DataModels/KeyFrameData.h"
 #include "ResourceManager.h"
-#include "GLSprite.h"
 #include <QMouseEvent>
 #include <QPixmap>
 #include <QTimer>
