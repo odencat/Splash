@@ -52,6 +52,7 @@ private slots:
 
     void setAnimationDirectory();
     void setImageDirectory();
+    void selectProjectFile();
 
 protected:
 private:

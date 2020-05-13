@@ -371,10 +371,9 @@
    </property>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
-     <string>Settings</string>
+     <string>Project</string>
     </property>
-    <addaction name="actionSet_Animation_Directory"/>
-    <addaction name="actionSet_Image_Directory"/>
+    <addaction name="actionOpenFile"/>
    </widget>
    <addaction name="menuSettings"/>
   </widget>
@@ -384,7 +383,7 @@
      <normaloff>resource/folder_open.png</normaloff>resource/folder_open.png</iconset>
    </property>
    <property name="text">
-    <string>OpenFile</string>
+    <string>Open</string>
    </property>
   </action>
   <action name="actionNewProject">

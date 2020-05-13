@@ -20,6 +20,7 @@ void MainWindow::setupConnections()
     //Menu action
     connect(ui->actionSet_Animation_Directory, SIGNAL(triggered()), this, SLOT(setAnimationDirectory()));
     connect(ui->actionSet_Image_Directory, SIGNAL(triggered()), this, SLOT(setImageDirectory()));
+    connect(ui->actionOpenFile, SIGNAL(triggered()), this, SLOT(selectProjectFile()));
 
 
     // connect animation list controls
@@ -96,7 +97,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow)
 {
-    ResourceManager::loadWorkingDirectory();
+    ResourceManager::openSavedProject();
     setupModels();
     setupUI();
 
@@ -331,3 +332,25 @@ void MainWindow::setImageDirectory()
 
     ResourceManager::setWorkingDirectory(newDirectory, ResourceManager::FileType_Image);
 }
+
+
+void MainWindow::selectProjectFile()
+{
+    QString filename = QFileDialog::getOpenFileName(
+                        this,
+                        tr("Open"),
+                        "~/",
+                        tr("XML files (*.spl)")
+                    );
+
+    if (filename == NULL) {
+        return;
+    }
+
+    ResourceManager::setProjectPath(filename);
+
+    QString rootPath = ResourceManager::GetDirectoryPath(ResourceManager::FileType_Animation);
+    ui->animationTreeView->setRootIndex(mAnimationTreeViewModel.index(rootPath) );
+}
+
+

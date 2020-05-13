@@ -5,6 +5,8 @@ node_modules/*
 npm-debug.log
 platforms/*
 plugins/*
+release/*
+debug/*
 runtime.exe
 www/runtime.js
 www/runtime.js.map

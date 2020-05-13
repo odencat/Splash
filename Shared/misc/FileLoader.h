@@ -8,12 +8,14 @@
 class FileLoader
 {
 public:
-    static Json::Value loadInitData();
+    static Json::Value loadProject(QString filename);
     static void saveInitData(Json::Value newOptionalData);
 
     static std::string getFileData(QString path);
     static Json::Value loadJsonFile(QString path);
     static Json::Value load(QString filePath);
+    static QString loadProjectPath();
+    static void saveProjectPath(QString path);
 
 private:
 

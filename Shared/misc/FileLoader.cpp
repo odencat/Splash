@@ -3,12 +3,14 @@
 #include <QTextStream>
 #include <QCloseEvent>
 #include <QFileDialog>
+#include <QSettings>
+#include <QApplication>
+#include <QStandardPaths>
 
 // public
-Json::Value FileLoader::loadInitData()
+Json::Value FileLoader::loadProject(QString filename)
 {
-//    QFileInfo initFileInfo = QFileInfo(QDir::currentPath(), QString("init.json"));
-    QFileInfo initFileInfo = QFileInfo(QString("/Users/daigosato/Development/Daigo/Splash/splash"), QString("init.json"));
+    QFileInfo initFileInfo = QFileInfo(filename);
     QString filePath = initFileInfo.absoluteFilePath();
 
     return loadJsonFile(filePath);
@@ -61,4 +63,18 @@ Json::Value FileLoader::loadJsonFile(QString path)
         printf("json parse error");
     }
     return root;
+}
+
+QString FileLoader::loadProjectPath()
+{
+ QString settingsFilePath = QStandardPaths::standardLocations(QStandardPaths::CacheLocation).last() + "/settings.ini";
+ QSettings settings(settingsFilePath, QSettings::NativeFormat);
+ return settings.value("project_path", "").toString();
+}
+
+void FileLoader::saveProjectPath(QString path)
+{
+ QString settingsFilePath =  QStandardPaths::standardLocations(QStandardPaths::CacheLocation).last() + "/settings.ini";
+ QSettings settings(settingsFilePath, QSettings::NativeFormat);
+ settings.setValue("project_path", path);
 }

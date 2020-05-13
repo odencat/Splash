@@ -168,13 +168,6 @@ void ResourceManager::playSound(QString path)
     //}
 }
 
-void ResourceManager::loadWorkingDirectory()
-{
-    Json::Value root = FileLoader::loadInitData();
-    mImageResourcePath = QString::fromStdString(root["imagePath"].asString());
-    mAnimationResourcePath = QString::fromStdString(root["animationPath"].asString());
-}
-
 void ResourceManager::setWorkingDirectory(QString newDirectory, ResourceManager::FileType fileType)
 {
     switch (fileType)
@@ -192,4 +185,29 @@ void ResourceManager::setWorkingDirectory(QString newDirectory, ResourceManager:
     data["animationPath"] = mAnimationResourcePath.toStdString();
     data["imagePath"] = mImageResourcePath.toStdString();
     FileLoader::saveInitData(data);
+}
+
+void ResourceManager::openSavedProject() {
+    QString projectPath = FileLoader::loadProjectPath();
+    openProject(projectPath);
+}
+
+bool ResourceManager::openProject(QString projectPath)
+{
+    Json::Value root = FileLoader::loadProject(projectPath);
+    if (root.empty()) {
+        return false;
+    }
+    QFileInfo info(projectPath);
+
+    mImageResourcePath = info.dir().path().append("/").append(QString::fromStdString(root["imagePath"].asString()));
+    mAnimationResourcePath = info.dir().path().append("/").append(QString::fromStdString(root["animationPath"].asString()));
+    return true;
+}
+
+void ResourceManager::setProjectPath(QString filename)
+{
+    if (ResourceManager::openProject(filename)) {
+        FileLoader::saveProjectPath(filename);
+    }
 }

@@ -40,6 +40,10 @@ public:
 
     static void loadWorkingDirectory();
     static void setWorkingDirectory(QString newDirectory, FileType fileType);
+
+    static void openSavedProject();
+    static bool openProject(QString projectPath);
+    static void setProjectPath(QString filename);
 };
 
 #endif // RESOURCEMANAGER_H
