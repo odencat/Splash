@@ -173,8 +173,7 @@ void MainWindow::onSelectionChanged(const QItemSelection& item1, const QItemSele
     if (fileInfo.isFile())
     {
         if (mpAnimationModel->isDataChanged()) {
-            QMessageBox::StandardButton reply;
-            reply = QMessageBox::question(this, "Save", "The animation is not saved. \nDo you want to change anywys?",
+            QMessageBox::StandardButton reply = QMessageBox::question(this, "Save", "The animation is not saved. \nDo you want to change anywys?",
                                           QMessageBox::Yes|QMessageBox::No);
 
             if (reply == QMessageBox::Yes) {
@@ -280,12 +279,18 @@ void MainWindow::onRemoveAnimationButtonClicked()
     QModelIndexList indexes = ui->animationTreeView->selectionModel()->selectedIndexes();
     if (indexes.count() > 0)
     {
-        QModelIndex index = indexes.takeFirst();
 
-        QString path = mAnimationTreeViewModel.filePath(index);
+        QMessageBox::StandardButton reply = QMessageBox::question(this, "Delete", "Do you really want to remove this file? (Can't undo)",
+                                      QMessageBox::Yes|QMessageBox::No);
 
-        QFile::remove(path);
-        refreshTree();
+        if (reply == QMessageBox::Yes) {
+            QModelIndex index = indexes.takeFirst();
+
+            QString path = mAnimationTreeViewModel.filePath(index);
+
+            QFile::remove(path);
+            refreshTree();
+        }
     }
 }
 
