@@ -95,7 +95,8 @@ void MainWindow::setupUI()
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
-      ui(new Ui::MainWindow)
+      ui(new Ui::MainWindow),
+      mpDialog(NULL)
 {
     ResourceManager::openSavedProject();
     setupModels();
