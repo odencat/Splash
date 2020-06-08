@@ -68,13 +68,19 @@ Json::Value FileLoader::loadJsonFile(QString path)
 QString FileLoader::loadProjectPath()
 {
  QString settingsFilePath = QStandardPaths::standardLocations(QStandardPaths::CacheLocation).last() + "/settings.ini";
- QSettings settings(settingsFilePath, QSettings::NativeFormat);
+ QSettings settings(settingsFilePath, QSettings::IniFormat);
  return settings.value("project_path", "").toString();
 }
 
 void FileLoader::saveProjectPath(QString path)
 {
- QString settingsFilePath =  QStandardPaths::standardLocations(QStandardPaths::CacheLocation).last() + "/settings.ini";
- QSettings settings(settingsFilePath, QSettings::NativeFormat);
- settings.setValue("project_path", path);
+ QString settingsFileDir = QStandardPaths::standardLocations(QStandardPaths::CacheLocation).last();
+ if (QDir().mkpath(settingsFileDir)) {
+     QString settingsFilePath = settingsFileDir + "/settings.ini";
+     QSettings settings(settingsFilePath, QSettings::IniFormat);
+     settings.setValue("project_path", path);
+     settings.sync();
+ } else {
+     printf("Failed to create path: %s", settingsFileDir.toStdString().c_str());
+ }
 }
