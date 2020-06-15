@@ -3,7 +3,7 @@ require 'json'
 require 'FileUtils'
 
 INPUT_PATH = "/Users/daigosato/Development/odencat/Splash/Sample/Animations"
-OUTPUT_PATH = "/Users/daigosato/Development/odencat/Splash/Sample/AnimationsJSON"
+OUTPUT_PATH = "/Users/daigosato/Development/odencat/splash-ebiten/player/assets/animations"
 
 AnchorData = {
     "bottomLeft" => [-1, 1],
@@ -32,9 +32,15 @@ def build_animation_file(filename)
     end
     json = JSON.parse(data)
 
+
+    typeString = ["normal", "background"]
+
     result = {}
     result["timelines"], result["dependencies"] = parse_timelines(json["keyframes"])
     result["events"] = json["events"]
+
+    typeIndex = json["type"] ? json["type"] : 0
+    result["type"] = typeString[typeIndex]
     return result
 end
 
@@ -54,7 +60,7 @@ def parse_timeline(timeline, dependencies)
         "position" => [],
         "rotation" => [],
         "scale" => [],
-        "hue" => [],
+        "color" => [],
         "source" => []
     }
 
@@ -116,10 +122,10 @@ def setup_tweens(result, latestSourceData)
         # last frame
         if keyframes.last
             if keyframes.last["wait"]
-                frameNo = keyframes.last["frameNo"]
                 keyframes.delete(keyframes.last)
                 if (key == "source")
-                    keyframes << {"frameNo" => frameNo, "duration" => 1, "id"=>"", "rect"=>nil}
+                    frameNo = keyframes.last["frameNo"]
+                    keyframes << {"frameNo" => frameNo, "duration" => 0, "id"=>"", "rect"=>nil}
                 end
             else
                 keyframes.last["duration"] = latestSourceData["maxFrame"] - keyframes.last["frameNo"] + 1
@@ -147,7 +153,7 @@ def parse_keyframes(latestSourceData, keyframe_set, result, dependencies)
         createAttributeKey(result, "position", keyframe_set, frameNo, [0, 0])
         createAttributeKey(result, "rotation", keyframe_set, frameNo, 0)
         createAttributeKey(result, "scale", keyframe_set, frameNo, [1, 1])
-        createAttributeKey(result, "hue", keyframe_set, frameNo, [0, 0, 0])
+        createAttributeKey(result, "color", keyframe_set, frameNo, [0, 0, 0])
         createSourceKey(result, keyframe_set, frameNo, latestSourceData, dependencies);
     end
 end
