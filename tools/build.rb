@@ -114,6 +114,9 @@ def setup_tweens(result, latestSourceData)
                             prev_keyframe["endPositionType"] = keyframe["startPositionType"] ? to_pascal(keyframe["startPositionType"]) : "None"
                             prev_keyframe["endPositionAnchor"] = keyframe["startPositionAnchor"] ? keyframe["startPositionAnchor"] : AnchorData["center"]
                         end
+                        if key == "roation"
+                            prev_keyframe["endFacingOptionType"] = keyframe["startFacingOption"] ? to_pascal(keyframe["startFacingOption"]) : "None"
+                        end
                     end
                 end
             end
@@ -194,11 +197,10 @@ def createAttributeKey(result, key, keyframe_set, frameNo, defaultValue)
 
             data["startPositionAnchor"] = AnchorData[keyframe_set["positionTypeOption"]] ? AnchorData[keyframe_set["positionTypeOption"]] : AnchorData["center"]
             data["endPositionAnchor"] = data["startPositionAnchor"] 
-            
         end
         if key == "rotation"
-            data["facingOption"] = keyframe_set["facingOption"] ? to_pascal(keyframe_set["facingOption"]) : "None"
-            #TODO FacingOption needs start & end
+            data["startFacingOption"] = keyframe_set["facingOption"] ? to_pascal(keyframe_set["facingOption"]) : "None"
+            data["endFacingOption"] = data["startFacingOption"]
         end
         
     end
