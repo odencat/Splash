@@ -128,7 +128,20 @@ def setup_tweens(result, latestSourceData)
                     keyframes << {"frameNo" => frameNo, "duration" => 0, "id"=>"", "rect"=>nil}
                 end
             else
-                keyframes.last["duration"] = latestSourceData["maxFrame"] - keyframes.last["frameNo"] + 1
+                duration = latestSourceData["maxFrame"] - keyframes.last["frameNo"] + 1
+                keyframes.last["duration"] = duration
+
+                # Merge last frame if necessary
+                # TODO It is possible that the same merge need to happen on middle frames
+                if keyframes.size > 1
+                    prev_keyframe = keyframes[keyframes.size - 2]
+                    if !(prev_keyframe["tween"] == "fix" || prev_keyframe["wait"]) 
+                        if duration == 1 
+                            keyframes.delete(keyframes.last)
+                            prev_keyframe["duration"] += 1
+                        end  
+                    end
+                end
             end
         end
     end
@@ -185,6 +198,7 @@ def createAttributeKey(result, key, keyframe_set, frameNo, defaultValue)
         end
         if key == "rotation"
             data["facingOption"] = keyframe_set["facingOption"] ? to_pascal(keyframe_set["facingOption"]) : "None"
+            #TODO FacingOption needs start & end
         end
         
     end
