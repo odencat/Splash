@@ -65,15 +65,96 @@ def parse_timeline(timeline, dependencies)
     }
 
     latestSourceData = {"textureRect" => nil, "sourcePath" => nil, "maxFrame" => 1}
-    timeline.each_with_index do |keyframe_set, i|
-        last = timeline.length() -1 == i
-        parse_keyframes(latestSourceData, keyframe_set, result, dependencies, last)
+    timeline.each do |keyframe_set|
+        parse_keyframes(latestSourceData, keyframe_set, result, dependencies)
     end
+
+    # setup duration
+    setup_tweens(result, latestSourceData)
 
     return result
 end
 
-def parse_keyframes(latestSourceData, keyframe_set, result, dependencies, last)
+def setup_tweens(result, latestSourceData)
+    result.each do |key, keyframes|
+        keyFrameCount = keyframes.count
+        keyframes.each_with_index do |keyframe, i| 
+            if (i == 0)
+                if keyframe["frameNo"] > 0
+                    # Add padding if the frame starts in the middle
+                    padding_key_frame = {
+                        "duration"=>keyframe["frameNo"], 
+                        "wait"=> true, 
+                        "frameNo"=>0
+                    }
+                    keyframes.insert(0, padding_key_frame)
+                end
+            else
+                # Decide duration and end-value of the last keyframe
+                prev_keyframe = keyframes[i - 1]
+                prev_keyframe["duration"] = keyframe["frameNo"] - prev_keyframe["frameNo"]
+                
+                if key != "source"
+                    if keyframe["wait"]
+                        if key == "position"
+                            prev_keyframe["endPositionType"] = prev_keyframe["endPositionType"] ? to_pascal(prev_keyframe["endPositionType"]) : "None"
+                            prev_keyframe["endPositionAnchor"] = prev_keyframe["endPositionAnchor"] ? prev_keyframe["endPositionAnchor"] : AnchorData["center"]
+                        end
+                    else
+                         prev_keyframe["endValue"] = keyframe["startValue"]
+                        
+                        unless prev_keyframe.has_key?("startValue")
+                           prev_keyframe["startValue"] = prev_keyframe["endValue"]
+                           prev_keyframe["startPositionType"] = "None"
+                           prev_keyframe["startPositionAnchor"] = AnchorData["center"]
+                        end
+                        
+                        prev_keyframe["startValue"] = prev_keyframe["endValue"] unless prev_keyframe.has_key?("startValue")
+                        if key == "position"
+                            prev_keyframe["endPositionType"] = keyframe["startPositionType"] ? to_pascal(keyframe["startPositionType"]) : "None"
+                            prev_keyframe["endPositionAnchor"] = keyframe["startPositionAnchor"] ? keyframe["startPositionAnchor"] : AnchorData["center"]
+                        end
+                        if key == "roation"
+                            prev_keyframe["endFacingOptionType"] = keyframe["startFacingOption"] ? to_pascal(keyframe["startFacingOption"]) : "None"
+                        end
+                    end
+                end
+            end
+        end
+    
+        # last frame
+        if keyframes.last
+            if keyframes.last["wait"]
+                keyframes.delete(keyframes.last)
+                if (key == "source")
+                    frameNo = keyframes.last["frameNo"]
+                    keyframes << {"frameNo" => frameNo, "duration" => 0, "id"=>"", "rect"=>nil}
+                end
+            else
+                duration = latestSourceData["maxFrame"] - keyframes.last["frameNo"] + 1
+                keyframes.last["duration"] = duration
+
+                # Merge last frame if necessary
+                # TODO It is possible that the same merge need to happen on middle frames
+                if (key != "source")
+                    if keyframes.size > 1
+                        prev_keyframe = keyframes[keyframes.size - 2]
+                        if !(prev_keyframe["tween"] == "fix" || prev_keyframe["wait"]) 
+                            if duration == 1 
+                                keyframes.delete(keyframes.last)
+                                prev_keyframe["duration"] += 1
+                            end  
+                        end
+                    end
+                end
+            end
+        end
+    end
+    
+    
+end
+
+def parse_keyframes(latestSourceData, keyframe_set, result, dependencies)
     frameNo = keyframe_set["frameNo"]
 
     if (keyframe_set["isEmpty"])
@@ -91,7 +172,7 @@ def parse_keyframes(latestSourceData, keyframe_set, result, dependencies, last)
         createAttributeKey(result, "rotation", keyframe_set, frameNo, 0)
         createAttributeKey(result, "scale", keyframe_set, frameNo, [1, 1])
         createAttributeKey(result, "color", keyframe_set, frameNo, [0, 0, 0])
-        createSourceKey(result, keyframe_set, frameNo, latestSourceData, dependencies, last);
+        createSourceKey(result, keyframe_set, frameNo, latestSourceData, dependencies);
     end
 end
 
@@ -108,19 +189,25 @@ def createAttributeKey(result, key, keyframe_set, frameNo, defaultValue)
 
     if tweenType && tweenType != "none"
         data["frameNo"] = frameNo
-        data["value"] = (value != nil) ? value : defaultValue
+        data["startValue"] = (value != nil) ? value : defaultValue
+        data["endValue"] = data["startValue"]
         
         # Position attribute has special options
         if key == "position"
-            data["positionType"] = keyframe_set["positionType"] ? to_pascal(keyframe_set["positionType"]) : "None"
+            data["startPositionType"] = keyframe_set["positionType"] ? to_pascal(keyframe_set["positionType"]) : "None"
+            data["endPositionType"] = data["startPositionType"]
 
-            data["positionAnchor"] = AnchorData[keyframe_set["positionTypeOption"]] ? AnchorData[keyframe_set["positionTypeOption"]] : AnchorData["center"]
+            data["startPositionAnchor"] = AnchorData[keyframe_set["positionTypeOption"]] ? AnchorData[keyframe_set["positionTypeOption"]] : AnchorData["center"]
+            data["endPositionAnchor"] = data["startPositionAnchor"] 
         end
         if key == "rotation"
-            data["facingOption"] = keyframe_set["facingOption"] ? to_pascal(keyframe_set["facingOption"]) : "None"
+            data["startFacingOption"] = keyframe_set["facingOption"] ? to_pascal(keyframe_set["facingOption"]) : "None"
+            data["endFacingOption"] = data["startFacingOption"]
         end
         
     end
+
+
     
     unless data.empty?
         result[key] << data
@@ -128,7 +215,7 @@ def createAttributeKey(result, key, keyframe_set, frameNo, defaultValue)
 end
 
 # Create keyframe for source key
-def createSourceKey(result, keyframe_set, frameNo, latestSourceData, dependencies,last)
+def createSourceKey(result, keyframe_set, frameNo, latestSourceData, dependencies)
     # Source is somewhat special (Like, no lenear tween)
     rectDiff = latestSourceData["textureRect"] != keyframe_set["textureRect"]
     pathDiff = latestSourceData["sourcePath"] != keyframe_set["sourcePath"]
@@ -136,7 +223,7 @@ def createSourceKey(result, keyframe_set, frameNo, latestSourceData, dependencie
     blendTypeDiff = latestSourceData["blendType"] != keyframe_set["blendType"]
     
     latestSourceData["maxFrame"] = frameNo
-    if rectDiff || pathDiff || priorityDiff || blendTypeDiff || last
+    if rectDiff || pathDiff || priorityDiff || blendTypeDiff
         latestSourceData["textureRect"] = keyframe_set["textureRect"]
         latestSourceData["sourcePath"] = keyframe_set["sourcePath"]
         latestSourceData["priority"] = keyframe_set["priority"]
