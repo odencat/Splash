@@ -3,7 +3,7 @@ require 'json'
 require 'FileUtils'
 
 INPUT_PATH = "/Users/daigosato/Development/odencat/Splash/Sample/Animations"
-OUTPUT_PATH = "/Users/daigosato/Development/odencat/splash-ebiten/cmd/splash-ebiten-player/assets/animations"
+OUTPUT_PATH = "/Users/daigosato/Development/odencat/splash-ebiten/cmd/splash-ebiten-editor/assets/animations"
 
 AnchorData = {
     "bottomLeft" => [-1, 1],
@@ -109,7 +109,18 @@ def createAttributeKey(result, key, keyframe_set, frameNo, defaultValue)
     if tweenType && tweenType != "none"
         data["frameNo"] = frameNo
         data["value"] = (value != nil) ? value : defaultValue
-        
+        if key == "alpha"
+            data["value"] = (data["value"] * 255).to_i
+        end
+        if key == "scale"
+            data["value"][0] = (data["value"][0] * 100).to_i
+            data["value"][1] = (data["value"][1] * 100).to_i
+        end
+        if key == "color"
+            data["value"][0] = (data["value"][0] * 255).to_i
+            data["value"][1] = (data["value"][1] * 255).to_i
+            data["value"][2] = (data["value"][2] * 255).to_i
+        end           
         # Position attribute has special options
         if key == "position"
             data["positionType"] = keyframe_set["positionType"] ? to_pascal(keyframe_set["positionType"]) : "None"
